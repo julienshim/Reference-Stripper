@@ -1,0 +1,86 @@
+* {
+  box-sizing: border-box;
+}
+
+h1 {
+  margin-left: 15px;
+}
+
+#header {
+  display: flex;
+}
+
+#main {
+  width: 100%;
+}
+
+#count {
+  margin: 15px 0 0 15px;
+}
+
+#output {
+  border: 1px solid #fff;
+  outline: none;
+  overflow: auto;
+  cursor: pointer;
+}
+
+#output:hover {
+  background: rgba(255, 0, 0, 0.1);
+}
+
+#preview {
+  position: relative;
+}
+
+#confirm {
+  position: absolute;
+  bottom: 15px;
+  right: 30px;
+  border-radius: 15px;
+  border: 1px solid red;
+  padding: 15px 30px;
+}
+
+#editor {
+  background: pink;
+}
+
+textarea {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px;
+  resize: none;
+  box-shadow: none;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  height: 40vh;
+  width: 97vw;
+}
+
+#id {
+  color: #ccc;
+  border: 1px solid #ccc;
+}
+
+.red {
+  color: red;
+  border: 1px solid rgba(255, 0, 0, 0.1);
+}
+
+@media only screen and (min-width: 768px) {
+  #main {
+    display: flex;
+    padding: 10px;
+  }
+
+  #output {
+    margin-left: 10px;
+  }
+
+  textarea {
+    height: 60vh;
+    width: 48.5vw;
+  }
+}
