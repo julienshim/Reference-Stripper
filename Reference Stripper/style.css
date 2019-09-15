@@ -1,3 +1,8 @@
+/* Reference Stripper
+
+Created by Julien Shim on 9/11/19.
+Copyright © 2019 Julien Shim. All rights reserved. */
+
 @import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
 
 * {
@@ -28,14 +33,10 @@
   cursor: pointer;
 }
 
-/* Titles */
+/* Header */
 
 h1 {
-  margin-left: 12px;
-}
-
-#header {
-  display: flex;
+  margin-left: 24px;
 }
 
 /* Text Area */

@@ -1,6 +1,11 @@
+// Reference Stripper
+
+// Created by Julien Shim on 9/11/19.
+// Copyright © 2019 Julien Shim. All rights reserved.
+
 const Title = ({ title }) => <h1>{title}</h1>;
 
-const Count = ({ length }) => <div id="count">{length}</div>;
+const Count = ({ length, wordCount }) => <div id="count">{length + " characters / " + wordCount + " words"}</div>;
 
 const ConfirmButton = ({ className, text }) => (
   <div id="confirm" className={className}>
@@ -21,15 +26,11 @@ class ReferenceStripper extends React.Component {
   }
 
   handleChange = (value, type) => {
-    this.setState({ [type]: value }, () => {
+    this.setState({ [type]: value, copied: false }, () => {
       if (type === "input") {
         this.handleStrip(this.state.input);
       }
     });
-  };
-
-  handleClear = () => {
-    this.setState({ copied: false });
   };
 
   handleFlicker = () => {
@@ -40,6 +41,12 @@ class ReferenceStripper extends React.Component {
 
     return () => clearTimeout(timer);
   };
+
+  handleWordCount = (string) => {
+   return string.split(' ')
+    .filter(function(n) { return n != '' })
+    .length;
+  }
 
   handleStrip = string => {
     let isWriting = true;
@@ -79,7 +86,7 @@ class ReferenceStripper extends React.Component {
         : this.state.copied
         ? "red"
         : "";
-
+   
     return (
       <div id="container">
         <Title title={this.state.title} />
@@ -88,13 +95,12 @@ class ReferenceStripper extends React.Component {
             <textarea
               id="input"
               value={this.state.input}
-              placeholder="Paste original Wikipedia text here."
-              onClick={this.handleClear}
+              placeholder="Paste original Wikipedia line or paragraph text here."
               onChange={event => {
                 this.handleChange(event.target.value, "input");
               }}
             />
-            <Count length={this.state.input.length} />
+            <Count length={this.state.input.length} wordCount={this.handleWordCount(this.state.input)} />
           </div>
           <CopyToClipboard onCopy={this.onCopy} text={this.state.output}>
             <div id="preview" onClick={this.handleFlicker}>
@@ -104,7 +110,7 @@ class ReferenceStripper extends React.Component {
                 class={flickr}
                 readonly
               />
-              <Count length={this.state.output.length} />
+              <Count length={this.state.output.length} wordCount={this.handleWordCount(this.state.output)} />
               <ConfirmButton
                 className={this.state.copied ? "red confirm" : "confirm"}
                 text={this.state.copied ? "Copied!" : "Copy"}
