@@ -1,7 +1,7 @@
 /* Reference Stripper
 
-Created by Julien Shim on 9/11/19.
-Copyright © 2019 Julien Shim. All rights reserved. */
+ Created by Julien Shim on 9/11/19.
+ Copyright © 2019 Julien Shim. All rights reserved. */
 
 @import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
 
@@ -16,6 +16,7 @@ Copyright © 2019 Julien Shim. All rights reserved. */
   --faded-clay: rgba(60, 72, 88, 0.5);
   --faded-peach: rgba(255, 0, 0, 0.5);
   --peach: rgba(254, 104, 74, 1);
+  --tangerine: rgba(251, 177, 60, 1);
 }
 
 /* Containers */
@@ -67,12 +68,31 @@ textarea {
 
 /* Counter */
 
-#count {
-  padding: 6px;
+/* #count {
+    padding: 6px;
+    position: absolute;
+    left: 24px;
+    bottom: 12px;
+    color: var(--faded-clay);
+  } */
+
+.circle-progress {
+  fill: transparent;
+}
+.circle-background {
+  fill: white;
+}
+
+.circle-text {
+  font-size: 1rem;
+  font-weight: bold;
+  fill: var(--ash);
+}
+
+#circular-progress-bar {
   position: absolute;
   left: 24px;
   bottom: 12px;
-  color: var(--faded-clay);
 }
 
 /* User Feedback */
