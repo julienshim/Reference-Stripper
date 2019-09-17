@@ -123,6 +123,21 @@ class ReferenceStripper extends React.Component {
         isWriting = false;
         hasClosed = false;
       }
+      // this saves the trouble of removing addresses when copying hyperlinked text
+      if (
+        string[i] === " " &&
+        string[i + 1] === "(" &&
+        string[i + 2] === "h" &&
+        string[i + 3] === "t" &&
+        string[i + 4] === "t" &&
+        string[i + 5] === "p"
+      ) {
+        isWriting = false;
+        hasClosed = false;
+      }
+      if (string[i] === ")") {
+        hasClosed = true;
+      }
       if (string[i] === '"') {
         isQuoting = !isQuoting;
       }
@@ -183,7 +198,6 @@ class ReferenceStripper extends React.Component {
                 wordCount={this.handleWordCount(this.state.output)}
                 size={25}
               />
-              {/* <Count length={this.state.output.length} wordCount={this.handleWordCount(this.state.output)} /> */}
               <ConfirmButton
                 className={this.state.copied ? "red confirm" : "confirm"}
                 text={this.state.copied ? "Copied!" : "Copy"}
