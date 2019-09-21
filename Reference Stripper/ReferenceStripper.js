@@ -85,8 +85,9 @@ class ReferenceStripper extends React.Component {
       title: "Reference Stripper",
       input: "",
       output: "Click on this text to copy.",
-      copied: false,
-      flicker: false
+      copied: false
+      // flicker: false, <~~ Future Development
+      // isEasy: false <~~ Future Development
     };
   }
 
@@ -125,7 +126,6 @@ class ReferenceStripper extends React.Component {
       }
       // this saves the trouble of removing addresses when copying hyperlinked text
       if (
-        string[i] === " " &&
         string[i + 1] === "(" &&
         string[i + 2] === "h" &&
         string[i + 3] === "t" &&
