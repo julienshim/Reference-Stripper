@@ -7,10 +7,13 @@ const ToggleButton = ({isEasy, handleSettingsMode}) => (
   // <div>
   //  <button onClick={handleSettingsMode}>{isEasy ? "Easy" : "Advanced"}</button>
   // </div>
+  <div id="toggle">
   <label class="switch">
    <input checked={isEasy} onClick={handleSettingsMode} type="checkbox" />
    <span class="slider"></span>
   </label>
+   <p id="toggleLabel">{isEasy ? "Easy Mode" : "Split Mode"}</p>
+  </div>
  )
  
  const CircularProgressBar = ({ wordCount, size }) => {
@@ -102,8 +105,7 @@ const ToggleButton = ({isEasy, handleSettingsMode}) => (
  
    handleChange = (value, type) => {
      this.setState({ [type]: value, copied: false }, () => {
-       if (type === "input") {
-         this.handleStrip(this.state.input);
+       if (type === "input") {       this.handleChange(this.handleStrip(this.state.input), "output");
        }
      });
    };
@@ -165,9 +167,9 @@ const ToggleButton = ({isEasy, handleSettingsMode}) => (
        if (isWriting) {
          stripped += string[i];
        }
-       console.log(isWriting);
      }
-     this.handleChange(stripped, "output");
+     // this.handleChange(stripped, "output");
+    return stripped;
    };
  
    onCopy = () => {
@@ -181,28 +183,39 @@ const ToggleButton = ({isEasy, handleSettingsMode}) => (
          : this.state.copied
          ? "red"
          : "";
- 
+      
      return (
        <div id="container">
+         <div id="header">
          <Title title={this.state.title} />
          <ToggleButton isEasy={this.state.isEasy} handleSettingsMode={this.handleSettingsMode}/>
+       </div>
          <div id="main">
            <div id="editor">
              <textarea
                id="input"
-               value={this.state.input}
+               value={this.state.isEasy ? this.state.output : this.state.input}
                placeholder="Paste original Wikipedia line or paragraph text here."
+               class={this.state.isEasy && flickr}
                onChange={event => {
-                 this.handleChange(event.target.value, "input");
+  this.handleChange(event.target.value, "input");
                }}
              />
              <CircularProgressBar
-               wordCount={this.handleWordCount(this.state.input)}
+               wordCount={this.handleWordCount(this.state.isEasy ? this.state.output : this.state.input)}
                size={25}
              />
              {/* <Count length={this.state.input.length} wordCount={this.handleWordCount(this.state.input)} /> */}
-           </div>
-           <CopyToClipboard onCopy={this.onCopy} text={this.state.output}>
+                                          <CopyToClipboard onCopy={this.onCopy} text={this.state.output}>
+                   <ConfirmButton
+                  onClick={this.handleFlicker}
+                 className={this.state.copied ? "red confirm" : "confirm"}
+                 text={this.state.copied ? "Copied!" : "Copy"}
+               />
+                       </CopyToClipboard>
+                       </div>
+
+           <CopyToClipboard className={this.state.isEasy && "hidden"} onCopy={this.onCopy} text={this.state.output}>
              <div id="preview" onClick={this.handleFlicker}>
                <textarea
                  id="output"
