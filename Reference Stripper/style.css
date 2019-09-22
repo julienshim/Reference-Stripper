@@ -1,7 +1,7 @@
-/* Reference Stripper
+// Reference Stripper
 
- Created by Julien Shim on 9/11/19.
- Copyright © 2019 Julien Shim. All rights reserved. */
+// Created by Julien Shim on 9/11/19.
+// Copyright © 2019 Julien Shim. All rights reserved.
 
 @import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
 
@@ -16,7 +16,7 @@
   --faded-clay: rgba(60, 72, 88, 0.5);
   --faded-peach: rgba(255, 0, 0, 0.5);
   --peach: rgba(254, 104, 74, 1);
-  --tangerine: rgba(251, 177, 60, 1);
+  --tangerine: rgba(	251, 177, 60, 1);
 }
 
 /* Containers */
@@ -68,13 +68,13 @@ textarea {
 
 /* Counter */
 
-/* #count {
-    padding: 6px;
-    position: absolute;
-    left: 24px;
-    bottom: 12px;
-    color: var(--faded-clay);
-  } */
+ /* #count {
+   padding: 6px;
+   position: absolute;
+   left: 24px;
+   bottom: 12px;
+   color: var(--faded-clay);
+ } */
 
 .circle-progress {
   fill: transparent;
@@ -90,9 +90,10 @@ textarea {
 }
 
 #circular-progress-bar {
-  position: absolute;
-  left: 24px;
-  bottom: 12px;
+ position: absolute;
+ left: 24px;
+ bottom: 12px;
+ 
 }
 
 /* User Feedback */
@@ -113,6 +114,59 @@ textarea {
 
 .flicker {
   background: var(--faded-peach);
+}
+
+/* Toggle Switch */
+
+.switch { /* Switch Container */
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input { /* Hide the default HTML version */
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider { /* Switch Slider*/
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
 }
 
 @media only screen and (min-width: 768px) {
