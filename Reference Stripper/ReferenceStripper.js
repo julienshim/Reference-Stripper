@@ -189,7 +189,7 @@ class ReferenceStripper extends React.Component {
           ? "red"
           : "";
 
-    const placeholder = "Many women not only fought on the field[citation needed] but led entire hosts of men within Pictish (https://en.wikipedia.org/wiki/Picts), Brythonic (https://en.wikipedia.org/wiki/Ancient_Britons), and Irish (https://en.wikipedia.org/wiki/Ancient_Ireland) tribes in Pre-Christian culture. Boudicca (https://en.wikipedia.org/wiki/Boudicca) of the Iceni (https://en.wikipedia.org/wiki/Iceni) is a famous example of a female leader of warriors, who rebelled (https://en.wikipedia.org/wiki/Boudica#Boudica's_uprising) against Roman rule in Britain (Roman rule in Britain). Tomoe Gozen (https://en.wikipedia.org/wiki/Tomoe_Gozen) is celebrated in Japanese history as a woman samurai general in the 12th century. Joan of Arc (https://en.wikipedia.org/wiki/Joan_of_Arc), nicknamed \"The Maid of Orléans\" is considered a heroine of France for her role during the Lancastrian phase of the Hundred Years' War (https://en.wikipedia.org/wiki/Hundred_Years'_War). These women survive in few historical testimonies like those of the Byzantine Empire (https://en.wikipedia.org/wiki/Byzantine_Empire)."
+    const placeholder = "Many women not only fought on the field[citation needed] but led entire hosts of men within Pictish (https://en.wikipedia.org/wiki/Picts), Brythonic (https://en.wikipedia.org/wiki/Ancient_Britons), and Irish (https://en.wikipedia.org/wiki/Ancient_Ireland) tribes in Pre-Christian culture."
 
     return (
       <div id="container">
@@ -209,7 +209,7 @@ class ReferenceStripper extends React.Component {
               }}
             />
             {this.state.isEasy && <CircularProgressBar
-              wordCount={this.handleWordCount(this.state.isEasy ? this.state.output : this.state.input)}
+              wordCount={this.state.output === "" ? 18 : this.handleWordCount(this.state.isEasy ? this.state.output : this.state.input)}
               size={25}
             />}
             {/* <Count length={this.state.input.length} wordCount={this.handleWordCount(this.state.input)} /> */}
@@ -232,7 +232,7 @@ class ReferenceStripper extends React.Component {
                 readonly
               />
               <CircularProgressBar
-                wordCount={this.handleWordCount(this.state.output)}
+                wordCount={this.state.input === "" ? 18 : this.handleWordCount(this.state.output)}
                 size={25}
               />
               <ConfirmButton
