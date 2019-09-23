@@ -190,7 +190,7 @@ class ReferenceStripper extends React.Component {
     const view = this.state.isEasy ? "easy-view" : "split-view";
 
     const placeholder =
-      "Many women not only fought on the field[citation needed] but led entire hosts of men within Pictish (https://en.wikipedia.org/wiki/Picts), Brythonic (https://en.wikipedia.org/wiki/Ancient_Britons), and Irish (https://en.wikipedia.org/wiki/Ancient_Ireland) tribes in Pre-Christian culture.";
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit[citation needed], sed do eiusmod tempor incididunt ut labore et (https://en.wikipedia.org/wiki/Lorem_ipsum), dolore (https://en.wikipedia.org/wiki/Lorem_ipsum) magna aliqua (https://en.wikipedia.org/wiki/Lorem_ipsum) ultrices sagittis orci a.";
 
     return (
       <div id="container">
@@ -218,7 +218,7 @@ class ReferenceStripper extends React.Component {
               <CircularProgressBar
                 wordCount={
                   this.state.output === ""
-                    ? 18
+                    ? 20
                     : this.handleWordCount(
                         this.state.isEasy ? this.state.output : this.state.input
                       )
@@ -250,7 +250,7 @@ class ReferenceStripper extends React.Component {
               <CircularProgressBar
                 wordCount={
                   this.state.input === ""
-                    ? 18
+                    ? 20
                     : this.handleWordCount(this.state.output)
                 }
                 size={25}
