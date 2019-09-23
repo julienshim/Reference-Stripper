@@ -239,32 +239,30 @@ class ReferenceStripper extends React.Component {
           </div>
 
           {!this.state.isEasy && (
-            <CopyToClipboard onCopy={this.onCopy} text={this.state.ouput}>
-              <div id="preview">
-                <textarea
-                  id="output"
-                  placeholder={this.handleStrip(placeholder)}
-                  value={this.state.output}
-                  class={`${view} ${flickr}`}
-                  readonly
-                />
-                <CircularProgressBar
-                  wordCount={
-                    this.state.input === ""
-                      ? 18
-                      : this.handleWordCount(this.state.output)
-                  }
-                  size={25}
-                />
-                <ConfirmButton
-                  className={this.state.copied ? "red confirm" : "confirm"}
-                  onCopy={this.onCopy}
-                  text={this.state.output}
-                  label={this.state.copied ? "Copied!" : "Copy"}
-                  handleFlicker={this.handleFlicker}
-                />
-              </div>
-            </CopyToClipboard>
+            <div id="preview">
+              <textarea
+                id="output"
+                placeholder={this.handleStrip(placeholder)}
+                value={this.state.output}
+                class={`${view} ${flickr}`}
+                readonly
+              />
+              <CircularProgressBar
+                wordCount={
+                  this.state.input === ""
+                    ? 18
+                    : this.handleWordCount(this.state.output)
+                }
+                size={25}
+              />
+              <ConfirmButton
+                className={this.state.copied ? "red confirm" : "confirm"}
+                onCopy={this.onCopy}
+                text={this.state.output}
+                label={this.state.copied ? "Copied!" : "Copy"}
+                handleFlicker={this.handleFlicker}
+              />
+            </div>
           )}
         </div>
       </div>
