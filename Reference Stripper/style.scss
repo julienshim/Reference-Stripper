@@ -57,6 +57,9 @@ textarea {
   margin-right: auto;
   padding: 12px;
   resize: none;
+  &::placeholder {
+    color: var(--ash);
+  }
 }
 
 .easy-view {
