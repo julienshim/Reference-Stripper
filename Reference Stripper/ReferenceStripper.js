@@ -14,7 +14,7 @@ const ToggleButton = ({ isEasy, handleSettingsMode }) => (
     </label>
     <p id="toggleLabel">{isEasy ? "Easy Mode" : "Split Mode"}</p>
   </div>
-)
+);
 
 const CircularProgressBar = ({ wordCount, size }) => {
   const percentage = (wordCount / 30) * 100;
@@ -29,8 +29,8 @@ const CircularProgressBar = ({ wordCount, size }) => {
       wordCount < 30
         ? "var(--ash)"
         : wordCount < 40
-          ? "var(--peach)"
-          : "transparent"
+        ? "var(--peach)"
+        : "transparent"
   };
   const progressStyle = {
     strokeDashoffset,
@@ -38,10 +38,10 @@ const CircularProgressBar = ({ wordCount, size }) => {
       wordCount < 20
         ? "var(--blue)"
         : wordCount < 30
-          ? "var(--tangerine)"
-          : wordCount < 40
-            ? "var(--peach)"
-            : "transparent"
+        ? "var(--tangerine)"
+        : wordCount < 40
+        ? "var(--peach)"
+        : "transparent"
   };
   const textStyle = { fill: wordCount < 30 ? "var(--ash)" : "var(--peach)" };
   return (
@@ -87,9 +87,7 @@ const Count = ({ length, wordCount }) => (
 
 const ConfirmButton = ({ className, text, onCopy, label, handleFlicker }) => (
   <CopyToClipboard onCopy={onCopy} text={text}>
-    <div id="confirm"
-      className={className}
-      onClick={handleFlicker}>
+    <div id="confirm" className={className} onClick={handleFlicker}>
       {label}
     </div>
   </CopyToClipboard>
@@ -118,8 +116,8 @@ class ReferenceStripper extends React.Component {
   handleSettingsMode = () => {
     this.setState(prevState => ({
       isEasy: !prevState.isEasy
-    }))
-  }
+    }));
+  };
 
   handleFlicker = () => {
     this.setState({ flicker: true });
@@ -131,7 +129,7 @@ class ReferenceStripper extends React.Component {
   };
 
   handleWordCount = string => {
-    return string.split(" ").filter(function (n) {
+    return string.split(" ").filter(function(n) {
       return n != "";
     }).length;
   };
@@ -186,55 +184,50 @@ class ReferenceStripper extends React.Component {
       this.state.flicker && this.state.copied
         ? "flicker red"
         : this.state.copied
-          ? "red"
-          : "";
+        ? "red"
+        : "";
 
-    const placeholder = "Many women not only fought on the field[citation needed] but led entire hosts of men within Pictish (https://en.wikipedia.org/wiki/Picts), Brythonic (https://en.wikipedia.org/wiki/Ancient_Britons), and Irish (https://en.wikipedia.org/wiki/Ancient_Ireland) tribes in Pre-Christian culture."
+    const view = this.state.isEasy ? "easy-view" : "split-view";
+
+    const placeholder =
+      "Many women not only fought on the field[citation needed] but led entire hosts of men within Pictish (https://en.wikipedia.org/wiki/Picts), Brythonic (https://en.wikipedia.org/wiki/Ancient_Britons), and Irish (https://en.wikipedia.org/wiki/Ancient_Ireland) tribes in Pre-Christian culture.";
 
     return (
       <div id="container">
         <div id="header">
           <Title title={this.state.title} />
-          <ToggleButton isEasy={this.state.isEasy} handleSettingsMode={this.handleSettingsMode} />
+          <ToggleButton
+            isEasy={this.state.isEasy}
+            handleSettingsMode={this.handleSettingsMode}
+          />
         </div>
         <div id="main">
           <div id="editor">
             <textarea
               id="input"
               value={this.state.isEasy ? this.state.output : this.state.input}
-              placeholder={this.state.isEasy ? this.handleStrip(placeholder) : placeholder}
-              class={this.state.isEasy && flickr}
+              placeholder={
+                this.state.isEasy ? this.handleStrip(placeholder) : placeholder
+              }
+              class={`${view} ${this.state.isEasy && flickr}`}
               onChange={event => {
                 this.handleChange(event.target.value, "input");
               }}
             />
-            {this.state.isEasy && <CircularProgressBar
-              wordCount={this.state.output === "" ? 18 : this.handleWordCount(this.state.isEasy ? this.state.output : this.state.input)}
-              size={25}
-            />}
-            {/* <Count length={this.state.input.length} wordCount={this.handleWordCount(this.state.input)} /> */}
-            {this.state.isEasy && <ConfirmButton
-              className={this.state.copied ? "red confirm" : "confirm"}
-              onCopy={this.onCopy}
-              text={this.state.output}
-              label={this.state.copied ? "Copied!" : "Copy"}
-              handleFlicker={this.handleFlicker}
-            />}
-          </div>
-
-          {!this.state.isEasy && <CopyToClipboard onCopy={this.onCopy} text={this.state.ouput}>
-            <div id="preview">
-              <textarea
-                id="output"
-                placeholder={this.handleStrip(placeholder)}
-                // value={this.state.output}
-                class={flickr}
-                readonly
-              />
+            {this.state.isEasy && (
               <CircularProgressBar
-                wordCount={this.state.input === "" ? 18 : this.handleWordCount(this.state.output)}
+                wordCount={
+                  this.state.output === ""
+                    ? 18
+                    : this.handleWordCount(
+                        this.state.isEasy ? this.state.output : this.state.input
+                      )
+                }
                 size={25}
               />
+            )}
+            {/* <Count length={this.state.input.length} wordCount={this.handleWordCount(this.state.input)} /> */}
+            {this.state.isEasy && (
               <ConfirmButton
                 className={this.state.copied ? "red confirm" : "confirm"}
                 onCopy={this.onCopy}
@@ -242,8 +235,37 @@ class ReferenceStripper extends React.Component {
                 label={this.state.copied ? "Copied!" : "Copy"}
                 handleFlicker={this.handleFlicker}
               />
-            </div></CopyToClipboard>}
+            )}
+          </div>
 
+          {!this.state.isEasy && (
+            <CopyToClipboard onCopy={this.onCopy} text={this.state.ouput}>
+              <div id="preview">
+                <textarea
+                  id="output"
+                  placeholder={this.handleStrip(placeholder)}
+                  value={this.state.output}
+                  class={`${view} ${flickr}`}
+                  readonly
+                />
+                <CircularProgressBar
+                  wordCount={
+                    this.state.input === ""
+                      ? 18
+                      : this.handleWordCount(this.state.output)
+                  }
+                  size={25}
+                />
+                <ConfirmButton
+                  className={this.state.copied ? "red confirm" : "confirm"}
+                  onCopy={this.onCopy}
+                  text={this.state.output}
+                  label={this.state.copied ? "Copied!" : "Copy"}
+                  handleFlicker={this.handleFlicker}
+                />
+              </div>
+            </CopyToClipboard>
+          )}
         </div>
       </div>
     );
