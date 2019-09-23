@@ -1,0 +1,226 @@
+/* Reference Stripper
+
+Created by Julien Shim on 9/11/19.
+Copyright © 2019 Julien Shim. All rights reserved. */
+
+@import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
+
+* {
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+}
+
+:root {
+  --ash: rgba(204, 204, 204, 1);
+  --blue: rgba(33, 118, 134, 1);
+  --faded-clay: rgba(60, 72, 88, 0.5);
+  --faded-peach: rgba(255, 0, 0, 0.5);
+  --peach: rgba(254, 104, 74, 1);
+  --tangerine: rgba(251, 177, 60, 1);
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+/* Containers */
+
+#main {
+  width: 100%;
+}
+
+#header {
+  display: flex;
+  flex-direction: column;
+}
+
+#preview,
+#editor {
+  position: relative;
+}
+
+/* Header */
+
+h1 {
+  margin: 12px 0 12px 24px;
+}
+
+/* Text Area */
+
+textarea {
+  box-shadow: none;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  display: block;
+  height: 42.5vh;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 12px;
+  resize: none;
+}
+
+.easy-view {
+  width: 97vw;
+}
+
+.split-view {
+  width: 97vw;
+}
+
+#output {
+  // cursor: pointer;
+  border: 1px solid var(--ash);
+  outline-color: var(--peach);
+  overflow: auto;
+}
+
+#input {
+  outline-color: var(--blue);
+}
+
+/* Counter */
+
+/* #count {
+   padding: 6px;
+   position: absolute;
+   left: 24px;
+   bottom: 12px;
+   color: var(--faded-clay);
+ } */
+
+.circle-progress {
+  fill: transparent;
+}
+.circle-background {
+  fill: white;
+}
+
+.circle-text {
+  font-size: 1rem;
+  font-weight: bold;
+  fill: var(--ash);
+}
+
+#circular-progress-bar {
+  position: absolute;
+  left: 24px;
+  bottom: 12px;
+}
+
+/* User Feedback */
+
+#confirm {
+  cursor: pointer;
+}
+
+.confirm {
+  position: absolute;
+  bottom: 12px;
+  right: 24px;
+  border-radius: 12px;
+  border: 1px solid var(--ash);
+  padding: 12px 12px;
+}
+
+.red {
+  color: var(--peach);
+  border: 1px solid var(--peach);
+}
+
+.flicker {
+  background: var(--faded-peach);
+}
+
+/* Toggle Switch */
+#toggle {
+  display: flex;
+}
+
+#toggleLabel {
+  margin: 0 0 12px 16px;
+}
+
+.switch {
+  /* Switch Container */
+  margin: 0 0 12px 24px;
+  position: relative;
+  display: inline-block;
+  width: 42px;
+  height: 24px;
+  & input {
+    /* Hide the default HTML version */
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+}
+
+.slider {
+  /* Switch Slider*/
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--ash);
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  &:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+  }
+}
+
+input {
+  &:checked + .slider {
+    background-color: var(--blue);
+  }
+  &:checked + .slider:before {
+    -webkit-transform: translateX(16px); /* The same size as slider */
+    -ms-transform: translateX(16px);
+    transform: translateX(16px);
+  }
+  &:focus + .slider {
+    /* Focus Option */
+    box-shadow: 0 0 1px #2196f3;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  #main {
+    display: flex;
+    padding: 12px;
+  }
+
+  .split-view {
+    width: 48.5vw;
+  }
+
+  #header {
+    flex-direction: row;
+  }
+
+  #preview {
+    margin-left: 12px;
+  }
+
+  textarea {
+    height: 72.75vh;
+  }
+
+  #toggleLabel {
+    margin: 20px 0 0 16px;
+  }
+
+  .switch {
+    margin: 18px 0 0 24px;
+  }
+}
