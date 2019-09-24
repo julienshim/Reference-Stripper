@@ -12,7 +12,7 @@ const ToggleButton = ({ isEasy, handleSettingsMode }) => (
       <input checked={isEasy} onClick={handleSettingsMode} type="checkbox" />
       <span class="slider"></span>
     </label>
-    <p id="toggleLabel">{isEasy ? "Easy Mode" : "Split Mode"}</p>
+    <p id="toggleLabel">{isEasy ? "Easy Mode \(HIGHLY EXPERIMENTAL. DO NOT USE\)" : "Split Mode"}</p>
   </div>
 );
 
@@ -190,7 +190,7 @@ class ReferenceStripper extends React.Component {
     const view = this.state.isEasy ? "easy-view" : "split-view";
 
     const placeholder =
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit[citation needed], sed do eiusmod tempor incididunt ut labore et (https://en.wikipedia.org/wiki/Lorem_ipsum), dolore (https://en.wikipedia.org/wiki/Lorem_ipsum) magna aliqua (https://en.wikipedia.org/wiki/Lorem_ipsum) ultrices sagittis orci a.";
+      "Lorem ipsum dolor sit amet[1], consectetur adipiscing elit[citation needed], sed do eiusmod tempor incididunt ut labore et (https://en.wikipedia.org/wiki/Lorem_ipsum)[2], dolore (https://en.wikipedia.org/wiki/Lorem_ipsum) magna aliqua (https://en.wikipedia.org/wiki/Lorem_ipsum) ultrices sagittis orci a.[3]";
 
     return (
       <div id="container">
@@ -239,7 +239,8 @@ class ReferenceStripper extends React.Component {
           </div>
 
           {!this.state.isEasy && (
-            <div id="preview">
+            <CopyToClipboard onCopy={this.onCopy} text={this.state.output}>
+            <div id="preview" onClick={this.handleFlicker}>
               <textarea
                 id="output"
                 placeholder={this.handleStrip(placeholder)}
@@ -263,6 +264,7 @@ class ReferenceStripper extends React.Component {
                 handleFlicker={this.handleFlicker}
               />
             </div>
+           </CopyToClipboard>
           )}
         </div>
       </div>
