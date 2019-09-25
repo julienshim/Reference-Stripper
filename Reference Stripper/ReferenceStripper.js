@@ -12,7 +12,7 @@ const ToggleButton = ({ isEasy, handleSettingsMode }) => (
       <input checked={isEasy} onClick={handleSettingsMode} type="checkbox" />
       <span class="slider"></span>
     </label>
-    <p id="toggleLabel">{isEasy ? "Easy Mode \(HIGHLY EXPERIMENTAL. DO NOT USE\)" : "Split Mode"}</p>
+    <p id="toggleLabel">{isEasy ? "Easy Mode \(BETA\)" : "Split Mode"}</p>
   </div>
 );
 
@@ -101,15 +101,25 @@ class ReferenceStripper extends React.Component {
       input: "",
       output: "",
       copied: false,
-      isEasy: false
+      isEasy: false,
+      start: 0,
+      end: 0,
     };
   }
 
   handleChange = (value, type) => {
+    console.log("before", this.input.selectionStart, this.input.selectionEnd);
+    if (type === "input") {
+     this.setState({start: this.input.selectionStart, end: this.input.selectionEnd});
+    }
     this.setState({ [type]: value, copied: false }, () => {
+     // console.log("after", this.state.start, this.state.end);
       if (type === "input") {
         this.handleChange(this.handleStrip(this.state.input), "output");
+
       }
+                  this.input.setSelectionRange(this.state.start, this.state.end);
+
     });
   };
 
@@ -157,6 +167,7 @@ class ReferenceStripper extends React.Component {
       }
       if (string[i] === ")") {
         hasClosed = true;
+        isWriting == true;
       }
       if (string[i] === '"') {
         isQuoting = !isQuoting;
@@ -164,7 +175,14 @@ class ReferenceStripper extends React.Component {
       if (string[i] === "]") {
         hasClosed = true;
       }
-      if (string[i] === " " && hasClosed) {
+      if ((string[i] === " " ||
+           string[i] === "," ||
+           string[i] === "." ||
+           string[i] === "!" ||
+           string[i] === ";" ||
+           string[i] === ":" ||
+           string[i] === "?"
+          ) && hasClosed) {
         isWriting = true;
       }
       if (isWriting) {
@@ -210,6 +228,7 @@ class ReferenceStripper extends React.Component {
                 this.state.isEasy ? this.handleStrip(placeholder) : placeholder
               }
               class={`${view} ${this.state.isEasy && flickr}`}
+              ref={ref => this.input = ref}
               onChange={event => {
                 this.handleChange(event.target.value, "input");
               }}
@@ -218,7 +237,7 @@ class ReferenceStripper extends React.Component {
               <CircularProgressBar
                 wordCount={
                   this.state.output === ""
-                    ? 20
+                    ? 23
                     : this.handleWordCount(
                         this.state.isEasy ? this.state.output : this.state.input
                       )
@@ -236,6 +255,7 @@ class ReferenceStripper extends React.Component {
                 handleFlicker={this.handleFlicker}
               />
             )}
+                     {this.state.isEasy && <p className="warning">Warning: Any edits to text while in easy mode will irreversibly strip all references <span class="example"> e.g. [3]</span>, hyperlink URLs <span className ="example"> e.g. (https://en.wikipedia.org/wiki/Lorem_ipsum)</span>, and may also delete needed text (<em>if omitted by the current version stripping algorithm from view</em>) from the original inputted text. Use split mode if being able to view the original inputted text and stripped text side by side is critical to your work.</p>}
           </div>
 
           {!this.state.isEasy && (
@@ -251,7 +271,7 @@ class ReferenceStripper extends React.Component {
               <CircularProgressBar
                 wordCount={
                   this.state.input === ""
-                    ? 20
+                    ? 23
                     : this.handleWordCount(this.state.output)
                 }
                 size={25}
