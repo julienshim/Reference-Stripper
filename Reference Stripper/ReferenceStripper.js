@@ -139,7 +139,8 @@ class ReferenceStripper extends React.Component {
   };
 
   handleWordCount = string => {
-    return string.split(" ").filter(function(n) {
+   // Regex Replace takes in account copy and pasted lists
+    return string.replace(/[\n]/g, " ").split(" ").filter(function(n) {
       return n != "";
     }).length;
   };
@@ -230,7 +231,7 @@ class ReferenceStripper extends React.Component {
               class={`${view} ${this.state.isEasy && flickr}`}
               ref={ref => this.input = ref}
               onChange={event => {
-                this.handleChange(event.target.value, "input");
+               console.log(event.target.value); this.handleChange(event.target.value, "input");
               }}
             />
             {this.state.isEasy && (
@@ -260,7 +261,7 @@ class ReferenceStripper extends React.Component {
 
           {!this.state.isEasy && (
             <CopyToClipboard onCopy={this.onCopy} text={this.state.output}>
-            <div id="preview" onClick={this.handleFlicker}>
+            <div id="preview" onFocus={this.handleFlicker}>
               <textarea
                 id="output"
                 placeholder={this.handleStrip(placeholder)}
