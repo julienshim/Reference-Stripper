@@ -61,10 +61,12 @@ export default class ReferenceStripper extends React.Component {
     let isQuoting = false;
     let hasClosed = true;
     let stripped = "";
+    let isReferencing = false;
     for (let i = 0; i < string.length; i++) {
       if (string[i] === "[" && !isQuoting) {
         isWriting = false;
         hasClosed = false;
+        isReferencing = true;
       }
       // removes embedded (<url)
       if (
@@ -86,6 +88,12 @@ export default class ReferenceStripper extends React.Component {
       }
       if (string[i] === "]") {
         hasClosed = true;
+        if (string[i + 1] !== ":") {
+          isReferencing = false;
+        }
+      }
+      if (string[i + 1] === " " && isReferencing) {
+        isReferencing = !isReferencing;
       }
       if (
         (string[i] === " " ||
@@ -95,7 +103,8 @@ export default class ReferenceStripper extends React.Component {
           string[i] === ";" ||
           string[i] === ":" ||
           string[i] === "?") &&
-        hasClosed
+        hasClosed &&
+        !isReferencing
       ) {
         isWriting = true;
       }
@@ -105,6 +114,7 @@ export default class ReferenceStripper extends React.Component {
     }
     return stripped;
   };
+
 
   outputTextareaRef = React.createRef();
 
