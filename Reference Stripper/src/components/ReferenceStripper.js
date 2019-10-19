@@ -5,8 +5,6 @@ import ConfirmButton from "./ConfirmButton";
 import ToggleButton from "./ToggleButton";
 import Wrapper from "./Wrapper";
 
-
-
 export default class ReferenceStripper extends React.Component {
   constructor(props) {
     super(props);
@@ -20,12 +18,16 @@ export default class ReferenceStripper extends React.Component {
   }
 
   componentDidMount() {
-    const sample =  "Lorem ipsum dolor sit amet[1], consectetur adipiscing elit[citation needed], sed do eiusmod tempor incididunt ut labore et (https://en.wikipedia.org/wiki/Lorem_ipsum)[2], dolore (https://en.wikipedia.org/wiki/Lorem_ipsum) magna aliqua (https://en.wikipedia.org/wiki/Lorem_ipsum) ultrices sagittis orci a.[3]";
-    this.setState({
-      title: "Reference Stripper",       
-    }, () => { 
-      this.handleChange(sample, "input");
-    });
+    const sample =
+      "Lorem ipsum sit amet[1], consectetur elit[citation needed], sed do tempor ut labore (https://en.wikipedia.org/wiki/Lorem_ipsum)[2], dolore (https://en.wikipedia.org/wiki/Lorem_ipsum) magna aliqua (https://en.wikipedia.org/wiki/Lorem_ipsum) ultrices sagittis orci.[3] Ut imperdiet iaculus rhoncus, placerat quam, ut vehicula pulvinar.[5]:35 Fusce vestibulum[10]:400,418[11][12][13][14], et ”mattis orci iaculis!”.[5]:35–36";
+    this.setState(
+      {
+        title: "Reference Stripper"
+      },
+      () => {
+        this.handleChange(sample, "input");
+      }
+    );
   }
 
   handleChange = (value, type) => {
@@ -115,7 +117,6 @@ export default class ReferenceStripper extends React.Component {
     return stripped;
   };
 
-
   outputTextareaRef = React.createRef();
 
   handleCopy = event => {
@@ -159,7 +160,7 @@ export default class ReferenceStripper extends React.Component {
             <ToggleButton
               isDark={this.state.isDark}
               handleToggleDarkMode={this.handleToggleDarkMode}
-              style={{ ...theme, color: this.state.isDark ? "var(--ash)" : ""  }}
+              style={{ ...theme, color: this.state.isDark ? "var(--ash)" : "" }}
             />
           </div>
           <div id="main">
@@ -172,7 +173,10 @@ export default class ReferenceStripper extends React.Component {
                 onChange={event => {
                   this.handleChange(event.target.value, "input");
                 }}
-                style={{ ...theme, color: this.state.isDark ? "var(--ash)" : "" }}
+                style={{
+                  ...theme,
+                  color: this.state.isDark ? "var(--ash)" : ""
+                }}
               />
             </div>
             <div id="preview">
