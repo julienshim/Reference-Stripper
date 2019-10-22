@@ -86,112 +86,6 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./node_modules/copy-to-clipboard/index.js":
-/*!*************************************************!*\
-  !*** ./node_modules/copy-to-clipboard/index.js ***!
-  \*************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var deselectCurrent = __webpack_require__(/*! toggle-selection */ "./node_modules/toggle-selection/index.js");
-
-var defaultMessage = "Copy to clipboard: #{key}, Enter";
-
-function format(message) {
-  var copyKey = (/mac os x/i.test(navigator.userAgent) ? "⌘" : "Ctrl") + "+C";
-  return message.replace(/#{\s*key\s*}/g, copyKey);
-}
-
-function copy(text, options) {
-  var debug,
-    message,
-    reselectPrevious,
-    range,
-    selection,
-    mark,
-    success = false;
-  if (!options) {
-    options = {};
-  }
-  debug = options.debug || false;
-  try {
-    reselectPrevious = deselectCurrent();
-
-    range = document.createRange();
-    selection = document.getSelection();
-
-    mark = document.createElement("span");
-    mark.textContent = text;
-    // reset user styles for span element
-    mark.style.all = "unset";
-    // prevents scrolling to the end of the page
-    mark.style.position = "fixed";
-    mark.style.top = 0;
-    mark.style.clip = "rect(0, 0, 0, 0)";
-    // used to preserve spaces and line breaks
-    mark.style.whiteSpace = "pre";
-    // do not inherit user-select (it may be `none`)
-    mark.style.webkitUserSelect = "text";
-    mark.style.MozUserSelect = "text";
-    mark.style.msUserSelect = "text";
-    mark.style.userSelect = "text";
-    mark.addEventListener("copy", function(e) {
-      e.stopPropagation();
-      if (options.format) {
-        e.preventDefault();
-        e.clipboardData.clearData();
-        e.clipboardData.setData(options.format, text);
-      }
-    });
-
-    document.body.appendChild(mark);
-
-    range.selectNodeContents(mark);
-    selection.addRange(range);
-
-    var successful = document.execCommand("copy");
-    if (!successful) {
-      throw new Error("copy command was unsuccessful");
-    }
-    success = true;
-  } catch (err) {
-    debug && console.error("unable to copy using execCommand: ", err);
-    debug && console.warn("trying IE specific stuff");
-    try {
-      window.clipboardData.setData(options.format || "text", text);
-      success = true;
-    } catch (err) {
-      debug && console.error("unable to copy using clipboardData: ", err);
-      debug && console.error("falling back to prompt");
-      message = format("message" in options ? options.message : defaultMessage);
-      window.prompt(message, text);
-    }
-  } finally {
-    if (selection) {
-      if (typeof selection.removeRange == "function") {
-        selection.removeRange(range);
-      } else {
-        selection.removeAllRanges();
-      }
-    }
-
-    if (mark) {
-      document.body.removeChild(mark);
-    }
-    reselectPrevious();
-  }
-
-  return success;
-}
-
-module.exports = copy;
-
-
-/***/ }),
-
 /***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/lib/loader.js!./node_modules/normalize.css/normalize.css":
 /*!*********************************************************************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/lib/loader.js!./node_modules/normalize.css/normalize.css ***!
@@ -217,7 +111,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 // Imports
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Roboto&display=swap);", ""]);
 // Module
-exports.push([module.i, "@charset \"UTF-8\";\n/* Reference Stripper\n\nCreated by Julien Shim on 9/11/19.\nCopyright © 2019 Julien Shim. All rights reserved. */\nhtml {\n  font-size: 62.5%; }\n\nbody {\n  font-family: Helvetica, Arial, sans-serif;\n  font-size: 1.6rem; }\n\nbutton {\n  cursor: pointer; }\n\nbutton:disabled {\n  cursor: default; }\n\n* {\n  box-sizing: border-box;\n  font-family: \"Roboto\", sans-serif; }\n\n:root {\n  --ash: rgba(204, 204, 204, 1);\n  --blue: rgba(33, 118, 134, 1);\n  --faded-clay: rgba(60, 72, 88, 0.5);\n  --faded-peach: rgba(255, 0, 0, 0.5);\n  --peach: rgba(254, 104, 74, 1);\n  --tangerine: rgba(251, 177, 60, 1); }\n\n.hidden {\n  visibility: hidden; }\n\n/* Containers */\n#main {\n  width: 100%; }\n\n#header {\n  display: flex;\n  flex-direction: column; }\n\n#preview,\n#editor {\n  position: relative; }\n\n/* Header */\nh1 {\n  margin: 12px 0 12px 24px; }\n\n/* Text Area */\ntextarea {\n  box-shadow: none;\n  -moz-box-shadow: none;\n  -webkit-box-shadow: none;\n  display: block;\n  height: 42.5vh;\n  margin-left: auto;\n  margin-right: auto;\n  padding: 12px;\n  resize: none; }\n  textarea::placeholder {\n    color: var(--ash); }\n\n.easy-view {\n  width: 97vw; }\n\n.split-view {\n  width: 97vw; }\n\n#output {\n  outline-color: var(--blue);\n  overflow: auto; }\n\n#input {\n  outline-color: var(--blue); }\n\n/* Counter */\n/* #count {\n   padding: 6px;\n   position: absolute;\n   left: 24px;\n   bottom: 12px;\n   color: var(--faded-clay);\n } */\n.circle-progress {\n  fill: transparent; }\n\n.circle-background {\n  fill: white; }\n\n.circle-text {\n  font-size: 1rem;\n  font-weight: bold;\n  fill: var(--ash); }\n\n#circular-progress-bar {\n  position: absolute;\n  left: 24px;\n  bottom: 12px; }\n\n/* User Feedback */\n#confirm {\n  cursor: pointer; }\n\n.confirm {\n  position: absolute;\n  bottom: 12px;\n  right: 24px;\n  border-radius: 12px;\n  border: 1px solid var(--ash);\n  padding: 12px 12px; }\n\n.red {\n  color: var(--peach);\n  border: 1px solid var(--peach); }\n\n.flicker {\n  background: var(--faded-peach); }\n\n.warning {\n  position: absolute;\n  color: var(--faded-peach);\n  padding: 6px 12px; }\n\n.example {\n  color: var(--ash);\n  padding: 0 6px; }\n\n/* Toggle Switch */\n#toggle {\n  display: flex; }\n\n#toggleLabel {\n  margin: 0 0 12px 16px; }\n\n.switch {\n  /* Switch Container */\n  margin: 0 0 12px 24px;\n  position: relative;\n  display: inline-block;\n  width: 42px;\n  height: 24px; }\n  .switch input {\n    /* Hide the default HTML version */\n    opacity: 0;\n    width: 0;\n    height: 0; }\n\n.slider {\n  /* Switch Slider*/\n  position: absolute;\n  cursor: pointer;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background-color: var(--ash);\n  -webkit-transition: 0.4s;\n  transition: 0.4s; }\n  .slider:before {\n    position: absolute;\n    content: \"\";\n    height: 16px;\n    width: 16px;\n    left: 4px;\n    bottom: 4px;\n    background-color: white;\n    -webkit-transition: 0.4s;\n    transition: 0.4s; }\n\ninput:checked + .slider {\n  background-color: var(--blue); }\n\ninput:checked + .slider:before {\n  -webkit-transform: translateX(16px);\n  /* The same size as slider */\n  -ms-transform: translateX(16px);\n  transform: translateX(16px); }\n\ninput:focus + .slider {\n  /* Focus Option */\n  box-shadow: 0 0 1px #2196f3; }\n\n@media only screen and (min-width: 768px) {\n  #main {\n    display: flex;\n    padding: 12px; }\n  .split-view {\n    width: 48.5vw; }\n  #header {\n    flex-direction: row; }\n  #preview {\n    margin-left: 12px; }\n  textarea {\n    height: 72.75vh; }\n  #toggleLabel {\n    margin: 20px 0 0 16px; }\n  .switch {\n    margin: 18px 0 0 24px; } }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/* Reference Stripper\n\nCreated by Julien Shim on 9/11/19.\nCopyright © 2019 Julien Shim. All rights reserved. */\nhtml {\n  font-size: 62.5%; }\n\nbody {\n  font-family: Helvetica, Arial, sans-serif;\n  font-size: 1.6rem; }\n\nbutton {\n  cursor: pointer; }\n\nbutton:disabled {\n  cursor: default; }\n\n* {\n  box-sizing: border-box;\n  font-family: \"Roboto\", sans-serif; }\n\n:root {\n  --ash: rgba(204, 204, 204, 1);\n  --blue: rgba(33, 118, 134, 1);\n  --charcoal: rgba(30, 30, 30, 1);\n  --faded-blue: rgba(33, 118, 134, 0.5);\n  --faded-clay: rgba(60, 72, 88, 0.5);\n  --faded-peach: rgba(255, 0, 0, 0.5);\n  --peach: rgba(254, 104, 74, 1);\n  --tangerine: rgba(251, 177, 60, 1); }\n\n.hidden {\n  visibility: hidden; }\n\n/* Containers */\n#main {\n  width: 100%; }\n\n#header {\n  display: flex;\n  flex-direction: column; }\n\n#preview,\n#editor {\n  position: relative; }\n\n#wrapper {\n  width: 100vw;\n  height: 100vh; }\n\n/* Header */\nh1 {\n  margin: 12px 0 12px 24px; }\n\n/* Text Area */\ntextarea {\n  box-shadow: none;\n  -moz-box-shadow: none;\n  -webkit-box-shadow: none;\n  display: block;\n  height: 42.5vh;\n  margin-left: auto;\n  margin-right: auto;\n  padding: 12px;\n  resize: none; }\n\n.split-view {\n  width: 97vw; }\n\n.dark {\n  background: var(--charcoal);\n  color: var(--ash); }\n\n#output {\n  cursor: pointer;\n  outline: none;\n  overflow: auto; }\n\n#input {\n  outline: none; }\n\n/* Counter */\n.circle-progress {\n  fill: transparent; }\n\n.circle-background {\n  fill: transparent; }\n\n.circle-text {\n  font-size: 1rem;\n  font-weight: bold;\n  fill: var(--ash); }\n\n#circular-progress-bar {\n  position: absolute;\n  left: 24px;\n  bottom: 12px; }\n\n/* User Feedback */\n#confirm {\n  cursor: pointer; }\n\n.confirm {\n  position: absolute;\n  bottom: 12px;\n  right: 24px;\n  border-radius: 12px;\n  border: 1px solid var(--ash);\n  padding: 12px 12px; }\n\n.red {\n  color: var(--peach);\n  border: 1px solid var(--peach); }\n\n.flicker {\n  background: var(--faded-peach); }\n\n.warning {\n  position: absolute;\n  color: var(--faded-peach);\n  padding: 6px 12px; }\n\n.example {\n  color: var(--ash);\n  padding: 0 6px; }\n\n/* Toggle Switch */\n#toggle {\n  display: flex; }\n\n#toggleLabel {\n  margin: 0 0 12px 16px; }\n\n.switch {\n  /* Switch Container */\n  margin: 0 0 12px 24px;\n  position: relative;\n  display: inline-block;\n  width: 42px;\n  height: 24px; }\n  .switch input {\n    /* Hide the default HTML version */\n    opacity: 0;\n    width: 0;\n    height: 0; }\n\n#subline {\n  color: var(--faded-blue);\n  padding: 3px 6px;\n  border: 1px var(--ash) dashed;\n  font-weight: 700; }\n\n.slider {\n  /* Switch Slider*/\n  position: absolute;\n  cursor: pointer;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background-color: var(--ash);\n  -webkit-transition: 0.4s;\n  transition: 0.4s; }\n  .slider:before {\n    position: absolute;\n    content: \"\";\n    height: 16px;\n    width: 16px;\n    left: 4px;\n    bottom: 4px;\n    background-color: white;\n    -webkit-transition: 0.4s;\n    transition: 0.4s; }\n\ninput:checked + .slider {\n  background-color: var(--blue); }\n\ninput:checked + .slider:before {\n  -webkit-transform: translateX(16px);\n  /* The same size as slider */\n  -ms-transform: translateX(16px);\n  transform: translateX(16px); }\n\ninput:focus + .slider {\n  /* Focus Option */\n  box-shadow: 0 0 1px #2196f3; }\n\n@media only screen and (min-width: 768px) {\n  #main {\n    display: flex;\n    padding: 12px; }\n  .split-view {\n    width: 48.5vw; }\n  #header {\n    flex-direction: row; }\n  #preview {\n    margin-left: 12px; }\n  textarea {\n    height: 72.75vh; }\n  #toggleLabel {\n    margin: 20px 0 0 16px; }\n  .switch {\n    margin: 18px 0 0 24px; } }\n", ""]);
 
 
 /***/ }),
@@ -590,124 +484,6 @@ var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 
 module.exports = ReactPropTypesSecret;
 
-
-/***/ }),
-
-/***/ "./node_modules/react-copy-to-clipboard/lib/Component.js":
-/*!***************************************************************!*\
-  !*** ./node_modules/react-copy-to-clipboard/lib/Component.js ***!
-  \***************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.CopyToClipboard = undefined;
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-var _react2 = _interopRequireDefault(_react);
-
-var _copyToClipboard = __webpack_require__(/*! copy-to-clipboard */ "./node_modules/copy-to-clipboard/index.js");
-
-var _copyToClipboard2 = _interopRequireDefault(_copyToClipboard);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var CopyToClipboard = exports.CopyToClipboard = function (_React$PureComponent) {
-  _inherits(CopyToClipboard, _React$PureComponent);
-
-  function CopyToClipboard() {
-    var _ref;
-
-    var _temp, _this, _ret;
-
-    _classCallCheck(this, CopyToClipboard);
-
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = CopyToClipboard.__proto__ || Object.getPrototypeOf(CopyToClipboard)).call.apply(_ref, [this].concat(args))), _this), _this.onClick = function (event) {
-      var _this$props = _this.props,
-          text = _this$props.text,
-          onCopy = _this$props.onCopy,
-          children = _this$props.children,
-          options = _this$props.options;
-
-
-      var elem = _react2.default.Children.only(children);
-
-      var result = (0, _copyToClipboard2.default)(text, options);
-
-      if (onCopy) {
-        onCopy(text, result);
-      }
-
-      // Bypass onClick if it was present
-      if (elem && elem.props && typeof elem.props.onClick === 'function') {
-        elem.props.onClick(event);
-      }
-    }, _temp), _possibleConstructorReturn(_this, _ret);
-  }
-
-  _createClass(CopyToClipboard, [{
-    key: 'render',
-    value: function render() {
-      var _props = this.props,
-          _text = _props.text,
-          _onCopy = _props.onCopy,
-          _options = _props.options,
-          children = _props.children,
-          props = _objectWithoutProperties(_props, ['text', 'onCopy', 'options', 'children']);
-
-      var elem = _react2.default.Children.only(children);
-
-      return _react2.default.cloneElement(elem, _extends({}, props, { onClick: this.onClick }));
-    }
-  }]);
-
-  return CopyToClipboard;
-}(_react2.default.PureComponent);
-
-CopyToClipboard.defaultProps = {
-  onCopy: undefined,
-  options: undefined
-};
-
-/***/ }),
-
-/***/ "./node_modules/react-copy-to-clipboard/lib/index.js":
-/*!***********************************************************!*\
-  !*** ./node_modules/react-copy-to-clipboard/lib/index.js ***!
-  \***********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _require = __webpack_require__(/*! ./Component */ "./node_modules/react-copy-to-clipboard/lib/Component.js"),
-    CopyToClipboard = _require.CopyToClipboard;
-
-CopyToClipboard.CopyToClipboard = CopyToClipboard;
-module.exports = CopyToClipboard;
 
 /***/ }),
 
@@ -25666,56 +25442,6 @@ module.exports = function (css) {
 
 /***/ }),
 
-/***/ "./node_modules/toggle-selection/index.js":
-/*!************************************************!*\
-  !*** ./node_modules/toggle-selection/index.js ***!
-  \************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-
-module.exports = function () {
-  var selection = document.getSelection();
-  if (!selection.rangeCount) {
-    return function () {};
-  }
-  var active = document.activeElement;
-
-  var ranges = [];
-  for (var i = 0; i < selection.rangeCount; i++) {
-    ranges.push(selection.getRangeAt(i));
-  }
-
-  switch (active.tagName.toUpperCase()) { // .toUpperCase handles XHTML
-    case 'INPUT':
-    case 'TEXTAREA':
-      active.blur();
-      break;
-
-    default:
-      active = null;
-      break;
-  }
-
-  selection.removeAllRanges();
-  return function () {
-    selection.type === 'Caret' &&
-    selection.removeAllRanges();
-
-    if (!selection.rangeCount) {
-      ranges.forEach(function(range) {
-        selection.addRange(range);
-      });
-    }
-
-    active &&
-    active.focus();
-  };
-};
-
-
-/***/ }),
-
 /***/ "./node_modules/webpack/buildin/global.js":
 /*!***********************************!*\
   !*** (webpack)/buildin/global.js ***!
@@ -25852,36 +25578,15 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = (function (_ref) {
   var className = _ref.className,
-      text = _ref.text,
       label = _ref.label,
-      handleFlicker = _ref.handleFlicker;
+      handleCopy = _ref.handleCopy,
+      style = _ref.style;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     id: "confirm",
     className: className,
-    onClick: handleCopy
+    onClick: handleCopy,
+    style: style
   }, label);
-});
-
-/***/ }),
-
-/***/ "./src/components/Count.js":
-/*!*********************************!*\
-  !*** ./src/components/Count.js ***!
-  \*********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-
-/* harmony default export */ __webpack_exports__["default"] = (function (_ref) {
-  var length = _ref.length,
-      wordCount = _ref.wordCount;
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    id: "count"
-  }, length + " characters / " + wordCount + " words");
 });
 
 /***/ }),
@@ -25898,14 +25603,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ReferenceStripper; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_copy_to_clipboard__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-copy-to-clipboard */ "./node_modules/react-copy-to-clipboard/lib/index.js");
-/* harmony import */ var react_copy_to_clipboard__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_copy_to_clipboard__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _ToggleButton__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ToggleButton */ "./src/components/ToggleButton.js");
-/* harmony import */ var _CircularProgressBar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./CircularProgressBar */ "./src/components/CircularProgressBar.js");
-/* harmony import */ var _Title__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Title */ "./src/components/Title.js");
-/* harmony import */ var _Count__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Count */ "./src/components/Count.js");
-/* harmony import */ var _ConfirmButton__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./ConfirmButton */ "./src/components/ConfirmButton.js");
+/* harmony import */ var _CircularProgressBar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CircularProgressBar */ "./src/components/CircularProgressBar.js");
+/* harmony import */ var _Title__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Title */ "./src/components/Title.js");
+/* harmony import */ var _ConfirmButton__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ConfirmButton */ "./src/components/ConfirmButton.js");
+/* harmony import */ var _ToggleButton__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ToggleButton */ "./src/components/ToggleButton.js");
+/* harmony import */ var _Wrapper__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Wrapper */ "./src/components/Wrapper.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { keys.push.apply(keys, Object.getOwnPropertySymbols(object)); } if (enumerableOnly) keys = keys.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -25932,7 +25639,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-
 var ReferenceStripper =
 /*#__PURE__*/
 function (_React$Component) {
@@ -25948,29 +25654,10 @@ function (_React$Component) {
     _defineProperty(_assertThisInitialized(_this), "handleChange", function (value, type) {
       var _this$setState;
 
-      // console.log("before", this.input.selectionStart, this.input.selectionEnd);
-      if (type === "input") {
-        _this.setState({
-          start: _this.input.selectionStart,
-          end: _this.input.selectionEnd
-        });
-      }
-
       _this.setState((_this$setState = {}, _defineProperty(_this$setState, type, value), _defineProperty(_this$setState, "copied", false), _this$setState), function () {
-        // console.log("after", this.state.start, this.state.end);
         if (type === "input") {
           _this.handleChange(_this.handleStrip(_this.state.input), "output");
         }
-
-        _this.input.setSelectionRange(_this.state.start, _this.state.end);
-      });
-    });
-
-    _defineProperty(_assertThisInitialized(_this), "handleSettingsMode", function () {
-      _this.setState(function (prevState) {
-        return {
-          isEasy: !prevState.isEasy
-        };
       });
     });
 
@@ -25990,8 +25677,8 @@ function (_React$Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "handleWordCount", function (string) {
-      // Regex Replace takes in account copy and pasted lists
-      return string.replace(/[\n]/g, " ").split(" ").filter(function (n) {
+      return string // strips newline before counting
+      .replace(/[\n]/g, " ").split(" ").filter(function (n) {
         return n != "";
       }).length;
     });
@@ -26001,12 +25688,14 @@ function (_React$Component) {
       var isQuoting = false;
       var hasClosed = true;
       var stripped = "";
+      var isReferencing = false;
 
       for (var i = 0; i < string.length; i++) {
         if (string[i] === "[" && !isQuoting) {
           isWriting = false;
           hasClosed = false;
-        } // this saves the trouble of removing addresses when copying hyperlinked text
+          isReferencing = true;
+        } // removes embedded (<url)
 
 
         if (string[i + 1] === "(" && string[i + 2] === "h" && string[i + 3] === "t" && string[i + 4] === "t" && string[i + 5] === "p") {
@@ -26025,119 +25714,142 @@ function (_React$Component) {
 
         if (string[i] === "]") {
           hasClosed = true;
+
+          if (string[i + 1] !== ":") {
+            isReferencing = false;
+          }
         }
 
-        if ((string[i] === " " || string[i] === "," || string[i] === "." || string[i] === "!" || string[i] === ";" || string[i] === ":" || string[i] === "?") && hasClosed) {
+        if (string[i + 1] === " " && isReferencing) {
+          isReferencing = !isReferencing;
+        }
+
+        if ((string[i] === " " || string[i] === "," || string[i] === "." || string[i] === "!" || string[i] === ";" || string[i] === ":" || string[i] === "?") && hasClosed && !isReferencing) {
           isWriting = true;
         }
 
         if (isWriting) {
           stripped += string[i];
         }
-      } // this.handleChange(stripped, "output");
-
+      }
 
       return stripped;
     });
 
-    _defineProperty(_assertThisInitialized(_this), "copyBoxRef", react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef());
+    _defineProperty(_assertThisInitialized(_this), "outputTextareaRef", react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef());
 
     _defineProperty(_assertThisInitialized(_this), "handleCopy", function (event) {
-      var copyBoxElement = _this.copyBoxRef.current;
-      copyBoxElement.contentEditable = true;
-      copyBoxElement.focus();
-      document.execCommand("selectAll");
+      var textareaText = _this.outputTextareaRef.current;
+      textareaText.select();
       document.execCommand("copy");
-      copyBoxElement.contentEditable = false;
-      getSelection().empty();
+      window.getSelection().removeAllRanges();
 
       _this.setState({
         copied: true
       }, function () {
-        _this.handleFlicker;
+        _this.handleFlicker();
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "handleToggleDarkMode", function () {
+      _this.setState(function (prevState) {
+        return {
+          isDark: !prevState.isDark
+        };
       });
     });
 
     _this.state = {
-      title: "Reference Stripper",
+      title: "",
       input: "",
       output: "",
       copied: false,
-      isEasy: false,
-      start: 0,
-      end: 0
+      isDark: false,
+      includeParentheses: true
     };
     return _this;
   }
 
   _createClass(ReferenceStripper, [{
-    key: "render",
-    value: function render() {
+    key: "componentDidMount",
+    value: function componentDidMount() {
       var _this2 = this;
 
+      var sample = "Lorem (ipsum -  sit) amet[1], consectetur elit[citation needed], sed do tempor ut labore (https://en.wikipedia.org/wiki/Lorem_ipsum)[2], dolore (https://en.wikipedia.org/wiki/Lorem_ipsum) magna aliqua (https://en.wikipedia.org/wiki/Lorem_ipsum) ultrices sagittis orci.[3] Ut imperdiet iaculus (rhoncus), placerat quam, vehicula pulvinar.[5]:35 Fusce vestibulum[10]:400,418[11][12][13][14], et ”mattis orci iaculis!”.[5]:35–36";
+      this.setState({
+        title: "Reference Stripper"
+      }, function () {
+        _this2.handleChange(sample, "input");
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this3 = this;
+
       var flickr = this.state.flicker && this.state.copied ? "flicker red" : this.state.copied ? "red" : "";
-      var view = this.state.isEasy ? "easy-view" : "split-view";
-      var placeholder = "Lorem ipsum dolor sit amet[1], consectetur adipiscing elit[citation needed], sed do eiusmod tempor incididunt ut labore et (https://en.wikipedia.org/wiki/Lorem_ipsum)[2], dolore (https://en.wikipedia.org/wiki/Lorem_ipsum) magna aliqua (https://en.wikipedia.org/wiki/Lorem_ipsum) ultrices sagittis orci a.[3]";
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      var themeDark = {
+        color: this.state.copied ? "" : "var(--ash)"
+      };
+      var theme = this.state.isDark ? themeDark : {};
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Wrapper__WEBPACK_IMPORTED_MODULE_5__["default"], _defineProperty({
+        isDark: this.state.isDark
+      }, "isDark", this.state.isDark), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "header"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Title__WEBPACK_IMPORTED_MODULE_4__["default"], {
-        text: this.state.title
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ToggleButton__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        isEasy: this.state.isEasy,
-        handleSettingsMode: this.handleSettingsMode
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Title__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        text: this.state.title,
+        isDark: this.state.isDark
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "settings"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ToggleButton__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        isDark: this.state.isDark,
+        handleToggleDarkMode: this.handleToggleDarkMode,
+        text: "Dark Mode"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ToggleButton__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        isDark: this.state.isDark,
+        handleToggleDarkMode: this.handleToggleDarkMode,
+        text: "Remove",
+        subline: "( ABC )"
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "main"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "editor"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
         id: "input",
-        value: this.state.isEasy ? this.state.output : this.state.input,
-        placeholder: this.state.isEasy ? this.handleStrip(placeholder) : placeholder,
-        className: "".concat(view, " ").concat(this.state.isEasy && flickr),
+        value: this.state.input,
+        className: "split-view",
         ref: function ref(_ref) {
-          return _this2.input = _ref;
+          return _this3.input = _ref;
         },
         onChange: function onChange(event) {
-          //  console.log(event.target.value);
-          _this2.handleChange(event.target.value, "input");
-        }
-      }), this.state.isEasy && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CircularProgressBar__WEBPACK_IMPORTED_MODULE_3__["default"], {
-        wordCount: this.state.output === "" ? 23 : this.handleWordCount(this.state.isEasy ? this.state.output : this.state.input),
-        size: 25
-      }), this.state.isEasy && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConfirmButton__WEBPACK_IMPORTED_MODULE_6__["default"], {
-        className: this.state.copied ? "red confirm" : "confirm",
-        handleCopy: this.handleCopy,
-        text: this.state.output,
-        label: this.state.copied ? "Copied!" : "Copy",
-        handleFlicker: this.handleFlicker
-      }), this.state.isEasy && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        className: "warning"
-      }, "Warning: Any edits to text while in easy mode will irreversibly strip all references ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "example"
-      }, " e.g. [3]"), ", hyperlink URLs", " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "example"
-      }, " ", "e.g. (https://en.wikipedia.org/wiki/Lorem_ipsum)"), ", and may also delete needed text (", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("em", null, "if omitted by the current version stripping algorithm from view"), ") from the original inputted text. Use split mode if being able to view the original inputted text and stripped text side by side is critical to your work.")), !this.state.isEasy && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        id: "preview",
-        onFocus: this.handleCopy
+          _this3.handleChange(event.target.value, "input");
+        },
+        style: _objectSpread({}, theme, {
+          color: this.state.isDark ? "var(--ash)" : ""
+        })
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "preview"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
         id: "output",
-        placeholder: this.handleStrip(placeholder),
         value: this.state.output,
-        className: "".concat(view, " ").concat(flickr),
-        ref: this.copyBoxRef,
+        className: "split-view ".concat(flickr),
+        ref: this.outputTextareaRef,
+        onFocus: this.handleCopy,
+        onMouseDown: this.handleCopy,
+        style: theme,
         readOnly: true
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CircularProgressBar__WEBPACK_IMPORTED_MODULE_3__["default"], {
-        wordCount: this.state.input === "" ? 23 : this.handleWordCount(this.state.output),
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CircularProgressBar__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        wordCount: this.handleWordCount(this.state.output),
         size: 25
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConfirmButton__WEBPACK_IMPORTED_MODULE_6__["default"], {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConfirmButton__WEBPACK_IMPORTED_MODULE_3__["default"], {
         className: this.state.copied ? "red confirm" : "confirm",
-        handleCopy: this.handleCopy,
         text: this.state.output,
         label: this.state.copied ? "Copied!" : "Copy",
-        handleFlicker: this.handleFlicker
-      }))));
+        handleCopy: this.handleCopy,
+        style: theme
+      })))));
     }
   }]);
 
@@ -26161,8 +25873,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 
 /* harmony default export */ __webpack_exports__["default"] = (function (_ref) {
-  var text = _ref.text;
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, text);
+  var text = _ref.text,
+      isDark = _ref.isDark;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+    className: isDark && 'dark'
+  }, text);
 });
 
 /***/ }),
@@ -26180,25 +25895,50 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 
 /* harmony default export */ __webpack_exports__["default"] = (function (_ref) {
-  var isEasy = _ref.isEasy,
-      handleSettingsMode = _ref.handleSettingsMode;
-  return (// <div>
-    //  <button onClick={handleSettingsMode}>{isEasy ? "Easy" : "Advanced"}</button>
-    // </div>
-    react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      id: "toggle"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-      className: "switch"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      defaultChecked: isEasy,
-      onClick: handleSettingsMode,
-      type: "checkbox"
-    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-      className: "slider"
-    })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-      id: "toggleLabel"
-    }, isEasy ? "Easy Mode (BETA)" : "Split Mode"))
-  );
+  var isDark = _ref.isDark,
+      handleToggleDarkMode = _ref.handleToggleDarkMode,
+      style = _ref.style,
+      text = _ref.text,
+      subline = _ref.subline;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    id: "toggle"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    className: "switch"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    defaultChecked: isDark,
+    type: "checkbox",
+    onClick: handleToggleDarkMode
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "slider"
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    id: "toggleLabel",
+    className: isDark && 'dark'
+  }, text, " ", subline && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    id: "subline"
+  }, subline)));
+});
+
+/***/ }),
+
+/***/ "./src/components/Wrapper.js":
+/*!***********************************!*\
+  !*** ./src/components/Wrapper.js ***!
+  \***********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+/* harmony default export */ __webpack_exports__["default"] = (function (_ref) {
+  var children = _ref.children,
+      isDark = _ref.isDark;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    id: "wrapper",
+    className: isDark && 'dark'
+  }, children);
 });
 
 /***/ }),

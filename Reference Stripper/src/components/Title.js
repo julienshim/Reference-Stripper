@@ -1,3 +1,3 @@
 import React from "react";
 
-export default ({ text, style }) => <h1 style={style}>{text}</h1>;
+export default ({ text, isDark }) => <h1 className={isDark ? 'dark' : ''}>{text}</h1>;

@@ -13,13 +13,13 @@ export default class ReferenceStripper extends React.Component {
       input: "",
       output: "",
       copied: false,
-      isDark: false
-    };
+      isDark: false,
+      includeParentheses: false    };
   }
 
   componentDidMount() {
     const sample =
-      "Lorem ipsum sit amet[1], consectetur elit[citation needed], sed do tempor ut labore (https://en.wikipedia.org/wiki/Lorem_ipsum)[2], dolore (https://en.wikipedia.org/wiki/Lorem_ipsum) magna aliqua (https://en.wikipedia.org/wiki/Lorem_ipsum) ultrices sagittis orci.[3] Ut imperdiet iaculus rhoncus, placerat quam, ut vehicula pulvinar.[5]:35 Fusce vestibulum[10]:400,418[11][12][13][14], et ”mattis orci iaculis!”.[5]:35–36";
+      "Lorem (ipsum -  sit) amet[1], consectetur elit[citation needed], sed do tempor ut labore (https://en.wikipedia.org/wiki/Lorem_ipsum)[2], dolore (https://en.wikipedia.org/wiki/Lorem_ipsum) magna aliqua (https://en.wikipedia.org/wiki/Lorem_ipsum) ultrices sagittis orci.[3] Ut imperdiet iaculus (rhoncus), placerat quam, vehicula pulvinar.[5]:35 Fusce vestibulum[10]:400,418[11][12][13][14], et ”mattis orci iaculis!”.[5]:35–36";
     this.setState(
       {
         title: "Reference Stripper"
@@ -64,20 +64,25 @@ export default class ReferenceStripper extends React.Component {
     let hasClosed = true;
     let stripped = "";
     let isReferencing = false;
+
+
     for (let i = 0; i < string.length; i++) {
+
+      const url = string[i + 1] === "("  &&
+      string[i + 2] === "h" &&
+      string[i + 3] === "t" &&
+      string[i + 4] === "t" &&
+      string[i + 5] === "p";
+
+      const p = string[i + 1] === "(";
+
       if (string[i] === "[" && !isQuoting) {
         isWriting = false;
         hasClosed = false;
         isReferencing = true;
       }
       // removes embedded (<url)
-      if (
-        string[i + 1] === "(" &&
-        string[i + 2] === "h" &&
-        string[i + 3] === "t" &&
-        string[i + 4] === "t" &&
-        string[i + 5] === "p"
-      ) {
+      if (!this.state.includeParentheses ? url : p) {
         isWriting = false;
         hasClosed = false;
       }
@@ -123,6 +128,7 @@ export default class ReferenceStripper extends React.Component {
     const textareaText = this.outputTextareaRef.current;
     textareaText.select();
     document.execCommand("copy");
+    window.getSelection().removeAllRanges();
     this.setState({ copied: true }, () => {
       this.handleFlicker();
     });
@@ -134,6 +140,14 @@ export default class ReferenceStripper extends React.Component {
     }));
   };
 
+  handleToggleIncludeParentheses = () => {
+    this.setState(prevState => ({
+      includeParentheses: !prevState.includeParentheses
+    }), () => {
+      this.handleChange(this.handleStrip(this.state.input), "output");
+    });
+  }
+
   render() {
     const flickr =
       this.state.flicker && this.state.copied
@@ -143,39 +157,44 @@ export default class ReferenceStripper extends React.Component {
         : "";
 
     const themeDark = {
-      background: "var(--charcoal)",
       color: this.state.copied ? "" : "var(--ash)"
     };
 
     const theme = this.state.isDark ? themeDark : {};
 
     return (
-      <Wrapper isDark={this.state.isDark} style={theme}>
+      <Wrapper isDark={this.state.isDark} isDark={this.state.isDark}>
         <div id="container">
           <div id="header">
             <Title
               text={this.state.title}
-              style={{ ...theme, color: this.state.isDark ? "var(--ash)" : "" }}
+              isDark={this.state.isDark}
             />
+            <div id="settings">
             <ToggleButton
               isDark={this.state.isDark}
-              handleToggleDarkMode={this.handleToggleDarkMode}
-              style={{ ...theme, color: this.state.isDark ? "var(--ash)" : "" }}
+              handleState={this.state.isDark}
+              handleOnClick={this.handleToggleDarkMode}
+              text={"Dark Mode"}
             />
+            <ToggleButton
+              isDark={this.state.include}
+              handleState={this.state.includeParentheses}
+              handleOnClick={this.handleToggleIncludeParentheses}
+              text={"Remove"}
+              subline={"( ABC )"}
+            />
+            </div>
           </div>
           <div id="main">
             <div id="editor">
               <textarea
                 id="input"
                 value={this.state.input}
-                className={"split-view"}
+                className={`split-view ${this.state.isDark ? 'dark' : ''}`}
                 ref={ref => (this.input = ref)}
                 onChange={event => {
                   this.handleChange(event.target.value, "input");
-                }}
-                style={{
-                  ...theme,
-                  color: this.state.isDark ? "var(--ash)" : ""
                 }}
               />
             </div>
@@ -183,10 +202,10 @@ export default class ReferenceStripper extends React.Component {
               <textarea
                 id="output"
                 value={this.state.output}
-                className={`split-view ${flickr}`}
+                className={`split-view ${this.state.isDark ? 'dark' : ''} ${flickr}`}
                 ref={this.outputTextareaRef}
                 onFocus={this.handleCopy}
-                style={theme}
+                onMouseDown={this.handleCopy}
                 readOnly
               />
               <CircularProgressBar

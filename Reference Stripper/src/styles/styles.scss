@@ -17,6 +17,7 @@ Copyright © 2019 Julien Shim. All rights reserved. */
   --ash: rgba(204, 204, 204, 1);
   --blue: rgba(33, 118, 134, 1);
   --charcoal: rgba(30, 30, 30, 1);
+  --faded-blue: rgba(33, 118, 134, 0.5);
   --faded-clay: rgba(60, 72, 88, 0.5);
   --faded-peach: rgba(255, 0, 0, 0.5);
   --peach: rgba(254, 104, 74, 1);
@@ -48,6 +49,11 @@ Copyright © 2019 Julien Shim. All rights reserved. */
   height: 100vh;
 }
 
+#settings {
+  display: flex;
+  flex-direction: row;
+}
+
 /* Header */
 
 h1 {
@@ -71,22 +77,18 @@ textarea {
   // }
 }
 
-.easy-view {
-  width: 97vw;
-}
-
 .split-view {
   width: 97vw;
 }
 
 #output {
   cursor: pointer;
-  outline-color: var(--blue);
+  outline: none;
   overflow: auto;
 }
 
 #input {
-  outline-color: var(--blue);
+  outline: none;
 }
 
 /* Counter */
@@ -130,6 +132,11 @@ textarea {
   border: 1px solid var(--peach);
 }
 
+.dark {
+  background: var(--charcoal);
+  color: var(--ash);
+}
+
 .flicker {
   background: var(--faded-peach);
 }
@@ -167,6 +174,13 @@ textarea {
     width: 0;
     height: 0;
   }
+}
+
+#subline {
+  color: var(--faded-blue);
+  padding: 3px 6px;
+  border: 1px var(--ash) dashed;
+  font-weight: 700;
 }
 
 .slider {

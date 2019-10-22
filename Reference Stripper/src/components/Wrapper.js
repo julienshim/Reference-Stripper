@@ -1,8 +1,8 @@
 import React from 'react';
 
-export default ({ children, style }) => {
+export default ({ children, isDark }) => {
   return (
-    <div id="wrapper" style={style}>
+    <div id="wrapper" className={isDark ? 'dark' : ''}>
       {children}
     </div>
   );
