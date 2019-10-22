@@ -10,7 +10,7 @@ export default ({ isDark, handleOnClick, handleState, text, subline }) => (
       />
       <span className="slider"></span>
     </label>
-    <p id="toggleLabel" className={isDark ? 'dark' : ''}>
+    <p id="toggleLabel" className={isDark ? "dark" : ""}>
       {text} {subline && <span id="subline">{subline}</span>}
     </p>
   </div>
