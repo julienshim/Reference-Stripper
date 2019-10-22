@@ -14,7 +14,8 @@ export default class ReferenceStripper extends React.Component {
       output: "",
       copied: false,
       isDark: false,
-      includeParentheses: false    };
+      includeParentheses: false
+    };
   }
 
   componentDidMount() {
@@ -65,24 +66,23 @@ export default class ReferenceStripper extends React.Component {
     let stripped = "";
     let isReferencing = false;
 
-
     for (let i = 0; i < string.length; i++) {
+      const pURL =
+        string[i + 1] === "(" &&
+        string[i + 2] === "h" &&
+        string[i + 3] === "t" &&
+        string[i + 4] === "t" &&
+        string[i + 5] === "p";
 
-      const url = string[i + 1] === "("  &&
-      string[i + 2] === "h" &&
-      string[i + 3] === "t" &&
-      string[i + 4] === "t" &&
-      string[i + 5] === "p";
-
-      const p = string[i + 1] === "(";
+      const pText = string[i + 1] === "(";
 
       if (string[i] === "[" && !isQuoting) {
         isWriting = false;
         hasClosed = false;
         isReferencing = true;
       }
-      // removes embedded (<url)
-      if (!this.state.includeParentheses ? url : p) {
+      // removes embedded (<url>)
+      if (!this.state.includeParentheses ? pURL : pText) {
         isWriting = false;
         hasClosed = false;
       }
@@ -141,12 +141,15 @@ export default class ReferenceStripper extends React.Component {
   };
 
   handleToggleIncludeParentheses = () => {
-    this.setState(prevState => ({
-      includeParentheses: !prevState.includeParentheses
-    }), () => {
-      this.handleChange(this.handleStrip(this.state.input), "output");
-    });
-  }
+    this.setState(
+      prevState => ({
+        includeParentheses: !prevState.includeParentheses
+      }),
+      () => {
+        this.handleChange(this.handleStrip(this.state.input), "output");
+      }
+    );
+  };
 
   render() {
     const flickr =
@@ -166,24 +169,21 @@ export default class ReferenceStripper extends React.Component {
       <Wrapper isDark={this.state.isDark} isDark={this.state.isDark}>
         <div id="container">
           <div id="header">
-            <Title
-              text={this.state.title}
-              isDark={this.state.isDark}
-            />
+            <Title text={this.state.title} isDark={this.state.isDark} />
             <div id="settings">
-            <ToggleButton
-              isDark={this.state.isDark}
-              handleState={this.state.isDark}
-              handleOnClick={this.handleToggleDarkMode}
-              text={"Dark Mode"}
-            />
-            <ToggleButton
-              isDark={this.state.include}
-              handleState={this.state.includeParentheses}
-              handleOnClick={this.handleToggleIncludeParentheses}
-              text={"Remove"}
-              subline={"( ABC )"}
-            />
+              <ToggleButton
+                isDark={this.state.isDark}
+                handleState={this.state.isDark}
+                handleOnClick={this.handleToggleDarkMode}
+                text={"Dark Mode"}
+              />
+              <ToggleButton
+                isDark={this.state.include}
+                handleState={this.state.includeParentheses}
+                handleOnClick={this.handleToggleIncludeParentheses}
+                text={"Remove"}
+                subline={"( text )"}
+              />
             </div>
           </div>
           <div id="main">
@@ -191,7 +191,7 @@ export default class ReferenceStripper extends React.Component {
               <textarea
                 id="input"
                 value={this.state.input}
-                className={`split-view ${this.state.isDark ? 'dark' : ''}`}
+                className={`split-view ${this.state.isDark ? "dark" : ""}`}
                 ref={ref => (this.input = ref)}
                 onChange={event => {
                   this.handleChange(event.target.value, "input");
@@ -202,7 +202,9 @@ export default class ReferenceStripper extends React.Component {
               <textarea
                 id="output"
                 value={this.state.output}
-                className={`split-view ${this.state.isDark ? 'dark' : ''} ${flickr}`}
+                className={`split-view ${
+                  this.state.isDark ? "dark" : ""
+                } ${flickr}`}
                 ref={this.outputTextareaRef}
                 onFocus={this.handleCopy}
                 onMouseDown={this.handleCopy}
