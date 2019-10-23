@@ -20,7 +20,7 @@ export default class ReferenceStripper extends React.Component {
 
   componentDidMount() {
     const sample =
-      "Lorem (ipsum -  sit) amet[1], consectetur elit[citation needed], sed do tempor ut labore (https://en.wikipedia.org/wiki/Lorem_ipsum)[2], dolore (https://en.wikipedia.org/wiki/Lorem_ipsum) magna aliqua (https://en.wikipedia.org/wiki/Lorem_ipsum) ultrices sagittis orci.[3] Ut imperdiet iaculus (rhoncus), placerat quam, vehicula pulvinar.[5]:35 Fusce vestibulum[10]:400,418[11][12][13][14], et ”mattis orci iaculis!”.[5]:35–36";
+      "Lorem (ipsum sit) amet[1], consectetur elit[citation needed], sed do tempor ut labore (https://en.wikipedia.org/wiki/Lorem_ipsum)[2], dolore (https://en.wikipedia.org/wiki/Lorem_ipsum) magna aliqua (https://en.wikipedia.org/wiki/Lorem_ipsum) ultrices sagittis orci.[3] Ut imperdiet iaculus (rhoncus), placerat quam, vehicula pulvinar.[5]:35 Fusce vestibulum[10]:400,418[11][12][13][14], et ”mattis orci iaculis!”.[5]:35–36";
     this.setState(
       {
         title: "Reference Stripper"
@@ -50,8 +50,10 @@ export default class ReferenceStripper extends React.Component {
   handleWordCount = string => {
     return (
       string
-        // strips newline before counting
-        .replace(/[\n]/g, " ")
+        // strips whitespace (e.g. new line, tab) before counting
+        .replace(/\s/g, " ")
+        // strips dashes before counting
+        .replace(/[-–]/g, " ")
         .split(" ")
         .filter(function(n) {
           return n != "";
@@ -103,7 +105,7 @@ export default class ReferenceStripper extends React.Component {
         isReferencing = !isReferencing;
       }
       if (
-        (string[i] === " " ||
+        (string[i].match(/\s/) ||
           string[i] === "," ||
           string[i] === "." ||
           string[i] === "!" ||
@@ -217,7 +219,13 @@ export default class ReferenceStripper extends React.Component {
               <ConfirmButton
                 className={this.state.copied ? "red confirm" : "confirm"}
                 text={this.state.output}
-                label={this.state.copied ? "Copied!" : "Copy"}
+                label={
+                  this.state.copied
+                    ? this.state.input !== ""
+                      ? "Copied!"
+                      : "Nothing to Copy!"
+                    : "Copy"
+                }
                 handleCopy={this.handleCopy}
                 style={theme}
               />
