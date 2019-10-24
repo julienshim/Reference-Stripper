@@ -4,6 +4,7 @@ import Title from "./Title";
 import ConfirmButton from "./ConfirmButton";
 import ToggleButton from "./ToggleButton";
 import Wrapper from "./Wrapper";
+import Changelog from "./Changelog";
 
 export default class ReferenceStripper extends React.Component {
   constructor(props) {
@@ -20,7 +21,7 @@ export default class ReferenceStripper extends React.Component {
 
   componentDidMount() {
     const sample =
-      "Lorem (ipsum sit) amet[1], consectetur elit[citation needed], sed do tempor ut labore (https://en.wikipedia.org/wiki/Lorem_ipsum)[2], dolore (https://en.wikipedia.org/wiki/Lorem_ipsum) magna aliqua (https://en.wikipedia.org/wiki/Lorem_ipsum) ultrices sagittis orci.[3] Ut imperdiet iaculus (rhoncus), placerat quam, vehicula pulvinar.[5]:35 Fusce vestibulum[10]:400,418[11][12][13][14], et ”mattis orci iaculis!”.[5]:35–36";
+      "Lorem (ipsum sit) amet[1], consectetur elit[citation needed], sed tempor ut labore (https://en.wikipedia.org/wiki/Lorem_ipsum)[2], dolore (https://en.wikipedia.org/wiki/Lorem_ipsum) magna aliqua (https://en.wikipedia.org/wiki/Lorem_ipsum) ultrices sagittis orci.[3] Ut imperdiet iaculus (rhoncus), placerat quam, vehicula pulvinar.[5]:35 Fusce vestibulum[10]:400,418[11][12][13][14], et ”mattis orci iaculis!”.[5]:35–36";
     this.setState(
       {
         title: "Reference Stripper"
@@ -186,6 +187,7 @@ export default class ReferenceStripper extends React.Component {
                 text={"Remove"}
                 subline={"( text )"}
               />
+              <Changelog isDark={this.state.isDark} />
             </div>
           </div>
           <div id="main">
