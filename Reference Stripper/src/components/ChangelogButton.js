@@ -1,7 +1,7 @@
 import React from "react";
 
 export default ({ isDark, handleChangelogView }) => {
-  const svgStyle = {fill: "rgba(60, 72, 88, 0.5)"}
+  const svgStyle = {fill: "rgba(204, 204, 204, 0.8)"}
   const note = (
     <svg
       style={svgStyle}
