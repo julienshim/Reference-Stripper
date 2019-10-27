@@ -16,7 +16,8 @@ export default class ReferenceStripper extends React.Component {
       output: "",
       copied: false,
       isDark: false,
-      includeParentheses: false
+      includeParentheses: false,
+      isViewingChangelog: false
     };
   }
 
@@ -144,6 +145,12 @@ export default class ReferenceStripper extends React.Component {
     }));
   };
 
+  handleChangelogView = () => {
+    this.setState(prevState => ({
+      isViewingChangelog: !prevState.isViewingChangelog
+    }));
+  }
+
   handleToggleIncludeParentheses = () => {
     this.setState(
       prevState => ({
@@ -171,7 +178,7 @@ export default class ReferenceStripper extends React.Component {
 
     return (
       <Wrapper isDark={this.state.isDark} isDark={this.state.isDark}>
-        <Changelog />
+        <Changelog handleChangelogView={this.handleChangelogView} isViewingChangelog={this.state.isViewingChangelog}/>
         <div id="container">
           <div id="header">
             <Title text={this.state.title} isDark={this.state.isDark} />
@@ -189,7 +196,7 @@ export default class ReferenceStripper extends React.Component {
                 text={"Remove"}
                 subline={"( text )"}
               />
-              <ChangelogButton isDark={this.state.isDark} />
+              <ChangelogButton handleChangelogView={this.handleChangelogView} isDark={this.state.isDark} />
             </div>
           </div>
           <div id="main">

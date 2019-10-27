@@ -1,6 +1,6 @@
 import React from "react";
 
-export default ({ isDark }) => {
+export default ({ isDark, handleChangelogView }) => {
   const svgStyle = {fill: "rgba(204, 204, 204, 0.8)"}
   const note = (
     <svg
@@ -25,16 +25,11 @@ export default ({ isDark }) => {
     </svg>
   );
   return (
-    <p
+    <p id="changelogButton"
       className={isDark ? "dark" : ""}
-      style={{
-        position: "absolute",
-        top: "0",
-        right: "24",
-        padding: "5px 10px"
-      }}
+      onClick={handleChangelogView}
     >
-      {isDark ? noteDark : note}
+      <span>{"Changelog (v1.2.4)"}</span>{isDark ? noteDark : note}
     </p>
   );
 };
