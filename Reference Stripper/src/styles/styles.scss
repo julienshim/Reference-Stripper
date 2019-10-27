@@ -69,9 +69,9 @@ h1 {
 /* Text Area */
 
 textarea {
-  box-shadow: none;
   -moz-box-shadow: none;
   -webkit-box-shadow: none;
+  box-shadow: none;
   display: block;
   height: 42.5vh;
   margin: 0 auto;
@@ -106,15 +106,15 @@ textarea {
 }
 
 .circle-text {
+  fill: var(--ash);
   font-size: 1rem;
   font-weight: bold;
-  fill: var(--ash);
 }
 
 #circular-progress-bar {
-  position: absolute;
-  left: 24px;
   bottom: 12px;
+  left: 24px;
+  position: absolute;
 }
 
 /* User Feedback */
@@ -124,12 +124,12 @@ textarea {
 }
 
 .confirm {
-  position: absolute;
-  bottom: 12px;
-  right: 24px;
-  border-radius: 12px;
   border: 1px solid var(--ash);
+  border-radius: 12px;
+  bottom: 12px;
   padding: 12px 12px;
+  position: absolute;
+  right: 24px;
 }
 
 .red {
@@ -261,15 +261,15 @@ textarea {
   -webkit-transition: 0.4s;
   transition: 0.4s;
   &:before {
-    position: absolute;
+    background-color: var(--white);
+    bottom: 4px;
     content: "";
     height: 16px;
-    width: 16px;
     left: 4px;
-    bottom: 4px;
-    background-color: var(--white);
+    position: absolute;
     -webkit-transition: 0.4s;
     transition: 0.4s;
+    width: 16px;
   }
 }
 
