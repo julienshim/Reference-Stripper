@@ -4,6 +4,7 @@ import Title from "./Title";
 import ConfirmButton from "./ConfirmButton";
 import ToggleButton from "./ToggleButton";
 import Wrapper from "./Wrapper";
+import ChangelogButton from "./ChangelogButton";
 import Changelog from "./Changelog";
 
 export default class ReferenceStripper extends React.Component {
@@ -170,6 +171,7 @@ export default class ReferenceStripper extends React.Component {
 
     return (
       <Wrapper isDark={this.state.isDark} isDark={this.state.isDark}>
+        <Changelog />
         <div id="container">
           <div id="header">
             <Title text={this.state.title} isDark={this.state.isDark} />
@@ -187,7 +189,7 @@ export default class ReferenceStripper extends React.Component {
                 text={"Remove"}
                 subline={"( text )"}
               />
-              <Changelog isDark={this.state.isDark} />
+              <ChangelogButton isDark={this.state.isDark} />
             </div>
           </div>
           <div id="main">

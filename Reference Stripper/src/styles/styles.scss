@@ -33,6 +33,17 @@ body {
 
 /* Containers */
 
+#changelog {
+  // visibility: hidden;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: var(--faded-clay);
+  height: 100vh;
+  width: 100vw;
+  z-index: 99;
+}
+
 #main {
   width: 100%;
 }
