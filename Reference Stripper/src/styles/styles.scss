@@ -13,6 +13,10 @@ Copyright © 2019 Julien Shim. All rights reserved. */
   font-family: "Roboto", sans-serif;
 }
 
+body {
+  overflow: hidden;
+}
+
 :root {
   --ash: rgba(204, 204, 204, 1);
   --blue: rgba(33, 118, 134, 1);
@@ -41,11 +45,12 @@ Copyright © 2019 Julien Shim. All rights reserved. */
 #preview,
 #editor {
   position: relative;
+  width: 100%;
 }
 
 #wrapper {
-  width: 100vw;
   height: 100vh;
+  width: 100vw;
 }
 
 #settings {
@@ -67,8 +72,7 @@ textarea {
   -webkit-box-shadow: none;
   display: block;
   height: 42.5vh;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto;
   padding: 12px;
   resize: none;
   // &::placeholder {
@@ -162,33 +166,33 @@ textarea {
 
 .switch {
   /* Switch Container */
+  display: inline-block;
+  height: 24px;
   margin: 0 0 12px 24px;
   position: relative;
-  display: inline-block;
   width: 42px;
-  height: 24px;
   & input {
     /* Hide the default HTML version */
+    height: 0;
     opacity: 0;
     width: 0;
-    height: 0;
   }
 }
 
 #subline {
-  padding: 3px 6px;
   border: 1px var(--ash) dashed;
+  padding: 3px 6px;
 }
 
 .slider {
   /* Switch Slider*/
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
   background-color: var(--ash);
+  bottom: 0;
+  cursor: pointer;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
   -webkit-transition: 0.4s;
   transition: 0.4s;
   &:before {
@@ -222,7 +226,6 @@ input {
 @media only screen and (min-width: 768px) {
   #main {
     display: flex;
-    padding: 12px;
   }
 
   .split-view {
@@ -231,10 +234,6 @@ input {
 
   #header {
     flex-direction: row;
-  }
-
-  #preview {
-    margin-left: 12px;
   }
 
   textarea {
