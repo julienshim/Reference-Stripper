@@ -3,7 +3,7 @@ import React from "react";
 export default ({ handleChangelogView, isViewingChangelog }) => {
 
   const updates = [
-    { version: "1.2.4", date: "2019-10-27", change: "Added Changelog" },
+    { version: "1.2.4", date: "2019-10-27", change: "Added Changelog. Fixed text area spacing." },
     { version: "1.2.3", date: "2019-10-22", change: "Fixed toggle label margin spacing. Added \"Nothing to Copy!\" user feedback when input is blank. Fixed stripping out whitespaces and dashes prior to word count. Fixed issue of not maintaining whitespace types (e.g. newline, tab) during handleStrip." },
     { version: "1.2.2", date: "2019-10-21", change: "Added remove all parenthesis mode. Fixed user feedback in Dark Mode." },
     { version: "1.2.1", date: "2019-10-16", change: "Fixed text stripping algorithm to account for rare references (e.g. [5]:35, [5]:35–36, [10]:400,418[11][12][13][14])." },
@@ -22,9 +22,10 @@ export default ({ handleChangelogView, isViewingChangelog }) => {
     <div id="changelog" className={isViewingChangelog ? "" : "hidden"} onClick={handleChangelogView}>
       <div>
         <ul>
+          <li><h1>Changelog</h1></li>
           {
             updates.map(update => {
-              return <li className="changelog-li" key={update.version}><h2><span>{`v${update.version}`}</span> {update.date}</h2><p>{update.change}</p></li>
+              return <li className="changelog-li" key={update.version}><h2><span>{`v${update.version}`}</span>{update.date}</h2><p>{update.change}</p></li>
             })
           }
         </ul>

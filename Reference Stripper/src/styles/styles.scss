@@ -21,11 +21,12 @@ body {
   --ash: rgba(204, 204, 204, 1);
   --blue: rgba(33, 118, 134, 1);
   --charcoal: rgba(30, 30, 30, 1);
-  --faded-ash: rgba(204, 204, 204, 0.01);
+  --faded-ash: rgba(204, 204, 204, 0.5);
   --faded-clay: rgba(60, 72, 88, 0.5);
   --faded-peach: rgba(255, 0, 0, 0.5);
   --peach: rgba(254, 104, 74, 1);
   --tangerine: rgba(251, 177, 60, 1);
+  --white: rgba(255, 255, 255, 1);
 }
 
 .hidden {
@@ -33,58 +34,6 @@ body {
 }
 
 /* Containers */
-
-#changelog {
-  // visibility: hidden;
-  background-color: rgba(255, 255, 255, 0.9);
-  height: 100vh;
-  left: 0;
-  overflow: scroll;
-  position: absolute;
-  top: 0;
-  width: 100vw;
-  z-index: 99;
-  & div {
-    color: var(--charcoal);
-    background: var(--faded-ash);
-    margin: 0;
-    & ul {
-      background: var(--ash);
-      list-style: none;
-      margin: 0;
-      padding: 24px 48px;
-      width: 100vw;
-      & li h2 {
-        font-weight: 700;
-        display: flex;
-        & span {
-          color: var(--faded-clay);
-          display: block;
-          width: 100px;
-        }
-      }
-      & li:last-child {
-        border-bottom: none;
-        margin-bottom: 10vh;
-      }
-    }
-  }  
-  
-}
-
-#changelogButton {
-  color: var(--ash);
-  cursor: pointer;
-  display: flex;
-  padding: 5px 10px;
-  position: absolute;
-  right: 24;
-  top: 0;
-  & span {
-    display: block;
-    margin: 3px 12px 0 0;
-  }
-}
 
 #main {
   width: 100%;
@@ -210,6 +159,63 @@ textarea {
 
 /* Changelog */
 
+#changelogButton {
+  cursor: pointer;
+  display: flex;
+  padding: 5px 10px;
+  position: absolute;
+  right: 24;
+  top: 0;
+  & span {
+    display: block;
+    color: var(--ash);
+    margin: 4px 8px;
+  }
+}
+
+#changelog {
+  // visibility: hidden;
+  height: 100vh;
+  left: 0;
+  overflow: scroll;
+  position: absolute;
+  top: 0;
+  width: 100vw;
+  z-index: 99;
+  & div {
+    color: var(--ash);
+    background: var(--faded-ash);
+    margin: 0;
+    & ul {
+      background: var(--charcoal);
+      list-style: none;
+      margin: 0;
+      padding: 24px 48px;
+      width: 100%;
+      & li h1 {
+        margin-left: 0;
+        margin-top: -12px;
+      }
+      & li h2 {
+        font-weight: 700;
+        display: flex;
+        & span {
+          color: var(--peach);
+          display: block;
+          width: 100px;
+        }
+      }
+      & li:last-child {
+        border-bottom: none;
+        margin-bottom: 12px;
+      }
+      & p {
+        margin-left: 100px;
+      }
+    }
+  }
+}
+
 .changelog-li {
   border-bottom: 1px solid grey;
 }
@@ -261,7 +267,7 @@ textarea {
     width: 16px;
     left: 4px;
     bottom: 4px;
-    background-color: white;
+    background-color: var(--white);
     -webkit-transition: 0.4s;
     transition: 0.4s;
   }
@@ -308,9 +314,10 @@ input {
   }
 
   #changelog {
-    & div { 
+    & div {
       & ul {
-        width: 47vw;
+        margin-left: auto;
+        width: 768px;
       }
     }
   }
