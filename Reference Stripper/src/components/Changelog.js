@@ -1,6 +1,6 @@
 import React from "react";
 
-export default ({ handleChangelogView, isViewingChangelog }) => {
+export default ({ handleChangelogView, isViewingChangelog, changelogRef }) => {
   const updates = [
     {
       version: "1.2.4",
@@ -76,6 +76,7 @@ export default ({ handleChangelogView, isViewingChangelog }) => {
       id="changelog"
       className={isViewingChangelog ? "" : "hidden"}
       onClick={handleChangelogView}
+      ref={changelogRef}
     >
       <div>
         <ul>

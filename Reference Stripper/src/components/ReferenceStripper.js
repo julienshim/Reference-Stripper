@@ -128,6 +128,7 @@ export default class ReferenceStripper extends React.Component {
   };
 
   outputTextareaRef = React.createRef();
+  changelogRef = React.createRef();
 
   handleCopy = event => {
     const textareaText = this.outputTextareaRef.current;
@@ -146,6 +147,8 @@ export default class ReferenceStripper extends React.Component {
   };
 
   handleChangelogView = () => {
+    const changelogDiv = this.changelogRef.current;
+    changelogDiv.scrollTo(0, 0);
     this.setState(prevState => ({
       isViewingChangelog: !prevState.isViewingChangelog
     }));
@@ -179,6 +182,7 @@ export default class ReferenceStripper extends React.Component {
     return (
       <Wrapper isDark={this.state.isDark} isDark={this.state.isDark}>
         <Changelog
+          changelogRef={this.changelogRef}
           handleChangelogView={this.handleChangelogView}
           isViewingChangelog={this.state.isViewingChangelog}
         />
