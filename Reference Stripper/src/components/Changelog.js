@@ -29,17 +29,12 @@ export default ({ handleChangelogView, isViewingChangelog, changelogRef }) => {
       version: "1.2.0",
       date: "2019-10-13",
       change:
-        "Removed easy mode. Removed react-copy-to-clipboard third-party package. Added copy to clipboard function. Added dark mode."
-    },
-    {
-      version: "1.1.1",
-      date: "2019-10-11",
-      change: "Fixed word count algorithm to account for new line."
+        "Removed Easy Mode. Removed react-copy-to-clipboard third-party package. Added copy to clipboard function. Added dark mode."
     },
     {
       version: "1.1.0",
       date: "2019-10-11",
-      change: "Changed CSS to SCSS. Added Easy Mode (single box editing) "
+      change: "Changed CSS to SCSS. Added Easy Mode (single box editing). Fixed word count algorithm to account for new line."
     },
     {
       version: "1.0.5",
