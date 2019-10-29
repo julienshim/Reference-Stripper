@@ -1,1 +1,1 @@
-# React-Playground
+# Reference Stripper
