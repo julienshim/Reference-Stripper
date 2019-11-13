@@ -3,6 +3,11 @@ import React from "react";
 export default ({ handleChangelogView, isViewingChangelog, changelogRef }) => {
   const updates = [
     {
+      version: "1.2.5",
+      date: "2019-11-12",
+      change: "Fixed text stripping algorithm to account for missing closing quotation following removed parenthesized text when remove parantehsized text mode is enabled. e.g. \"Try (Just a Little Bit Harder)\" becomes \"Try instead of \"Try\""
+    },
+    {
       version: "1.2.4",
       date: "2019-10-27",
       change: "Added Changelog. Fixed text area spacing."

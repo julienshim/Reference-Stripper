@@ -114,6 +114,7 @@ export default class ReferenceStripper extends React.Component {
           string[i] === "!" ||
           string[i] === ";" ||
           string[i] === ":" ||
+          string[i] === "\"" ||
           string[i] === "?") &&
         hasClosed &&
         !isReferencing
