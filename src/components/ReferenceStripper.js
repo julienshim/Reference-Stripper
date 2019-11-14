@@ -22,11 +22,15 @@ export default class ReferenceStripper extends React.Component {
   }
 
   componentDidMount() {
-    const sample =
-      "Lorem (ipsum sit) amet[1], consectetur elit[citation needed], sed tempor ut labore (https://en.wikipedia.org/wiki/Lorem_ipsum)[2], dolore (https://en.wikipedia.org/wiki/Lorem_ipsum) magna aliqua (https://en.wikipedia.org/wiki/Lorem_ipsum) ultrices sagittis orci.[3] Ut imperdiet iaculus (rhoncus), placerat quam, vehicula pulvinar.[5]:35 Fusce vestibulum[10]:400,418[11][12][13][14], et ”mattis orci iaculis!”.[5]:35–36";
+    const isDark = localStorage.getItem('rs-dark') === 'true';
+    const includeParentheses = localStorage.getItem('rs-include-parentheses') === 'true';
+    const sample = localStorage.getItem('rs-string') === null ?
+      "Lorem (ipsum sit) amet[1], consectetur elit[citation needed], sed tempor ut labore (https://en.wikipedia.org/wiki/Lorem_ipsum)[2], dolore (https://en.wikipedia.org/wiki/Lorem_ipsum) magna aliqua (https://en.wikipedia.org/wiki/Lorem_ipsum) ultrices sagittis orci.[3] Ut imperdiet iaculus (rhoncus), placerat quam, vehicula pulvinar.[5]:35 Fusce vestibulum[10]:400,418[11][12][13][14], et ”mattis orci iaculis!”.[5]:35–36" : localStorage.getItem('rs-string');
     this.setState(
       {
-        title: "Reference Stripper"
+        title: "Reference Stripper",
+        isDark,
+        includeParentheses
       },
       () => {
         this.handleChange(sample, "input");
@@ -37,6 +41,7 @@ export default class ReferenceStripper extends React.Component {
   handleChange = (value, type) => {
     this.setState({ [type]: value, copied: false }, () => {
       if (type === "input") {
+        localStorage.setItem('rs-string', this.state.input);
         this.handleChange(this.handleStrip(this.state.input), "output");
       }
     });
@@ -144,7 +149,9 @@ export default class ReferenceStripper extends React.Component {
   handleToggleDarkMode = () => {
     this.setState(prevState => ({
       isDark: !prevState.isDark
-    }));
+    }), ()=> {
+      localStorage.setItem('rs-dark', this.state.isDark);
+    });
   };
 
   handleChangelogView = () => {
@@ -161,6 +168,7 @@ export default class ReferenceStripper extends React.Component {
         includeParentheses: !prevState.includeParentheses
       }),
       () => {
+        localStorage.setItem('rs-include-parentheses', this.state.includeParentheses);
         this.handleChange(this.handleStrip(this.state.input), "output");
       }
     );

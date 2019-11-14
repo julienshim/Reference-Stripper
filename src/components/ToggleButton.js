@@ -4,9 +4,9 @@ export default ({ isDark, handleOnClick, handleState, text, subline }) => (
   <div id="toggle">
     <label className="switch">
       <input
-        defaultChecked={handleState}
+        checked={handleState}
         type="checkbox"
-        onClick={handleOnClick}
+        onChange={handleOnClick}
       />
       <span className="slider"></span>
     </label>

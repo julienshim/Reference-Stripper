@@ -30,7 +30,7 @@ export default ({ isDark, handleChangelogView }) => {
       className={isDark ? "dark" : ""}
       onClick={handleChangelogView}
     >
-      <span>v.1.2.4</span> {isDark ? noteDark : note}
+      <span>v.1.2.5</span> {isDark ? noteDark : note}
     </p>
   );
 };
