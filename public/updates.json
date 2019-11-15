@@ -2,7 +2,7 @@
     "updates": [
         {
             "version": "1.2.6",
-            "date": "2019-11-12",
+            "date": "2019-11-14",
             "change": "Sample input is now viewed as placeholder when input textarea is empty. App auto saves last known settings, inputted text."
         },
         {
