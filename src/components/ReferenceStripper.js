@@ -25,36 +25,45 @@ export default class ReferenceStripper extends React.Component {
   }
 
   componentDidMount() {
-    fetch("https://raw.githubusercontent.com/julienshim/Reference-Stripper/master/public/updates.json")
-      .then (response => response.json())
-      .then((result) =>  {
-        const isDark = localStorage.getItem('rs-dark') === 'true';
-        const includeParentheses = localStorage.getItem('rs-include-parentheses') === 'true';
-        const input = localStorage.getItem('rs-string') === null ? '' : localStorage.getItem('rs-string');
+    fetch(
+      "https://raw.githubusercontent.com/julienshim/Reference-Stripper/master/public/updates.json"
+    )
+      .then(response => response.json())
+      .then(result => {
+        const isDark = localStorage.getItem("rs-dark") === "true";
+        const includeParentheses =
+          localStorage.getItem("rs-include-parentheses") === "true";
+        const input =
+          localStorage.getItem("rs-string") === null
+            ? ""
+            : localStorage.getItem("rs-string");
         const placeholder =
-        "Lorem (ipsum sit) amet[1], consectetur elit[citation needed], sed tempor ut labore (https://en.wikipedia.org/wiki/Lorem_ipsum)[2], dolore (https://en.wikipedia.org/wiki/Lorem_ipsum) magna aliqua (https://en.wikipedia.org/wiki/Lorem_ipsum) ultrices sagittis orci.[3] Ut imperdiet iaculus (rhoncus), placerat quam, vehicula pulvinar.[5]:35 Fusce vestibulum[10]:400,418[11][12][13][14], et ”mattis orci iaculis!”.[5]:35–36";
+          "Lorem (ipsum sit) amet[1], consectetur elit[citation needed], sed tempor ut labore (https://en.wikipedia.org/wiki/Lorem_ipsum)[2], dolore (https://en.wikipedia.org/wiki/Lorem_ipsum) magna aliqua (https://en.wikipedia.org/wiki/Lorem_ipsum) ultrices sagittis orci.[3] Ut imperdiet iaculus (rhoncus), placerat quam, vehicula pulvinar.[5]:35 Fusce vestibulum[10]:400,418[11][12][13][14], et ”mattis orci iaculis!”.[5]:35–36";
         const title = "Reference Stripper";
         const updates = result.updates;
         const currentVersion = result.updates[0].version;
 
-        this.setState({
-          title,
-          placeholder,
-          updates,
-          currentVersion,
-          input,
-          includeParentheses,
-          isDark
-        }, ()=> {
-          this.handleChange(this.state.input, "input");
-        })
-      })
+        this.setState(
+          {
+            title,
+            placeholder,
+            updates,
+            currentVersion,
+            input,
+            includeParentheses,
+            isDark
+          },
+          () => {
+            this.handleChange(this.state.input, "input");
+          }
+        );
+      });
   }
 
   handleChange = (value, type) => {
     this.setState({ [type]: value, copied: false }, () => {
       if (type === "input") {
-        localStorage.setItem('rs-string', this.state.input);
+        localStorage.setItem("rs-string", this.state.input);
         this.handleChange(this.handleStrip(this.state.input), "output");
       }
     });
@@ -76,7 +85,7 @@ export default class ReferenceStripper extends React.Component {
         // strips dashes before counting
         .replace(/[-–]/g, " ")
         .split(" ")
-        .filter(function (n) {
+        .filter(function(n) {
           return n != "";
         }).length
     );
@@ -132,7 +141,7 @@ export default class ReferenceStripper extends React.Component {
           string[i] === "!" ||
           string[i] === ";" ||
           string[i] === ":" ||
-          string[i] === "\"" ||
+          string[i] === '"' ||
           string[i] === "?") &&
         hasClosed &&
         !isReferencing
@@ -160,11 +169,14 @@ export default class ReferenceStripper extends React.Component {
   };
 
   handleToggleDarkMode = () => {
-    this.setState(prevState => ({
-      isDark: !prevState.isDark
-    }),()=> {
-      localStorage.setItem('rs-dark', this.state.isDark);
-    });
+    this.setState(
+      prevState => ({
+        isDark: !prevState.isDark
+      }),
+      () => {
+        localStorage.setItem("rs-dark", this.state.isDark);
+      }
+    );
   };
 
   handleChangelogView = () => {
@@ -181,7 +193,10 @@ export default class ReferenceStripper extends React.Component {
         includeParentheses: !prevState.includeParentheses
       }),
       () => {
-        localStorage.setItem('rs-include-parentheses', this.state.includeParentheses);
+        localStorage.setItem(
+          "rs-include-parentheses",
+          this.state.includeParentheses
+        );
         this.handleChange(this.handleStrip(this.state.input), "output");
       }
     );
@@ -192,8 +207,8 @@ export default class ReferenceStripper extends React.Component {
       this.state.flicker && this.state.copied
         ? "flicker red"
         : this.state.copied
-          ? "red"
-          : "";
+        ? "red"
+        : "";
 
     const themeDark = {
       color: this.state.copied ? "" : "var(--ash)"
@@ -252,7 +267,7 @@ export default class ReferenceStripper extends React.Component {
                 value={this.state.output}
                 className={`split-view ${
                   this.state.isDark ? "dark" : ""
-                  } ${flickr}`}
+                } ${flickr}`}
                 ref={this.outputTextareaRef}
                 placeholder={this.handleStrip(this.state.placeholder)}
                 onFocus={this.handleCopy}
