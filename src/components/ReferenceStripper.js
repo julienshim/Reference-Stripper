@@ -41,7 +41,7 @@ export default class ReferenceStripper extends React.Component {
           "Lorem (ipsum sit) amet[1], consectetur elit[citation needed], sed tempor ut labore (https://en.wikipedia.org/wiki/Lorem_ipsum)[2], dolore (https://en.wikipedia.org/wiki/Lorem_ipsum) magna aliqua (https://en.wikipedia.org/wiki/Lorem_ipsum) ultrices sagittis orci.[3] Ut imperdiet iaculus (rhoncus), placerat quam, vehicula pulvinar.[5]:35 Fusce vestibulum[10]:400,418[11][12][13][14], et ”mattis orci iaculis!”.[5]:35–36";
         const title = "Reference Stripper";
         const updates = result.updates;
-        const currentVersion = result.updates[0].version;
+        const currentVersion = `v${result.updates[0].version}`;
 
         this.setState(
           {
