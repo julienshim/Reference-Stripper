@@ -13,29 +13,42 @@ export default class ReferenceStripper extends React.Component {
     this.state = {
       title: "",
       input: "",
+      placeholder: "",
       output: "",
+      updates: [],
       copied: false,
       isDark: false,
+      currentVersion: "",
       includeParentheses: false,
       isViewingChangelog: false
     };
   }
 
   componentDidMount() {
-    const isDark = localStorage.getItem('rs-dark') === 'true';
-    const includeParentheses = localStorage.getItem('rs-include-parentheses') === 'true';
-    const sample = localStorage.getItem('rs-string') === null ?
-      "Lorem (ipsum sit) amet[1], consectetur elit[citation needed], sed tempor ut labore (https://en.wikipedia.org/wiki/Lorem_ipsum)[2], dolore (https://en.wikipedia.org/wiki/Lorem_ipsum) magna aliqua (https://en.wikipedia.org/wiki/Lorem_ipsum) ultrices sagittis orci.[3] Ut imperdiet iaculus (rhoncus), placerat quam, vehicula pulvinar.[5]:35 Fusce vestibulum[10]:400,418[11][12][13][14], et ”mattis orci iaculis!”.[5]:35–36" : localStorage.getItem('rs-string');
-    this.setState(
-      {
-        title: "Reference Stripper",
-        isDark,
-        includeParentheses
-      },
-      () => {
-        this.handleChange(sample, "input");
-      }
-    );
+    fetch("https://raw.githubusercontent.com/julienshim/Reference-Stripper/master/public/updates.json")
+      .then (response => response.json())
+      .then((result) =>  {
+        const isDark = localStorage.getItem('rs-dark') === 'true';
+        const includeParentheses = localStorage.getItem('rs-include-parentheses') === 'true';
+        const input = localStorage.getItem('rs-string') === null ? '' : localStorage.getItem('rs-string');
+        const placeholder =
+        "Lorem (ipsum sit) amet[1], consectetur elit[citation needed], sed tempor ut labore (https://en.wikipedia.org/wiki/Lorem_ipsum)[2], dolore (https://en.wikipedia.org/wiki/Lorem_ipsum) magna aliqua (https://en.wikipedia.org/wiki/Lorem_ipsum) ultrices sagittis orci.[3] Ut imperdiet iaculus (rhoncus), placerat quam, vehicula pulvinar.[5]:35 Fusce vestibulum[10]:400,418[11][12][13][14], et ”mattis orci iaculis!”.[5]:35–36";
+        const title = "Reference Stripper";
+        const updates = result.updates;
+        const currentVersion = result.updates[0].version;
+
+        this.setState({
+          title,
+          placeholder,
+          updates,
+          currentVersion,
+          input,
+          includeParentheses,
+          isDark
+        }, ()=> {
+          this.handleChange(this.state.input, "input");
+        })
+      })
   }
 
   handleChange = (value, type) => {
@@ -63,7 +76,7 @@ export default class ReferenceStripper extends React.Component {
         // strips dashes before counting
         .replace(/[-–]/g, " ")
         .split(" ")
-        .filter(function(n) {
+        .filter(function (n) {
           return n != "";
         }).length
     );
@@ -149,7 +162,7 @@ export default class ReferenceStripper extends React.Component {
   handleToggleDarkMode = () => {
     this.setState(prevState => ({
       isDark: !prevState.isDark
-    }), ()=> {
+    }),()=> {
       localStorage.setItem('rs-dark', this.state.isDark);
     });
   };
@@ -179,8 +192,8 @@ export default class ReferenceStripper extends React.Component {
       this.state.flicker && this.state.copied
         ? "flicker red"
         : this.state.copied
-        ? "red"
-        : "";
+          ? "red"
+          : "";
 
     const themeDark = {
       color: this.state.copied ? "" : "var(--ash)"
@@ -194,6 +207,7 @@ export default class ReferenceStripper extends React.Component {
           changelogRef={this.changelogRef}
           handleChangelogView={this.handleChangelogView}
           isViewingChangelog={this.state.isViewingChangelog}
+          updates={this.state.updates}
         />
         <div id="container">
           <div id="header">
@@ -215,6 +229,7 @@ export default class ReferenceStripper extends React.Component {
               <ChangelogButton
                 handleChangelogView={this.handleChangelogView}
                 isDark={this.state.isDark}
+                currentVersion={this.state.currentVersion}
               />
             </div>
           </div>
@@ -224,6 +239,7 @@ export default class ReferenceStripper extends React.Component {
                 id="input"
                 value={this.state.input}
                 className={`split-view ${this.state.isDark ? "dark" : ""}`}
+                placeholder={this.state.placeholder}
                 ref={ref => (this.input = ref)}
                 onChange={event => {
                   this.handleChange(event.target.value, "input");
@@ -236,8 +252,9 @@ export default class ReferenceStripper extends React.Component {
                 value={this.state.output}
                 className={`split-view ${
                   this.state.isDark ? "dark" : ""
-                } ${flickr}`}
+                  } ${flickr}`}
                 ref={this.outputTextareaRef}
+                placeholder={this.handleStrip(this.state.placeholder)}
                 onFocus={this.handleCopy}
                 onMouseDown={this.handleCopy}
                 readOnly
