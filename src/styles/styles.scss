@@ -73,6 +73,7 @@ textarea {
   -webkit-box-shadow: none;
   box-shadow: none;
   display: block;
+  // height: 40vh;
   height: 42.5vh;
   margin: 0 auto;
   padding: 12px;
@@ -167,8 +168,8 @@ textarea {
   right: 12px;
   top: -6px;
   &:hover {
-   color: var(--ash);
-   text-decoration: underline;
+    color: var(--ash);
+    text-decoration: underline;
   }
   & span {
     display: block;
@@ -230,7 +231,7 @@ textarea {
 }
 
 #toggleLabel {
-  margin: 0 0 12px 16px;
+  margin: 4px 0 12px 12px;
 }
 
 .switch {
@@ -328,9 +329,7 @@ input {
 }
 
 @media only screen and (max-width: 405px) {
-
   #changelogButton span {
     display: none;
   }
-
 }

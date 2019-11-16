@@ -248,7 +248,6 @@ export default class ReferenceStripper extends React.Component {
               />
             </div>
           </div>
-          <div style={{ background: "green"}}>Ludwig Mies van der Rohe Luger</div>
           <div id="main">
             <div id="editor">
               <textarea
