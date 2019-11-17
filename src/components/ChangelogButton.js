@@ -27,7 +27,6 @@ export default ({ isDark, handleChangelogView, currentVersion }) => {
   return (
     <p
       id="changelogButton"
-      className={isDark ? "dark" : ""}
       onClick={handleChangelogView}
     >
       <span>{currentVersion}</span> {isDark ? noteDark : note}
