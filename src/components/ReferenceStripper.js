@@ -6,6 +6,7 @@ import ToggleButton from "./ToggleButton";
 import Wrapper from "./Wrapper";
 import ChangelogButton from "./ChangelogButton";
 import Changelog from "./Changelog";
+import Snippet from "./Snippet";
 
 export default class ReferenceStripper extends React.Component {
   constructor(props) {
@@ -20,7 +21,9 @@ export default class ReferenceStripper extends React.Component {
       isDark: false,
       currentVersion: "",
       includeParentheses: false,
-      isViewingChangelog: false
+      isViewingChangelog: false,
+      snippet: "",
+      snippets: []
     };
   }
 
@@ -33,12 +36,16 @@ export default class ReferenceStripper extends React.Component {
         const isDark = localStorage.getItem("rs-dark") === "true";
         const includeParentheses =
           localStorage.getItem("rs-include-parentheses") === "true";
+        const snippets =
+          localStorage.getItem("rs-snippets") === null
+            ? []
+            : JSON.parse(localStorage.getItem("rs-snippets"));
         const input =
           localStorage.getItem("rs-string") === null
             ? ""
             : localStorage.getItem("rs-string");
         const placeholder =
-          "Lorem (ipsum sit) amet[1], consectetur elit[citation needed], sed \"tempor (ut labore)\" (https://en.wikipedia.org/wiki/Lorem_ipsum)[2], dolore (https://en.wikipedia.org/wiki/Lorem_ipsum) magna aliqua (https://en.wikipedia.org/wiki/Lorem_ipsum) ultrices sagittis orci.[3] Ut imperdiet iaculus (rhoncus), placerat quam, vehicula pulvinar.[5]:35 Fusce vestibulum[10]:400,418[11][12][13][14], et ”mattis orci iaculis!”.[5]:35–36";
+          'Lorem (ipsum sit) amet[1], consectetur elit[citation needed], sed "tempor (ut labore)" (https://en.wikipedia.org/wiki/Lorem_ipsum)[2], dolore (https://en.wikipedia.org/wiki/Lorem_ipsum) magna aliqua (https://en.wikipedia.org/wiki/Lorem_ipsum) ultrices sagittis orci.[3] Ut imperdiet iaculus (rhoncus), placerat quam, vehicula pulvinar.[5]:35 Fusce vestibulum[10]:400,418[11][12][13][14], et ”mattis orci iaculis!”.[5]:35–36';
         const title = "Reference Stripper";
         const updates = result.updates;
         const currentVersion = `v${result.updates[0].version}`;
@@ -51,7 +58,8 @@ export default class ReferenceStripper extends React.Component {
             currentVersion,
             input,
             includeParentheses,
-            isDark
+            isDark,
+            snippets
           },
           () => {
             this.handleChange(this.state.input, "input");
@@ -65,6 +73,9 @@ export default class ReferenceStripper extends React.Component {
       if (type === "input") {
         localStorage.setItem("rs-string", this.state.input);
         this.handleChange(this.handleStrip(this.state.input), "output");
+      }
+      if (type === "snippet") {
+        // console.log(this.state.snippet);
       }
     });
   };
@@ -88,6 +99,28 @@ export default class ReferenceStripper extends React.Component {
         .filter(function(n) {
           return n != "";
         }).length
+    );
+  };
+
+  onSubmit = event => {
+    event.preventDefault();
+    const newSnippetObject = {
+      value: this.state.snippet,
+      copied: false,
+      flicker: false
+    };
+    this.setState(
+      prevState => ({
+        snippets: [newSnippetObject, ...prevState.snippets],
+        snippet: ""
+      }),
+      () => {
+        console.log(this.state.snippets);
+        localStorage.setItem(
+          "rs-snippets",
+          JSON.stringify(this.state.snippets)
+        );
+      }
     );
   };
 
@@ -179,6 +212,60 @@ export default class ReferenceStripper extends React.Component {
     );
   };
 
+  handleSnippetFlicker = index => {
+    const newSnippetsArr = this.state.snippets;
+    newSnippetsArr[index].flicker = true;
+    this.setState({ snippets: newSnippetsArr });
+    const timer = setTimeout(() => {
+      newSnippetsArr[index].flicker = false;
+      this.setState({ snippets: newSnippetsArr });
+    }, 75);
+    return () => clearTimeout(timer);
+  };
+
+  handleSnippetCopy = (value, index) => {
+    if (this.state.snippets[index].copied) {
+      this.handleSnippetFlicker(index);
+    } else {
+      const newSnippetsArr = this.state.snippets;
+      newSnippetsArr.forEach(x => (x.copied = false));
+      newSnippetsArr[index].copied = true;
+      this.setState(
+        {
+          snippets: newSnippetsArr
+        },
+        () => {
+          console.log(this.state.snippets[index]);
+        }
+      );
+    }
+    // console.log(
+    //   "snippet",
+    const snippetValue = document
+      .getElementById(`${value}-${index}`)
+      .getAttribute("data-value");
+    // );
+    // this.setState({ copied: true }, () => {
+    //   console.log("snippet is copied", this.state.copied)
+    // });
+    var dummy = document.createElement("textarea");
+    document.body.appendChild(dummy);
+    dummy.value = snippetValue;
+    dummy.select();
+    document.execCommand("copy");
+    document.body.removeChild(dummy);
+  };
+
+  handleRemoveSnippet = position => {
+    const newSnippetsArr = this.state.snippets;
+    newSnippetsArr.splice(position, 1);
+    this.setState({
+      snippets: newSnippetsArr
+    });
+    console.log("in here");
+    localStorage.setItem("rs-snippets", JSON.stringify(this.state.snippets));
+  };
+
   handleChangelogView = () => {
     const changelogDiv = this.changelogRef.current;
     changelogDiv.scrollTo(0, 0);
@@ -186,6 +273,14 @@ export default class ReferenceStripper extends React.Component {
       isViewingChangelog: !prevState.isViewingChangelog
     }));
   };
+
+  handleClearSnippets = () => {
+    this.setState({
+      snippets: []
+    }, () => {
+      localStorage.setItem("rs-snippets", JSON.stringify(this.state.snippets));
+    })
+  }
 
   handleToggleIncludeParentheses = () => {
     this.setState(
@@ -227,28 +322,78 @@ export default class ReferenceStripper extends React.Component {
         <div id="container">
           <div id="header">
             <Title text={this.state.title} isDark={this.state.isDark} />
-            <div id="settings">
-              <ToggleButton
-                isDark={this.state.isDark}
-                handleState={this.state.isDark}
-                handleOnClick={this.handleToggleDarkMode}
-                text={"Dark Mode"}
-              />
-              <ToggleButton
-                isDark={this.state.include}
-                handleState={this.state.includeParentheses}
-                handleOnClick={this.handleToggleIncludeParentheses}
-                text={"Remove"}
-                subline={"( text )"}
-              />
-              <ChangelogButton
-                handleChangelogView={this.handleChangelogView}
-                isDark={this.state.isDark}
-                currentVersion={this.state.currentVersion}
-              />
+            <div id="settings-container">
+              <div id="toggle-container">
+                <ToggleButton
+                  handleState={this.state.isDark}
+                  handleOnClick={this.handleToggleDarkMode}
+                  text={"Dark Mode"}
+                  isDark={this.state.isDark}
+                />
+                <ToggleButton
+                  handleState={this.state.includeParentheses}
+                  handleOnClick={this.handleToggleIncludeParentheses}
+                  text={"( text )"}
+                  isDark={this.state.isDark}
+                />
+              </div>
+              <form id="snippetForm" onSubmit={this.onSubmit}>
+                <input
+                  // style={{border: "2px solid pink"}}
+                  className={this.state.isDark ? "dark" : ""}
+                  type="text"
+                  id="snippetInput"
+                  value={this.state.snippet}
+                  placeholder="Enter new snippet"
+                  onChange={event =>
+                    this.handleChange(event.target.value, "snippet")
+                  }
+                ></input>
+                {/* <button style={{display: "none"}} className="button" type="submit">
+            Save Expense
+              </button> */}
+              </form>
             </div>
+            <ChangelogButton
+              handleChangelogView={this.handleChangelogView}
+              isDark={this.state.isDark}
+              currentVersion={this.state.currentVersion}
+            />
           </div>
-          <div style={{ background: "green"}}>Ludwig Mies van der Rohe Luger</div>
+          {this.state.snippets.length > 0 && (
+            <div className="snippet-container">
+            <div
+              id="snippetContainer"
+              onWheel={event => {
+                // event.preventDefault();
+                const container = document.getElementById("snippetContainer");
+                const containerScrollPosition = document.getElementById(
+                  "snippetContainer"
+                ).scrollLeft;
+                container.scrollTo({
+                  top: 0,
+                  left: containerScrollPosition + event.deltaY,
+                  behaviour: "smooth"
+                });
+              }}
+            >
+              {this.state.snippets.map((snippet, index) => (
+                <Snippet
+                  key={`${snippet.value}-${index}`}
+                  flicker={snippet.flicker}
+                  isCopied={snippet.copied}
+                  index={index}
+                  isDark={this.state.isDark}
+                  value={snippet.value}
+                  handleSnippetCopy={() =>
+                    this.handleSnippetCopy(snippet.value, index)
+                  }
+                  handleRemoveSnippet={() => this.handleRemoveSnippet(index)}
+                />
+              ))}
+            </div>   <div><svg onClick={this.handleClearSnippets} id="deleteSVG" width="24" height="24" xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd"><path d="M5.662 23l-5.369-5.365c-.195-.195-.293-.45-.293-.707 0-.256.098-.512.293-.707l14.929-14.928c.195-.194.451-.293.707-.293.255 0 .512.099.707.293l7.071 7.073c.196.195.293.451.293.708 0 .256-.097.511-.293.707l-11.216 11.219h5.514v2h-12.343zm3.657-2l-5.486-5.486-1.419 1.414 4.076 4.072h2.829zm.456-11.429l-4.528 4.528 5.658 5.659 4.527-4.53-5.657-5.657z"/></svg></div>
+            </div>
+          )}
           <div id="main">
             <div id="editor">
               <textarea

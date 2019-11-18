@@ -1,13 +1,172 @@
-import React from "react";
-import CircularProgressBar from "./CircularProgressBar";
-import Title from "./Title";
-import ConfirmButton from "./ConfirmButton";
-import ToggleButton from "./ToggleButton";
-import Wrapper from "./Wrapper";
-import ChangelogButton from "./ChangelogButton";
-import Changelog from "./Changelog";
+// Reference Stripper
 
-export default class ReferenceStripper extends React.Component {
+// Created by Julien Shim on 9/11/19.
+// Copyright © 2019 Julien Shim. All rights reserved.
+
+const Changelog = ({
+  handleChangelogView,
+  isViewingChangelog,
+  changelogRef,
+  updates
+}) => {
+  return (
+    <div
+      id="changelog"
+      className={isViewingChangelog ? "" : "hidden"}
+      onClick={handleChangelogView}
+      ref={changelogRef}
+    >
+      <div>
+        <ul>
+          <li>
+            <h1>Changelog</h1>
+          </li>
+          {updates.map(update => {
+            return (
+              <li className="changelog-li" key={update.version}>
+                <h2>
+                  <span>{`v${update.version}`}</span>
+                  {update.date}
+                </h2>
+                <p>{update.change}</p>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </div>
+  );
+};
+
+const ChangelogButton = ({ isDark, handleChangelogView, currentVersion }) => {
+  const svgStyle = { fill: "rgba(204, 204, 204, 0.8)" };
+  const note = (
+    <svg
+      style={svgStyle}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+    >
+      <path d="M4 22v-20h16v11.543c0 4.107-6 2.457-6 2.457s1.518 6-2.638 6h-7.362zm18-7.614v-14.386h-20v24h10.189c3.163 0 9.811-7.223 9.811-9.614zm-5-1.386h-10v-1h10v1zm0-4h-10v1h10v-1zm0-3h-10v1h10v-1z" />
+    </svg>
+  );
+  const noteDark = (
+    <svg
+      style={svgStyle}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+    >
+      <path d="M22 13v-13h-20v24h8.409c4.857 0 3.335-8 3.335-8 3.009.745 8.256.419 8.256-3zm-4-7h-12v-1h12v1zm0 3h-12v-1h12v1zm0 3h-12v-1h12v1zm-2.091 6.223c2.047.478 4.805-.279 6.091-1.179-1.494 1.998-5.23 5.708-7.432 6.881 1.156-1.168 1.563-4.234 1.341-5.702z" />
+    </svg>
+  );
+  return (
+    <p
+      id="changelogButton"
+      className={isDark ? "dark" : ""}
+      onClick={handleChangelogView}
+    >
+      <span>{currentVersion}</span> {isDark ? noteDark : note}
+    </p>
+  );
+};
+
+const CircularProgressBar = ({ wordCount, size }) => {
+  const percentage = (wordCount / 30) * 100;
+  const radius = size;
+  const strokeWidth = radius / 10;
+  const normalizedRadius = radius - strokeWidth * 2;
+  const circumference = normalizedRadius * 2 * Math.PI;
+  const strokeDashoffset = circumference - (percentage / 100) * circumference;
+  const backgroundStyle = {
+    strokeDashoffset,
+    stroke:
+      wordCount < 30
+        ? "var(--ash)"
+        : wordCount < 40
+        ? "var(--peach)"
+        : "transparent"
+  };
+  const progressStyle = {
+    strokeDashoffset,
+    stroke:
+      wordCount < 20
+        ? "var(--blue)"
+        : wordCount < 30
+        ? "var(--tangerine)"
+        : wordCount < 40
+        ? "var(--peach)"
+        : "transparent"
+  };
+  const textStyle = { fill: wordCount < 30 ? "var(--ash)" : "var(--peach)" };
+  return (
+    <div id="circular-progress-bar">
+      <svg height={radius * 2} width={radius * 2}>
+        <circle
+          className="circle-background"
+          strokeWidth={strokeWidth + 1}
+          style={backgroundStyle}
+          r={normalizedRadius}
+          cx={radius}
+          cy={radius}
+        />
+        <circle
+          className="circle-progress"
+          strokeWidth={strokeWidth}
+          strokeDasharray={`${circumference} ${circumference}`}
+          style={progressStyle}
+          r={normalizedRadius}
+          cx={radius}
+          cy={radius}
+        />
+        <text
+          className="circle-text"
+          x="50%"
+          y="50%"
+          dy=".3rem"
+          textAnchor="middle"
+          style={textStyle}
+        >
+          {30 - wordCount}
+        </text>
+      </svg>
+    </div>
+  );
+};
+
+const ConfirmButton = ({ className, label, handleCopy, style }) => (
+  <div id="confirm" className={className} onClick={handleCopy} style={style}>
+    {label}
+  </div>
+);
+
+const Title = ({ text, isDark }) => (
+  <h1 className={isDark ? "dark" : ""}>{text}</h1>
+);
+
+const ToggleButton = ({ isDark, handleOnClick, handleState, text, subline }) => (
+  <div id="toggle">
+    <label className="switch">
+      <input checked={handleState} type="checkbox" onChange={handleOnClick} />
+      <span className="slider"></span>
+    </label>
+    <p id="toggleLabel" className={isDark ? "dark" : ""}>
+      {text} {subline && <span id="subline">{subline}</span>}
+    </p>
+  </div>
+);
+
+const Wrapper = ({ children, isDark }) => {
+  return (
+    <div id="wrapper" className={isDark ? "dark" : ""}>
+      {children}
+    </div>
+  );
+};
+
+class ReferenceStripper extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -298,3 +457,5 @@ export default class ReferenceStripper extends React.Component {
     );
   }
 }
+
+ReactDOM.render(<ReferenceStripper />, document.getElementById("app"));

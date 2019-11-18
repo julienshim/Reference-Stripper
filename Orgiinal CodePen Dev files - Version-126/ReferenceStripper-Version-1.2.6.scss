@@ -3,8 +3,10 @@
 Created by Julien Shim on 9/11/19.
 Copyright © 2019 Julien Shim. All rights reserved. */
 
-@import "./base/settings";
-@import "./base/base";
+/* Reference Stripper
+
+Created by Julien Shim on 9/11/19.
+Copyright © 2019 Julien Shim. All rights reserved. */
 
 @import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
 
@@ -55,24 +57,15 @@ body {
   width: 100vw;
 }
 
-#settings-container {
+#settings {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  // background: pink;
-  width: 100%;
-}
-
-#toggle-container {
-  display: flex;
-  flex-direction: row;
-  // background: pink;
 }
 
 /* Header */
 
 h1 {
-  margin: 12px 12px 12px 24px;
+  margin: 12px 0 12px 24px;
 }
 
 /* Text Area */
@@ -82,8 +75,7 @@ textarea {
   -webkit-box-shadow: none;
   box-shadow: none;
   display: block;
-  height: 35vh;
-  // height: 42.5vh;
+  height: 42.5vh;
   margin: 0 auto;
   padding: 12px;
   resize: none;
@@ -156,20 +148,6 @@ textarea {
   background: var(--faded-peach);
 }
 
-#strike {
-  // color: var(--ash);
-  text-decoration: line-through;
-  font-weight: 700;
-  display: block;
-  margin-top: 2px;
-  width: 74px;
-}
-
-#strike:before,
-#strike:after {
-  content: "\00a0\00a0";
-}
-
 .warning {
   position: absolute;
   color: var(--faded-peach);
@@ -189,7 +167,7 @@ textarea {
   padding: 5px 10px;
   position: absolute;
   right: 12px;
-  bottom: 0;
+  top: -6px;
   &:hover {
     color: var(--ash);
     text-decoration: underline;
@@ -254,7 +232,7 @@ textarea {
 }
 
 #toggleLabel {
-  margin: 0 0 12px 12px;
+  margin: 0 0 12px 16px;
 }
 
 .switch {
@@ -272,10 +250,10 @@ textarea {
   }
 }
 
-// #subline {
-//   border: 1px var(--ash) dashed;
-//   padding: 3px 6px;
-// }
+#subline {
+  border: 1px var(--ash) dashed;
+  padding: 3px 6px;
+}
 
 .slider {
   /* Switch Slider*/
@@ -312,124 +290,11 @@ input {
   }
   &:focus + .slider {
     /* Focus Option */
-    box-shadow: 0 0 1px hsl(207, 90%, 54%);
-  }
-}
-
-#deleteSVG {
-  margin-top: 12px;
-  margin-right: 24px;
-  margin-left: auto;
-  fill: var(--ash);
-  cursor: pointer;
-  &:hover {
-    fill: red;
-  }
-}
-
-form#snippetForm {
-  width: 100%;
-  margin: -6px 12px 0 12px;
-  padding: 0;
-  height: 30px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-}
-
-.snippet-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: calc(100%-48px);
-}
-
-input#snippetInput {
-  // color: var(--ash);
-  border-bottom: 1px dotted var(--faded-ash);
-  border-top: none;
-  border-right: none;
-  border-left: none;
-  background: none;
-  width: 100%;
-  height: 30px;
-  &:focus {
-    outline: none;
-  }
-}
-
-#snippetContainer {
-  border-left: 2px solid var(--blue);
-  border-right: 2px solid var(--blue);
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: flex-start;
-  flex-direction: row;
-  overflow-x: auto;
-  margin: 12px 12px;
-  padding: 4px 12px 0 12px;
-  // height: 60px;
-  overflow: auto;
-  width: 100%;
-  // background: pink;
-  // padding: 0;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-  & div.snippet-container {
-    display: inline-block;
-    margin: 0 10px 5px 0;
-    flex: 0 0 auto;
-
-    div {
-      height: 20px;
-      // font-size: 10px;
-    }
-  }
-  & div.snippet {
-    display: flex;
-    flex-direction: row;
-  }
-  & div.snippet-label {
-    // color: var(--ash);
-    color: var(--charcoal);
-    padding: 1px 5px 0 5px;
-    overflow: hidden;
-  }
-  & div.delete-tag {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid var(--faded-ash);
-    background: none;
-    padding: 0 5px;
-    &:hover {
-      background: red;
-      color: black;
-    }
+    box-shadow: 0 0 1px #2196f3;
   }
 }
 
 @media only screen and (min-width: 768px) {
-  #deleteSvg {
-    margin-top: 0;
-  }
-  form#snippetForm {
-    max-width: 350px;
-    margin: 12px 12px 0 0;
-  }
-
-  #snippetContainer {
-    margin: 0 12px 12px 12px;
-  }
-
-  input#snippetInput {
-    max-width: 350px;
-  }
-
-  h1 {
-    min-width: 281px;
-  }
   #main {
     display: flex;
   }
