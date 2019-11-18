@@ -342,6 +342,7 @@ form#snippetForm {
   flex-direction: row;
   justify-content: space-between;
   width: calc(100%-48px);
+  cursor: pointer;
 }
 
 input#snippetInput {
@@ -395,6 +396,10 @@ input#snippetInput {
     color: var(--charcoal);
     padding: 1px 5px 0 5px;
     overflow: hidden;
+    &:hover {
+      font-weight: 700;
+      border-bottom: 1px solid var(--blue);
+    }
   }
   & div.delete-tag {
     display: flex;
@@ -406,12 +411,13 @@ input#snippetInput {
     &:hover {
       background: red;
       color: black;
+      border-bottom: 1px solid var(--blue);
     }
   }
 }
 
 @media only screen and (min-width: 768px) {
-  #deleteSvg {
+  #deleteSVG {
     margin-top: 0;
   }
   form#snippetForm {

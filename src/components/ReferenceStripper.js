@@ -69,7 +69,9 @@ export default class ReferenceStripper extends React.Component {
   }
 
   handleChange = (value, type) => {
-    this.setState({ [type]: value, copied: false }, () => {
+    const newSnippetsArr = this.state.snippets;
+    newSnippetsArr.forEach(x => (x.copied = false));
+    this.setState({ [type]: value, copied: false, snippets: newSnippetsArr }, () => {
       if (type === "input") {
         localStorage.setItem("rs-string", this.state.input);
         this.handleChange(this.handleStrip(this.state.input), "output");
@@ -196,7 +198,9 @@ export default class ReferenceStripper extends React.Component {
     textareaText.select();
     document.execCommand("copy");
     window.getSelection().removeAllRanges();
-    this.setState({ copied: true }, () => {
+    const newSnippetsArr = this.state.snippets;
+    newSnippetsArr.forEach(x => x.copied = false);
+    this.setState({ copied: true, snippets: newSnippetsArr }, () => {
       this.handleFlicker();
     });
   };
@@ -232,7 +236,8 @@ export default class ReferenceStripper extends React.Component {
       newSnippetsArr[index].copied = true;
       this.setState(
         {
-          snippets: newSnippetsArr
+          snippets: newSnippetsArr,
+          copied: false
         },
         () => {
           console.log(this.state.snippets[index]);
