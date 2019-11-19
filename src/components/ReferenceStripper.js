@@ -350,6 +350,7 @@ export default class ReferenceStripper extends React.Component {
                   id="snippetInput"
                   value={this.state.snippet}
                   placeholder="Enter new snippet"
+                  autoComplete="off"
                   onChange={event =>
                     this.handleChange(event.target.value, "snippet")
                   }
