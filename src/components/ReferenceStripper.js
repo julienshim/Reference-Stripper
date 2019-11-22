@@ -104,18 +104,34 @@ export default class ReferenceStripper extends React.Component {
 
   onSubmit = event => {
     event.preventDefault();
-    const newSnippetObject = {
-      value: this.state.snippet,
-      copied: false,
-      flicker: false
-    };
+    const isHashed = this.state.snippet[0] === "#";
+    const isAt = this.state.snippet[0] === "@";
+    const cleanSnippet = this.state.snippet.replace(/[@#\"]/g, "")
+    const cleanSnippetArr = [...new Set(cleanSnippet.replace(/[\\]/g, "\"").trim().split(/\s{2,}/))].map(x => {
+
+      return ({
+        value: x,
+        copied: false,
+        flicker: false,
+        isHashed,
+        isAt
+      })
+
+    })
+
+    // console.log(isHashed, cleanSnippetArr)
+    // const newSnippetObject = {
+    //   value: this.state.snippet,
+    //   copied: false,
+    //   flicker: false
+    // };
     this.setState(
       prevState => ({
-        snippets: [newSnippetObject, ...prevState.snippets],
+        snippets: [...cleanSnippetArr, ...prevState.snippets],
         snippet: ""
       }),
       () => {
-        console.log(this.state.snippets);
+        // console.log(this.state.snippets);
         localStorage.setItem(
           "rs-snippets",
           JSON.stringify(this.state.snippets)
@@ -235,7 +251,7 @@ export default class ReferenceStripper extends React.Component {
           snippets: newSnippetsArr
         },
         () => {
-          console.log(this.state.snippets[index]);
+          // console.log(this.state.snippets[index]);
         }
       );
     }
@@ -262,7 +278,7 @@ export default class ReferenceStripper extends React.Component {
     this.setState({
       snippets: newSnippetsArr
     });
-    console.log("in here");
+    // console.log("in here");
     localStorage.setItem("rs-snippets", JSON.stringify(this.state.snippets));
   };
 
@@ -385,6 +401,8 @@ export default class ReferenceStripper extends React.Component {
                   index={index}
                   isDark={this.state.isDark}
                   value={snippet.value}
+                  isHashed={snippet.isHashed === true}
+                  isAt={snippet.isAt === true}
                   handleSnippetCopy={() =>
                     this.handleSnippetCopy(snippet.value, index)
                   }
