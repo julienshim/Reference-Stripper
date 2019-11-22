@@ -166,8 +166,23 @@ textarea {
   width: 74px;
 }
 
+.strike-tag {
+  background: var(--tangerine);
+  font-size: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 5px 2px 5px;
+}
+
+#switch {
+  text-decoration: line-through;
+}
+
 #strike:before,
-#strike:after {
+#strike:after,
+#switch:before,
+#switch:after {
   content: "\00a0\00a0";
 }
 
@@ -409,7 +424,7 @@ input#snippetInput {
     align-items: center;
     justify-content: center;
     border: 1px solid var(--faded-ash);
-    background: none;
+    background: var(--faded-peach);
     padding: 0 5px;
     &:hover {
       background: red;

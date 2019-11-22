@@ -1,6 +1,11 @@
 {
   "updates": [
     {
+      "version": "1.3.1",
+      "date": "2019-11-21",
+      "change": "Added Batch Wikipedia Heading to Snippet Processing via hashtag (#) and at sign (@) symbols. Individual Wikipedia headings can be processed with either symbols as well. Please take note of the differences as follows: The hashtag (#) symbol will include a link to the related Wikipedia article with the snippet for user convenience, and convert Wikipedia headings with parentheses into 'the' snippets on copy (e.g. 'Us (2019 film)' --> 'the 2019 film Us'). The at sign (@) symbol will convert Wikipedia headings with parentheses into 'the' snippets on copy, but will not include a link to the related Wikipedia article."
+    },
+    {
       "version": "1.3.0",
       "date": "2019-11-17",
       "change": "Added Snippets to allow users to enter, store, and quickly access commonly used text."

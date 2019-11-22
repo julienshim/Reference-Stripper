@@ -13,7 +13,7 @@ export default ({
   isAt
 }) => {
   const wikiRef = `https://en.wikipedia.org/wiki/${value.split(" ").join("_")}`
-  const hashCheckedValue = (isHashed || isAt) ? `the ${value.replace(/[(]/g, "#").replace(/[)]/g, "").split(/[#\s]{2,}/).reverse().join(" ")}` : value ;
+  const hashCheckedValue = (isHashed || isAt) && value.includes("(") ? `the ${value.replace(/[(]/g, "#").replace(/[)]/g, "").split(/[#\s]{2,}/).reverse().join(" ")}` : value ;
   return (
     <div className="snippet-container">
       <div className="snippet">
@@ -36,6 +36,9 @@ export default ({
           <a href={wikiRef} style={{color: "inherit", textDecoration: "inherit"}} target="_blank">
             <div className="wiki">{"W"}</div>
           </a>
+        )}
+        {((isHashed || isAt) && value.includes("(")) && (
+            <div className="strike-tag"><span style={{color: "var(--charcoal)"}} id="switch">{"( )"}</span></div>
         )}
         <div className="delete-tag" onClick={handleRemoveSnippet}>
           {"X"}
