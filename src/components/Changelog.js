@@ -12,7 +12,7 @@ const Changelog = ({
     <div
       id="changelog"
       className={isViewingChangelog ? '' : 'hidden'}
-      onClick={() => {}}
+      onClick={handleChangelogView}
       onKeyUp={handleChangelogView}
       ref={changelogRef}
       role="button"
@@ -29,10 +29,18 @@ Changelog.propTypes = {
   changelogRef: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.shape({
-      current: PropTypes.instanceOf(HTMLInputElement)
+      current: PropTypes.any
     })
   ]),
-  updates: PropTypes.arrayOf
+  updates: PropTypes.arrayOf(
+    PropTypes.oneOfType([
+      PropTypes.shape({
+        version: PropTypes.string,
+        date: PropTypes.string,
+        change: PropTypes.string
+      })
+    ])
+  )
 };
 
 export default Changelog;
