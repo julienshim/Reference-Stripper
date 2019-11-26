@@ -1,7 +1,8 @@
-import React from "react";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-export default ({ handleOnClick, handleState, text, isDark }) => {
-  const svgStyle = isDark ? { fill: "var(--ash)" } : {};
+const ToggleButton = ({ handleOnClick, handleState, text, isDark }) => {
+  const svgStyle = isDark ? { fill: 'var(--ash)' } : {};
   const iconDarkMode = (
     <svg
       style={svgStyle}
@@ -16,14 +17,28 @@ export default ({ handleOnClick, handleState, text, isDark }) => {
 
   return (
     <div id="toggle">
-      <label className="switch">
-        <input checked={handleState} type="checkbox" onChange={handleOnClick} />
-        <span className="slider"></span>
+      <label className="switch" htmlFor={text}>
+        <input
+          id={text}
+          checked={handleState}
+          type="checkbox"
+          onChange={handleOnClick}
+        />
+        <span className="slider" />
       </label>
-      <p id="toggleLabel" className={isDark ? "dark" : ""}>
+      <p id="toggleLabel" className={isDark ? 'dark' : ''}>
         {/* {text} {subline && <span id="subline">{subline}</span>} */}
-        {text === "Dark Mode" ? iconDarkMode : <span id="strike">{text}</span>}
+        {text === 'Dark Mode' ? iconDarkMode : <span id="strike">{text}</span>}
       </p>
     </div>
   );
 };
+
+ToggleButton.propTypes = {
+  handleOnClick: PropTypes.func,
+  handleState: PropTypes.bool,
+  text: PropTypes.string,
+  isDark: PropTypes.bool
+};
+
+export default ToggleButton;
