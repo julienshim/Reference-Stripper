@@ -3,14 +3,14 @@
 Created by Julien Shim on 9/11/19.
 Copyright © 2019 Julien Shim. All rights reserved. */
 
-@import "./base/settings";
-@import "./base/base";
+@import './base/settings';
+@import './base/base';
 
-@import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 
 * {
   box-sizing: border-box;
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 body {
@@ -60,14 +60,12 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  // background: pink;
   width: 100%;
 }
 
 #toggle-container {
   display: flex;
   flex-direction: row;
-  // background: pink;
 }
 
 /* Header */
@@ -79,18 +77,14 @@ h1 {
 /* Text Area */
 
 textarea {
+  box-shadow: none;
   -moz-box-shadow: none;
   -webkit-box-shadow: none;
-  box-shadow: none;
   display: block;
   height: 35vh;
-  // height: 42.5vh;
   margin: 0 auto;
   padding: 12px;
   resize: none;
-  // &::placeholder {
-  //   color: var(--ash);
-  // }
 }
 
 .split-view {
@@ -158,20 +152,19 @@ textarea {
 }
 
 #strike {
-  // color: var(--ash);
-  text-decoration: line-through;
-  font-weight: 700;
   display: block;
+  font-weight: 700;
   margin-top: 2px;
+  text-decoration: line-through;
   width: 74px;
 }
 
 .strike-tag {
-  background: var(--tangerine);
-  font-size: 10px;
-  display: flex;
-  justify-content: center;
   align-items: center;
+  background: var(--tangerine);
+  display: flex;
+  font-size: 10px;
+  justify-content: center;
   padding: 0 5px 2px 5px;
 }
 
@@ -183,13 +176,13 @@ textarea {
 #strike:after,
 #switch:before,
 #switch:after {
-  content: "\00a0\00a0";
+  content: '\00a0\00a0';
 }
 
 .warning {
-  position: absolute;
   color: var(--faded-peach);
   padding: 6px 12px;
+  position: absolute;
 }
 
 .example {
@@ -200,25 +193,24 @@ textarea {
 /* Changelog */
 
 #changelogButton {
+  bottom: 0;
   cursor: pointer;
   display: flex;
   padding: 5px 10px;
   position: absolute;
   right: 12px;
-  bottom: 0;
   &:hover {
     color: var(--ash);
     text-decoration: underline;
   }
   & span {
-    display: block;
     color: var(--ash);
+    display: block;
     margin: 4px 8px;
   }
 }
 
 #changelog {
-  // visibility: hidden;
   height: 100vh;
   left: 0;
   overflow: scroll;
@@ -241,8 +233,8 @@ textarea {
         margin-top: -12px;
       }
       & li h2 {
-        font-weight: 700;
         display: flex;
+        font-weight: 700;
         & span {
           color: var(--peach);
           display: block;
@@ -288,11 +280,6 @@ textarea {
   }
 }
 
-// #subline {
-//   border: 1px var(--ash) dashed;
-//   padding: 3px 6px;
-// }
-
 .slider {
   /* Switch Slider*/
   background-color: var(--ash);
@@ -302,17 +289,17 @@ textarea {
   position: absolute;
   right: 0;
   top: 0;
-  -webkit-transition: 0.4s;
   transition: 0.4s;
+  -webkit-transition: 0.4s;
   &:before {
     background-color: var(--white);
     bottom: 4px;
-    content: "";
+    content: '';
     height: 16px;
     left: 4px;
     position: absolute;
-    -webkit-transition: 0.4s;
     transition: 0.4s;
+    -webkit-transition: 0.4s;
     width: 16px;
   }
 }
@@ -322,9 +309,9 @@ input {
     background-color: var(--blue);
   }
   &:checked + .slider:before {
-    -webkit-transform: translateX(16px); /* The same size as slider */
+    transform: translateX(16px); /* The same size as slider */
     -ms-transform: translateX(16px);
-    transform: translateX(16px);
+    -webkit-transform: translateX(16px);
   }
   &:focus + .slider {
     /* Focus Option */
@@ -333,74 +320,68 @@ input {
 }
 
 #deleteSVG {
-  margin-top: 12px;
-  margin-right: 24px;
-  margin-left: auto;
-  fill: var(--ash);
   cursor: pointer;
+  fill: var(--ash);
+  margin-left: auto;
+  margin-right: 24px;
+  margin-top: 12px;
   &:hover {
     fill: red;
   }
 }
 
 form#snippetForm {
-  width: 100%;
-  margin: -6px 12px 0 12px;
-  padding: 0;
-  height: 30px;
+  align-items: flex-end;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  height: 30px;
+  margin: -6px 12px 0 12px;
+  padding: 0;
+  width: 100%;
 }
 
 .snippets-container {
+  cursor: pointer;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   width: calc(100%-48px);
-  cursor: pointer;
 }
 
 input#snippetInput {
-  // color: var(--ash);
-  border-bottom: 1px dotted var(--faded-ash);
-  border-top: none;
-  border-right: none;
-  border-left: none;
   background: none;
-  width: 100%;
+  border-bottom: 1px dotted var(--faded-ash);
+  border-left: none;
+  border-right: none;
+  border-top: none;
   height: 30px;
+  width: 100%;
   &:focus {
     outline: none;
   }
 }
 
 #snippetsContainer {
+  align-items: flex-start;
   border-left: 2px solid var(--blue);
   border-right: 2px solid var(--blue);
   display: flex;
-  flex-wrap: nowrap;
-  align-items: flex-start;
   flex-direction: row;
-  overflow-x: auto;
+  flex-wrap: nowrap;
   margin: 12px 12px;
-  padding: 4px 12px 0 12px;
-  // height: 60px;
   overflow: auto;
+  overflow-x: auto;
+  padding: 4px 12px 0 12px;
   width: 100%;
-  // background: pink;
-  // padding: 0;
   &::-webkit-scrollbar {
     display: none;
   }
   & div.snippet-container {
     display: inline-block;
-    margin: 0 10px 5px 0;
     flex: 0 0 auto;
-
+    margin: 0 10px 5px 0;
     div {
       height: 20px;
-      // font-size: 10px;
     }
   }
   & div.snippet {
@@ -408,41 +389,39 @@ input#snippetInput {
     flex-direction: row;
   }
   & div.snippet-label {
-    // color: var(--ash);
     color: var(--charcoal);
-    padding: 1px 5px 0 5px;
     overflow: hidden;
+    padding: 1px 5px 0 5px;
     &:hover {
-      font-weight: 700;
       border-bottom: 1px solid var(--blue);
+      font-weight: 700;
     }
   }
   & div.delete-tag {
+    align-items: center;
+    background: var(--faded-peach);
+    border: 1px solid var(--faded-ash);
+    display: flex;
     font-size: 10px;
     font-weight: 700;
-    display: flex;
-    align-items: center;
     justify-content: center;
-    border: 1px solid var(--faded-ash);
-    background: var(--faded-peach);
     padding: 0 5px;
     &:hover {
       background: red;
-      color: white;
       border-bottom: 1px solid var(--blue);
+      color: white;
     }
   }
 }
 
 .wiki {
-  font-size: 10px;
-  font-family: "Garamond", "Adobe Garamond Pro", "Warnock", "Warnock Pro",
-    "Bodoni", "Bodoni MT", "Goudy Old Style", "Musica", "serif";
-  display: flex;
-  justify-content: center;
-  // border: 1px solid var(--faded-ash);
-  background: var(--faded-blue);
   align-items: center;
+  background: var(--faded-blue);
+  display: flex;
+  font-family: 'Garamond', 'Adobe Garamond Pro', 'Warnock', 'Warnock Pro',
+    'Bodoni', 'Bodoni MT', 'Goudy Old Style', 'Musica', 'serif';
+  font-size: 10px;
+  justify-content: center;
   padding: 0 5px;
   padding-top: 3.5px;
   &:hover {
@@ -456,8 +435,8 @@ input#snippetInput {
     margin-top: 0;
   }
   form#snippetForm {
-    max-width: 350px;
     margin: 12px 12px 0 0;
+    max-width: 350px;
   }
 
   #snippetsContainer {
