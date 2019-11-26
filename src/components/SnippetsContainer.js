@@ -1,8 +1,9 @@
-import React from "react";
-import Snippet from "./Snippet";
-import ClearSnippetsButton from "./ClearSnippetsButton";
+import React from 'react';
+import PropTypes from 'prop-types';
+import Snippet from './Snippet';
+import ClearSnippetsButton from './ClearSnippetsButton';
 
-export default ({
+const SnippetsContainer = ({
   snippets,
   isDark,
   handleSnippetCopy,
@@ -14,20 +15,20 @@ export default ({
       id="snippetsContainer"
       onWheel={event => {
         // event.preventDefault();
-        const container = document.getElementById("snippetsContainer");
+        const container = document.getElementById('snippetsContainer');
         const containerScrollPosition = document.getElementById(
-          "snippetsContainer"
+          'snippetsContainer'
         ).scrollLeft;
         container.scrollTo({
           top: 0,
           left: containerScrollPosition + event.deltaY,
-          behaviour: "smooth"
+          behaviour: 'smooth'
         });
       }}
     >
       {snippets.map((snippet, index) => (
         <Snippet
-          key={`${snippet.value}-${index}`}
+          key={`${snippet.value}`}
           flicker={snippet.flicker}
           isCopied={snippet.copied}
           index={index}
@@ -39,9 +40,29 @@ export default ({
           handleRemoveSnippet={() => handleRemoveSnippet(index)}
         />
       ))}
-    </div>{" "}
+    </div>{' '}
     <div>
       <ClearSnippetsButton handleClearSnippets={handleClearSnippets} />
     </div>
   </div>
 );
+
+SnippetsContainer.propTypes = {
+  snippets: PropTypes.arrayOf(
+    PropTypes.oneOfType([
+      PropTypes.shape({
+        value: PropTypes.string,
+        copied: PropTypes.bool,
+        flicker: PropTypes.bool,
+        isHashed: PropTypes.bool,
+        isAt: PropTypes.bool
+      })
+    ])
+  ),
+  isDark: PropTypes.bool,
+  handleSnippetCopy: PropTypes.func,
+  handleClearSnippets: PropTypes.func,
+  handleRemoveSnippet: PropTypes.func
+};
+
+export default SnippetsContainer;
