@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 // Reference Stripper
 
 // Created by Julien Shim on 9/11/19.
@@ -12,7 +14,7 @@ const Changelog = ({
   return (
     <div
       id="changelog"
-      className={isViewingChangelog ? "" : "hidden"}
+      className={isViewingChangelog ? '' : 'hidden'}
       onClick={handleChangelogView}
       ref={changelogRef}
     >
@@ -39,7 +41,7 @@ const Changelog = ({
 };
 
 const ChangelogButton = ({ isDark, handleChangelogView, currentVersion }) => {
-  const svgStyle = { fill: "rgba(204, 204, 204, 0.8)" };
+  const svgStyle = { fill: 'rgba(204, 204, 204, 0.8)' };
   const note = (
     <svg
       style={svgStyle}
@@ -63,10 +65,7 @@ const ChangelogButton = ({ isDark, handleChangelogView, currentVersion }) => {
     </svg>
   );
   return (
-    <p
-      id="changelogButton"
-      onClick={handleChangelogView}
-    >
+    <p id="changelogButton" onClick={handleChangelogView}>
       <span>{currentVersion}</span> {isDark ? noteDark : note}
     </p>
   );
@@ -83,23 +82,23 @@ const CircularProgressBar = ({ wordCount, size }) => {
     strokeDashoffset,
     stroke:
       wordCount < 30
-        ? "var(--ash)"
+        ? 'var(--ash)'
         : wordCount < 40
-        ? "var(--peach)"
-        : "transparent"
+        ? 'var(--peach)'
+        : 'transparent'
   };
   const progressStyle = {
     strokeDashoffset,
     stroke:
       wordCount < 20
-        ? "var(--blue)"
+        ? 'var(--blue)'
         : wordCount < 30
-        ? "var(--tangerine)"
+        ? 'var(--tangerine)'
         : wordCount < 40
-        ? "var(--peach)"
-        : "transparent"
+        ? 'var(--peach)'
+        : 'transparent'
   };
-  const textStyle = { fill: wordCount < 30 ? "var(--ash)" : "var(--peach)" };
+  const textStyle = { fill: wordCount < 30 ? 'var(--ash)' : 'var(--peach)' };
   return (
     <div id="circular-progress-bar">
       <svg height={radius * 2} width={radius * 2}>
@@ -141,54 +140,105 @@ const ConfirmButton = ({ className, label, handleCopy, style }) => (
   </div>
 );
 
-const Snippet = ({ value, index, handleRemoveSnippet, isDark, flicker, isCopied, handleSnippetCopy }) => (
-  <div className="snippet-container">
-    <div className="snippet">
-      <div
-        id={`${value}-${index}`}
-        className="snippet-label"
-        style={
-          isCopied && !flicker ? {background: "var(--peach)"} :
-          isDark
-            ? { background: "var(--ash)" }
-            : { background: "var(--faded-ash)" }
-        }
-        data-value={value}
-        onClick={handleSnippetCopy}
-      >
-        {value.length <= 30 ? value : `${value.slice(0, 30).trim()}...`}
-      </div>
-      <div className="delete-tag" onClick={handleRemoveSnippet}>
-        {"x"}
+const Snippet = ({
+  value,
+  index,
+  handleRemoveSnippet,
+  isDark,
+  flicker,
+  isCopied,
+  handleSnippetCopy,
+  isHashed
+}) => {
+  const wikiRef = `https://en.wikipedia.org/wiki/${value.split(' ').join('_')}`;
+  const hashCheckedValue =
+    isHashed && value.includes('(')
+      ? `the ${value
+          .replace(/[(]/g, '#')
+          .replace(/[)]/g, '')
+          .split(/[#\s]{2,}/)
+          .reverse()
+          .join(' ')}`
+      : value;
+  return (
+    <div className="snippet-container">
+      <div className="snippet">
+        <div
+          id={`${value}-${index}`}
+          className="snippet-label"
+          style={
+            isCopied && !flicker
+              ? { background: 'var(--peach)' }
+              : isDark
+              ? { background: 'var(--ash)' }
+              : { background: 'var(--faded-ash)' }
+          }
+          data-value={hashCheckedValue}
+          onClick={handleSnippetCopy}
+        >
+          {value.length <= 30 ? value : `${value.slice(0, 30).trim()}...`}
+        </div>
+        {isHashed && (
+          <a
+            href={wikiRef}
+            style={{ color: 'inherit', textDecoration: 'inherit' }}
+            target="_blank"
+          >
+            <div className="wiki">W</div>
+          </a>
+        )}
+        {isHashed && value.includes('(') && (
+          <div className="strike-tag">
+            <span style={{ color: 'var(--charcoal)' }} id="switch">
+              ( )
+            </span>
+          </div>
+        )}
+        <div className="delete-tag" onClick={handleRemoveSnippet}>
+          X
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 const Title = ({ text, isDark }) => (
-  <h1 id="title" className={isDark ? "dark" : ""}>{text}</h1>
+  <h1 id="title" className={isDark ? 'dark' : ''}>
+    {text}
+  </h1>
 );
 
 const ToggleButton = ({ handleOnClick, handleState, text, isDark }) => {
-  const svgStyle = isDark ? {fill: "var(--ash)"} : {}
-  const iconDarkMode = (<svg style={svgStyle} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12-5.373-12-12-12-12 5.373-12 12zm2 0c0-5.514 4.486-10 10-10v20c-5.514 0-10-4.486-10-10z"/></svg>);
-  
+  const svgStyle = isDark ? { fill: 'var(--ash)' } : {};
+  const iconDarkMode = (
+    <svg
+      style={svgStyle}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+    >
+      <path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12-5.373-12-12-12-12 5.373-12 12zm2 0c0-5.514 4.486-10 10-10v20c-5.514 0-10-4.486-10-10z" />
+    </svg>
+  );
+
   return (
-  <div id="toggle">
-    <label className="switch">
-      <input checked={handleState} type="checkbox" onChange={handleOnClick} />
-      <span className="slider"></span>
-    </label>
-    <p id="toggleLabel" className={isDark ? "dark" : ""}>
-      {/* {text} {subline && <span id="subline">{subline}</span>} */}
-      {text === "Dark Mode" ? iconDarkMode : <span id="strike">{text}</span>}
-    </p>
-  </div>
-)};
+    <div id="toggle">
+      <label className="switch">
+        <input checked={handleState} type="checkbox" onChange={handleOnClick} />
+        <span className="slider" />
+      </label>
+      <p id="toggleLabel" className={isDark ? 'dark' : ''}>
+        {/* {text} {subline && <span id="subline">{subline}</span>} */}
+        {text === 'Dark Mode' ? iconDarkMode : <span id="strike">{text}</span>}
+      </p>
+    </div>
+  );
+};
 
 const Wrapper = ({ children, isDark }) => {
   return (
-    <div id="wrapper" className={isDark ? "dark" : ""}>
+    <div id="wrapper" className={isDark ? 'dark' : ''}>
       {children}
     </div>
   );
@@ -198,42 +248,42 @@ class ReferenceStripper extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: "",
-      input: "",
-      placeholder: "",
-      output: "",
+      title: '',
+      input: '',
+      placeholder: '',
+      output: '',
       updates: [],
       copied: false,
       isDark: false,
-      currentVersion: "",
+      currentVersion: '',
       includeParentheses: false,
       isViewingChangelog: false,
-      snippet: "",
+      snippet: '',
       snippets: []
     };
   }
 
   componentDidMount() {
     fetch(
-      "https://raw.githubusercontent.com/julienshim/Reference-Stripper/master/public/updates.json"
+      'https://raw.githubusercontent.com/julienshim/Reference-Stripper/master/public/updates.json'
     )
       .then(response => response.json())
       .then(result => {
-        const isDark = localStorage.getItem("rs-dark") === "true";
+        const isDark = localStorage.getItem('rs-dark') === 'true';
         const includeParentheses =
-          localStorage.getItem("rs-include-parentheses") === "true";
+          localStorage.getItem('rs-include-parentheses') === 'true';
         const snippets =
-          localStorage.getItem("rs-snippets") === null
+          localStorage.getItem('rs-snippets') === null
             ? []
-            : JSON.parse(localStorage.getItem("rs-snippets"));
+            : JSON.parse(localStorage.getItem('rs-snippets'));
         const input =
-          localStorage.getItem("rs-string") === null
-            ? ""
-            : localStorage.getItem("rs-string");
+          localStorage.getItem('rs-string') === null
+            ? ''
+            : localStorage.getItem('rs-string');
         const placeholder =
           'Lorem (ipsum sit) amet[1], consectetur elit[citation needed], sed "tempor (ut labore)" (https://en.wikipedia.org/wiki/Lorem_ipsum)[2], dolore (https://en.wikipedia.org/wiki/Lorem_ipsum) magna aliqua (https://en.wikipedia.org/wiki/Lorem_ipsum) ultrices sagittis orci.[3] Ut imperdiet iaculus (rhoncus), placerat quam, vehicula pulvinar.[5]:35 Fusce vestibulum[10]:400,418[11][12][13][14], et ”mattis orci iaculis!”.[5]:35–36';
-        const title = "Reference Stripper";
-        const updates = result.updates;
+        const title = 'Reference Stripper';
+        const { updates } = result;
         const currentVersion = `v${result.updates[0].version}`;
 
         this.setState(
@@ -248,7 +298,7 @@ class ReferenceStripper extends React.Component {
             snippets
           },
           () => {
-            this.handleChange(this.state.input, "input");
+            this.handleChange(this.state.input, 'input');
           }
         );
       });
@@ -257,15 +307,18 @@ class ReferenceStripper extends React.Component {
   handleChange = (value, type) => {
     const newSnippetsArr = this.state.snippets;
     newSnippetsArr.forEach(x => (x.copied = false));
-    this.setState({ [type]: value, copied: false, snippets: newSnippetsArr }, () => {
-      if (type === "input") {
-        localStorage.setItem("rs-string", this.state.input);
-        this.handleChange(this.handleStrip(this.state.input), "output");
+    this.setState(
+      { [type]: value, copied: false, snippets: newSnippetsArr },
+      () => {
+        if (type === 'input') {
+          localStorage.setItem('rs-string', this.state.input);
+          this.handleChange(this.handleStrip(this.state.input), 'output');
+        }
+        if (type === 'snippet') {
+          // console.log(this.state.snippet);
+        }
       }
-      if (type === "snippet") {
-        // console.log(this.state.snippet);
-      }
-    });
+    );
   };
 
   handleFlicker = () => {
@@ -280,32 +333,53 @@ class ReferenceStripper extends React.Component {
     return (
       string
         // strips whitespace (e.g. new line, tab) before counting
-        .replace(/\s/g, " ")
+        .replace(/\s/g, ' ')
         // strips dashes before counting
-        .replace(/[-–]/g, " ")
-        .split(" ")
+        .replace(/[-–]/g, ' ')
+        .split(' ')
         .filter(function(n) {
-          return n != "";
+          return n != '';
         }).length
     );
   };
 
   onSubmit = event => {
     event.preventDefault();
-    const newSnippetObject = {
-      value: this.state.snippet,
-      copied: false,
-      flicker: false
-    };
+    const isHashed = this.state.snippet[0] === '#';
+    const isEscapingQuotes = this.state.snippet.includes('\\"');
+    const cleanSnippet = isEscapingQuotes
+      ? this.state.snippet
+          .replace(/[\"]/g, '')
+          .replace(/[#]/g, ' ')
+          .replace(/[\\]/g, '"')
+      : this.state.snippet.replace(/[#]/g, ' ');
+    const cleanSnippetSet = isHashed
+      ? cleanSnippet.trim().split(/\s{2,}/)
+      : [this.state.snippet];
+    const cleanSnippetArr = [...new Set(cleanSnippetSet)].map(x => {
+      return {
+        value: x,
+        copied: false,
+        flicker: false,
+        isHashed
+      };
+    });
+
+    // console.log(isHashed, cleanSnippetArr)
+    // const newSnippetObject = {
+    //   value: this.state.snippet,
+    //   copied: false,
+    //   flicker: false
+    // };
     this.setState(
       prevState => ({
-        snippets: [newSnippetObject, ...prevState.snippets],
-        snippet: ""
+        snippets: [...cleanSnippetArr, ...prevState.snippets],
+        snippet: ''
       }),
       () => {
-        console.log(this.state.snippets);
+        // console.log(this.state.snippets);
         localStorage.setItem(
-          "rs-snippets",
+          'rs-snippets',
           JSON.stringify(this.state.snippets)
         );
       }
@@ -316,20 +390,20 @@ class ReferenceStripper extends React.Component {
     let isWriting = true;
     let isQuoting = false;
     let hasClosed = true;
-    let stripped = "";
+    let stripped = '';
     let isReferencing = false;
 
     for (let i = 0; i < string.length; i++) {
       const pURL =
-        string[i + 1] === "(" &&
-        string[i + 2] === "h" &&
-        string[i + 3] === "t" &&
-        string[i + 4] === "t" &&
-        string[i + 5] === "p";
+        string[i + 1] === '(' &&
+        string[i + 2] === 'h' &&
+        string[i + 3] === 't' &&
+        string[i + 4] === 't' &&
+        string[i + 5] === 'p';
 
-      const pText = string[i + 1] === "(";
+      const pText = string[i + 1] === '(';
 
-      if (string[i] === "[" && !isQuoting) {
+      if (string[i] === '[' && !isQuoting) {
         isWriting = false;
         hasClosed = false;
         isReferencing = true;
@@ -339,31 +413,31 @@ class ReferenceStripper extends React.Component {
         isWriting = false;
         hasClosed = false;
       }
-      if (string[i] === ")") {
+      if (string[i] === ')') {
         hasClosed = true;
         isWriting == true;
       }
       if (string[i] === '"') {
         isQuoting = !isQuoting;
       }
-      if (string[i] === "]") {
+      if (string[i] === ']') {
         hasClosed = true;
-        if (string[i + 1] !== ":") {
+        if (string[i + 1] !== ':') {
           isReferencing = false;
         }
       }
-      if (string[i + 1] === " " && isReferencing) {
+      if (string[i + 1] === ' ' && isReferencing) {
         isReferencing = !isReferencing;
       }
       if (
         (string[i].match(/\s/) ||
-          string[i] === "," ||
-          string[i] === "." ||
-          string[i] === "!" ||
-          string[i] === ";" ||
-          string[i] === ":" ||
+          string[i] === ',' ||
+          string[i] === '.' ||
+          string[i] === '!' ||
+          string[i] === ';' ||
+          string[i] === ':' ||
           string[i] === '"' ||
-          string[i] === "?") &&
+          string[i] === '?') &&
         hasClosed &&
         !isReferencing
       ) {
@@ -377,15 +451,16 @@ class ReferenceStripper extends React.Component {
   };
 
   outputTextareaRef = React.createRef();
+
   changelogRef = React.createRef();
 
   handleCopy = event => {
     const textareaText = this.outputTextareaRef.current;
     textareaText.select();
-    document.execCommand("copy");
+    document.execCommand('copy');
     window.getSelection().removeAllRanges();
     const newSnippetsArr = this.state.snippets;
-    newSnippetsArr.forEach(x => x.copied = false);
+    newSnippetsArr.forEach(x => (x.copied = false));
     this.setState({ copied: true, snippets: newSnippetsArr }, () => {
       this.handleFlicker();
     });
@@ -397,7 +472,7 @@ class ReferenceStripper extends React.Component {
         isDark: !prevState.isDark
       }),
       () => {
-        localStorage.setItem("rs-dark", this.state.isDark);
+        localStorage.setItem('rs-dark', this.state.isDark);
       }
     );
   };
@@ -426,7 +501,7 @@ class ReferenceStripper extends React.Component {
           copied: false
         },
         () => {
-          console.log(this.state.snippets[index]);
+          // console.log(this.state.snippets[index]);
         }
       );
     }
@@ -434,16 +509,16 @@ class ReferenceStripper extends React.Component {
     //   "snippet",
     const snippetValue = document
       .getElementById(`${value}-${index}`)
-      .getAttribute("data-value");
+      .getAttribute('data-value');
     // );
     // this.setState({ copied: true }, () => {
     //   console.log("snippet is copied", this.state.copied)
     // });
-    var dummy = document.createElement("textarea");
+    const dummy = document.createElement('textarea');
     document.body.appendChild(dummy);
     dummy.value = snippetValue;
     dummy.select();
-    document.execCommand("copy");
+    document.execCommand('copy');
     document.body.removeChild(dummy);
   };
 
@@ -453,8 +528,8 @@ class ReferenceStripper extends React.Component {
     this.setState({
       snippets: newSnippetsArr
     });
-    console.log("in here");
-    localStorage.setItem("rs-snippets", JSON.stringify(this.state.snippets));
+    // console.log("in here");
+    localStorage.setItem('rs-snippets', JSON.stringify(this.state.snippets));
   };
 
   handleChangelogView = () => {
@@ -466,12 +541,18 @@ class ReferenceStripper extends React.Component {
   };
 
   handleClearSnippets = () => {
-    this.setState({
-      snippets: []
-    }, () => {
-      localStorage.setItem("rs-snippets", JSON.stringify(this.state.snippets));
-    })
-  }
+    this.setState(
+      {
+        snippets: []
+      },
+      () => {
+        localStorage.setItem(
+          'rs-snippets',
+          JSON.stringify(this.state.snippets)
+        );
+      }
+    );
+  };
 
   handleToggleIncludeParentheses = () => {
     this.setState(
@@ -480,10 +561,10 @@ class ReferenceStripper extends React.Component {
       }),
       () => {
         localStorage.setItem(
-          "rs-include-parentheses",
+          'rs-include-parentheses',
           this.state.includeParentheses
         );
-        this.handleChange(this.handleStrip(this.state.input), "output");
+        this.handleChange(this.handleStrip(this.state.input), 'output');
       }
     );
   };
@@ -491,13 +572,13 @@ class ReferenceStripper extends React.Component {
   render() {
     const flickr =
       this.state.flicker && this.state.copied
-        ? "flicker red"
+        ? 'flicker red'
         : this.state.copied
-        ? "red"
-        : "";
+        ? 'red'
+        : '';
 
     const themeDark = {
-      color: this.state.copied ? "" : "var(--ash)"
+      color: this.state.copied ? '' : 'var(--ash)'
     };
 
     const theme = this.state.isDark ? themeDark : {};
@@ -518,29 +599,28 @@ class ReferenceStripper extends React.Component {
                 <ToggleButton
                   handleState={this.state.isDark}
                   handleOnClick={this.handleToggleDarkMode}
-                  text={"Dark Mode"}
+                  text="Dark Mode"
                   isDark={this.state.isDark}
                 />
                 <ToggleButton
                   handleState={this.state.includeParentheses}
                   handleOnClick={this.handleToggleIncludeParentheses}
-                  text={"( text )"}
+                  text="( text )"
                   isDark={this.state.isDark}
                 />
               </div>
               <form id="snippetForm" onSubmit={this.onSubmit}>
                 <input
                   // style={{border: "2px solid pink"}}
-                  className={this.state.isDark ? "dark" : ""}
+                  className={this.state.isDark ? 'dark' : ''}
                   type="text"
                   id="snippetInput"
                   value={this.state.snippet}
                   placeholder="Enter new snippet"
                   autoComplete="off"
                   onChange={event =>
-                    this.handleChange(event.target.value, "snippet")
-                  }
-                ></input>
+                    this.handleChange(event.target.value, 'snippet')
+                />
                 {/* <button style={{display: "none"}} className="button" type="submit">
             Save Expense
               </button> */}
@@ -554,36 +634,51 @@ class ReferenceStripper extends React.Component {
           </div>
           {this.state.snippets.length > 0 && (
             <div className="snippet-container">
-            <div
-              id="snippetContainer"
-              onWheel={event => {
-                // event.preventDefault();
-                const container = document.getElementById("snippetContainer");
-                const containerScrollPosition = document.getElementById(
-                  "snippetContainer"
-                ).scrollLeft;
-                container.scrollTo({
-                  top: 0,
-                  left: containerScrollPosition + event.deltaY,
-                  behaviour: "smooth"
-                });
-              }}
-            >
-              {this.state.snippets.map((snippet, index) => (
-                <Snippet
-                  key={`${snippet.value}-${index}`}
-                  flicker={snippet.flicker}
-                  isCopied={snippet.copied}
-                  index={index}
-                  isDark={this.state.isDark}
-                  value={snippet.value}
-                  handleSnippetCopy={() =>
-                    this.handleSnippetCopy(snippet.value, index)
-                  }
-                  handleRemoveSnippet={() => this.handleRemoveSnippet(index)}
-                />
-              ))}
-            </div>   <div><svg onClick={this.handleClearSnippets} id="deleteSVG" width="24" height="24" xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd"><path d="M5.662 23l-5.369-5.365c-.195-.195-.293-.45-.293-.707 0-.256.098-.512.293-.707l14.929-14.928c.195-.194.451-.293.707-.293.255 0 .512.099.707.293l7.071 7.073c.196.195.293.451.293.708 0 .256-.097.511-.293.707l-11.216 11.219h5.514v2h-12.343zm3.657-2l-5.486-5.486-1.419 1.414 4.076 4.072h2.829zm.456-11.429l-4.528 4.528 5.658 5.659 4.527-4.53-5.657-5.657z"/></svg></div>
+              <div
+                id="snippetContainer"
+                onWheel={event => {
+                  // event.preventDefault();
+                  const container = document.getElementById('snippetContainer');
+                  const containerScrollPosition = document.getElementById(
+                    'snippetContainer'
+                  ).scrollLeft;
+                  container.scrollTo({
+                    top: 0,
+                    left: containerScrollPosition + event.deltaY,
+                    behaviour: 'smooth'
+                  });
+                }}
+              >
+                {this.state.snippets.map((snippet, index) => (
+                  <Snippet
+                    key={`${snippet.value}-${index}`}
+                    flicker={snippet.flicker}
+                    isCopied={snippet.copied}
+                    index={index}
+                    isDark={this.state.isDark}
+                    value={snippet.value}
+                    isHashed={snippet.isHashed === true}
+                                        f
+                    handleSnippetCopy={() =>
+                      this.handleSnippetCopy(snippet.value, index)
+                    }
+                    handleRemoveSnippet={() => this.handleRemoveSnippet(index)}
+                  />
+                ))}
+              </div>{' '}
+              <div>
+                <svg
+                  onClick={this.handleClearSnippets}
+                  id="deleteSVG"
+                  width="24"
+                  height="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                >
+                  <path d="M5.662 23l-5.369-5.365c-.195-.195-.293-.45-.293-.707 0-.256.098-.512.293-.707l14.929-14.928c.195-.194.451-.293.707-.293.255 0 .512.099.707.293l7.071 7.073c.196.195.293.451.293.708 0 .256-.097.511-.293.707l-11.216 11.219h5.514v2h-12.343zm3.657-2l-5.486-5.486-1.419 1.414 4.076 4.072h2.829zm.456-11.429l-4.528 4.528 5.658 5.659 4.527-4.53-5.657-5.657z" />
+                </svg>
+              </div>
             </div>
           )}
           <div id="main">
@@ -591,11 +686,11 @@ class ReferenceStripper extends React.Component {
               <textarea
                 id="input"
                 value={this.state.input}
-                className={`split-view ${this.state.isDark ? "dark" : ""}`}
+                className={`split-view ${this.state.isDark ? 'dark' : ''}`}
                 placeholder={this.state.placeholder}
                 ref={ref => (this.input = ref)}
                 onChange={event => {
-                  this.handleChange(event.target.value, "input");
+                  this.handleChange(event.target.value, 'input');
                 }}
               />
             </div>
@@ -604,7 +699,7 @@ class ReferenceStripper extends React.Component {
                 id="output"
                 value={this.state.output}
                 className={`split-view ${
-                  this.state.isDark ? "dark" : ""
+                  this.state.isDark ? 'dark' : ''
                 } ${flickr}`}
                 ref={this.outputTextareaRef}
                 placeholder={this.handleStrip(this.state.placeholder)}
@@ -617,14 +712,14 @@ class ReferenceStripper extends React.Component {
                 size={25}
               />
               <ConfirmButton
-                className={this.state.copied ? "red confirm" : "confirm"}
+                className={this.state.copied ? 'red confirm' : 'confirm'}
                 text={this.state.output}
                 label={
                   this.state.copied
-                    ? this.state.input !== ""
-                      ? "Copied!"
-                      : "Nothing to Copy!"
-                    : "Copy"
+                    ? this.state.input !== ''
+                      ? 'Copied!'
+                      : 'Nothing to Copy!'
+                    : 'Copy'
                 }
                 handleCopy={this.handleCopy}
                 style={theme}
@@ -637,4 +732,4 @@ class ReferenceStripper extends React.Component {
   }
 }
 
-ReactDOM.render(<ReferenceStripper />, document.getElementById("app"));
+ReactDOM.render(<ReferenceStripper />, document.getElementById('app'));
