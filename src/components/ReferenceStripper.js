@@ -7,7 +7,8 @@ import Wrapper from "./Wrapper";
 import ChangelogButton from "./ChangelogButton";
 import Changelog from "./Changelog";
 import SnippetForm from "./SnippetForm";
-import SnippetsContainer from "./SnippetsContainer"
+import SnippetsContainer from "./SnippetsContainer";
+import Output from "./Output";
 
 export default class ReferenceStripper extends React.Component {
   constructor(props) {
@@ -79,9 +80,6 @@ export default class ReferenceStripper extends React.Component {
           localStorage.setItem("rs-string", this.state.input);
           this.handleChange(this.handleStrip(this.state.input), "output");
         }
-        if (type === "snippet") {
-          // console.log(this.state.snippet);
-        }
       }
     );
   };
@@ -129,20 +127,12 @@ export default class ReferenceStripper extends React.Component {
         isAt
       };
     });
-
-    // console.log(isHashed, cleanSnippetArr)
-    // const newSnippetObject = {
-    //   value: this.state.snippet,
-    //   copied: false,
-    //   flicker: false
-    // };
     this.setState(
       prevState => ({
         snippets: [...cleanSnippetArr, ...prevState.snippets],
         snippet: ""
       }),
       () => {
-        // console.log(this.state.snippets);
         localStorage.setItem(
           "rs-snippets",
           JSON.stringify(this.state.snippets)
@@ -259,26 +249,15 @@ export default class ReferenceStripper extends React.Component {
       const newSnippetsArr = this.state.snippets;
       newSnippetsArr.forEach(x => (x.copied = false));
       newSnippetsArr[index].copied = true;
-      this.setState(
-        {
-          snippets: newSnippetsArr,
-          copied: false
-        },
-        () => {
-          // console.log(this.state.snippets[index]);
-        }
-      );
+      this.setState({
+        snippets: newSnippetsArr,
+        copied: false
+      });
     }
-    // console.log(
-    //   "snippet",
     const snippetValue = document
       .getElementById(`${value}-${index}`)
       .getAttribute("data-value");
-    // );
-    // this.setState({ copied: true }, () => {
-    //   console.log("snippet is copied", this.state.copied)
-    // });
-    var dummy = document.createElement("textarea");
+    const dummy = document.createElement("textarea");
     document.body.appendChild(dummy);
     dummy.value = snippetValue;
     dummy.select();
@@ -334,18 +313,7 @@ export default class ReferenceStripper extends React.Component {
   };
 
   render() {
-    const flickr =
-      this.state.flicker && this.state.copied
-        ? "flicker red"
-        : this.state.copied
-        ? "red"
-        : "";
 
-    const themeDark = {
-      color: this.state.copied ? "" : "var(--ash)"
-    };
-
-    const theme = this.state.isDark ? themeDark : {};
 
     return (
       <Wrapper isDark={this.state.isDark} isDark={this.state.isDark}>
@@ -373,12 +341,12 @@ export default class ReferenceStripper extends React.Component {
                   isDark={this.state.isDark}
                 />
               </div>
-              <SnippetForm 
+              <SnippetForm
                 value={this.state.snippet}
                 isDark={this.state.isDark}
                 onSubmit={this.onSubmit}
                 handleChange={event =>
-                this.handleChange(event.target.value, "snippet")
+                  this.handleChange(event.target.value, "snippet")
                 }
               />
             </div>
@@ -389,7 +357,7 @@ export default class ReferenceStripper extends React.Component {
             />
           </div>
           {this.state.snippets.length > 0 && (
-            <SnippetsContainer 
+            <SnippetsContainer
               snippets={this.state.snippets}
               isDark={this.state.isDark}
               handleSnippetCopy={this.handleSnippetCopy}
@@ -411,17 +379,14 @@ export default class ReferenceStripper extends React.Component {
               />
             </div>
             <div id="preview">
-              <textarea
-                id="output"
+              <Output 
+                flicker={this.state.flicker}
+                copied={this.state.copied}
                 value={this.state.output}
-                className={`split-view ${
-                  this.state.isDark ? "dark" : ""
-                } ${flickr}`}
-                ref={this.outputTextareaRef}
-                placeholder={this.handleStrip(this.state.placeholder)}
-                onFocus={this.handleCopy}
-                onMouseDown={this.handleCopy}
-                readOnly
+                isDark={this.state.isDark}
+                handleStrip={this.handleStrip(this.state.placeholder)}
+                handleCopy={this.handleCopy}
+                outputTextareaRef={this.outputTextareaRef}
               />
               <CircularProgressBar
                 wordCount={this.handleWordCount(this.state.output)}
@@ -438,7 +403,8 @@ export default class ReferenceStripper extends React.Component {
                     : "Copy"
                 }
                 handleCopy={this.handleCopy}
-                style={theme}
+                isDark={this.state.isDark}
+                copied={this.state.copied}
               />
             </div>
           </div>
