@@ -1,33 +1,43 @@
-import React from "react";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-export default ({ wordCount, size }) => {
+const CircularProgressBar = ({ wordCount, size }) => {
   const percentage = (wordCount / 30) * 100;
   const radius = size;
   const strokeWidth = radius / 10;
   const normalizedRadius = radius - strokeWidth * 2;
   const circumference = normalizedRadius * 2 * Math.PI;
   const strokeDashoffset = circumference - (percentage / 100) * circumference;
+
+  let backgroundStroke;
+  let progressStroke;
+
+  if (wordCount < 20) {
+    backgroundStroke = 'var(--ash)';
+    progressStroke = 'var(--blue)';
+  } else if (wordCount < 30) {
+    backgroundStroke = 'var(--ash)';
+    progressStroke = 'var(--tangerine)';
+  } else if (wordCount < 40) {
+    backgroundStroke = 'var(--peach)';
+    progressStroke = 'var(--peach)';
+  } else {
+    backgroundStroke = 'transparent';
+    progressStroke = 'transparent';
+  }
+
   const backgroundStyle = {
     strokeDashoffset,
-    stroke:
-      wordCount < 30
-        ? "var(--ash)"
-        : wordCount < 40
-        ? "var(--peach)"
-        : "transparent"
+    stroke: backgroundStroke
   };
+
   const progressStyle = {
     strokeDashoffset,
-    stroke:
-      wordCount < 20
-        ? "var(--blue)"
-        : wordCount < 30
-        ? "var(--tangerine)"
-        : wordCount < 40
-        ? "var(--peach)"
-        : "transparent"
+    stroke: progressStroke
   };
-  const textStyle = { fill: wordCount < 30 ? "var(--ash)" : "var(--peach)" };
+
+  const textStyle = { fill: wordCount < 30 ? 'var(--ash)' : 'var(--peach)' };
+
   return (
     <div id="circular-progress-bar">
       <svg height={radius * 2} width={radius * 2}>
@@ -62,3 +72,10 @@ export default ({ wordCount, size }) => {
     </div>
   );
 };
+
+CircularProgressBar.propTypes = {
+  wordCount: PropTypes.number,
+  size: PropTypes.number
+};
+
+export default CircularProgressBar;
