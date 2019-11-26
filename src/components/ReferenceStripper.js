@@ -12,6 +12,10 @@ import Output from './Output';
 import Input from './Input';
 
 export default class ReferenceStripper extends React.Component {
+  outputTextareaRef = React.createRef();
+
+  changelogRef = React.createRef();
+
   constructor(props) {
     super(props);
     this.state = {
@@ -36,22 +40,22 @@ export default class ReferenceStripper extends React.Component {
     )
       .then(response => response.json())
       .then(result => {
-        const isDark = localStorage.getItem('rs-dark') === 'true';
-        const includeParentheses =
+        const { updates } = result;
+        const currentVersion = `v${updates[0].version}`;
+        const rsDark = localStorage.getItem('rs-dark') === 'true';
+        const rsIncludeParentheses =
           localStorage.getItem('rs-include-parentheses') === 'true';
-        const snippets =
+        const rsSnippets =
           localStorage.getItem('rs-snippets') === null
             ? []
             : JSON.parse(localStorage.getItem('rs-snippets'));
-        const input =
+        const rsString =
           localStorage.getItem('rs-string') === null
             ? ''
             : localStorage.getItem('rs-string');
         const placeholder =
           'Lorem (ipsum sit) amet[1], consectetur elit[citation needed], sed "tempor (ut labore)" (https://en.wikipedia.org/wiki/Lorem_ipsum)[2], dolore (https://en.wikipedia.org/wiki/Lorem_ipsum) magna aliqua (https://en.wikipedia.org/wiki/Lorem_ipsum) ultrices sagittis orci.[3] Ut imperdiet iaculus (rhoncus), placerat quam, vehicula pulvinar.[5]:35 Fusce vestibulum[10]:400,418[11][12][13][14], et ”mattis orci iaculis!”.[5]:35–36';
         const title = 'Reference Stripper';
-        const { updates } = result;
-        const currentVersion = `v${result.updates[0].version}`;
 
         this.setState(
           {
@@ -59,27 +63,32 @@ export default class ReferenceStripper extends React.Component {
             placeholder,
             updates,
             currentVersion,
-            input,
-            includeParentheses,
-            isDark,
-            snippets
+            input: rsString,
+            includeParentheses: rsIncludeParentheses,
+            isDark: rsDark,
+            snippets: rsSnippets
           },
           () => {
-            this.handleChange(this.state.input, 'input');
+            const { input } = this.state;
+            this.handleChange(input, 'input');
           }
         );
       });
   }
 
   handleChange = (value, type) => {
-    const newSnippetsArr = this.state.snippets;
-    newSnippetsArr.forEach(x => (x.copied = false));
+    const { snippets } = this.state;
+    const newSnippetsArr = snippets;
+    for (let i = 0; i < newSnippetsArr.length; i += 1) {
+      newSnippetsArr[i].copied = false;
+    }
     this.setState(
       { [type]: value, copied: false, snippets: newSnippetsArr },
       () => {
+        const { input } = this.state;
         if (type === 'input') {
-          localStorage.setItem('rs-string', this.state.input);
-          this.handleChange(this.handleStrip(this.state.input), 'output');
+          localStorage.setItem('rs-string', input);
+          this.handleChange(this.handleStrip(input), 'output');
         }
       }
     );
@@ -109,16 +118,15 @@ export default class ReferenceStripper extends React.Component {
 
   onSubmit = event => {
     event.preventDefault();
-    const isHashed = this.state.snippet[0] === '#';
-    const isAt = this.state.snippet[0] === '@';
-    const isEscapingQuotes = this.state.snippet.includes('\\"');
+    const { snippet } = this.state;
+    const isHashed = snippet[0] === '#';
+    const isAt = snippet[0] === '@';
+    const isEscapingQuotes = snippet.includes('\\"');
     const cleanSnippet = isEscapingQuotes
-      ? this.state.snippet.replace(/[@#\"]/g, '').replace(/[\\]/g, '"')
-      : this.state.snippet.replace(/[@#]/g, '');
+      ? snippet.replace(/[@#"]/g, '').replace(/[\\]/g, '"')
+      : snippet.replace(/[@#]/g, '');
     const cleanSnippetSet =
-      isHashed || isAt
-        ? cleanSnippet.trim().split(/\s{2,}/)
-        : [this.state.snippet];
+      isHashed || isAt ? cleanSnippet.trim().split(/\s{2,}/) : [snippet];
     const cleanSnippetArr = [...new Set(cleanSnippetSet)].map(x => {
       return {
         value: x,
@@ -134,22 +142,22 @@ export default class ReferenceStripper extends React.Component {
         snippet: ''
       }),
       () => {
-        localStorage.setItem(
-          'rs-snippets',
-          JSON.stringify(this.state.snippets)
-        );
+        const { snippets } = this.state;
+        localStorage.setItem('rs-snippets', JSON.stringify(snippets));
       }
     );
   };
 
   handleStrip = string => {
+    const { includeParentheses } = this.state;
     let isWriting = true;
     let isQuoting = false;
     let hasClosed = true;
     let stripped = '';
     let isReferencing = false;
 
-    for (let i = 0; i < string.length; i++) {
+    // no-plusplus
+    for (let i = 0; i < string.length; i += 1) {
       const pURL =
         string[i + 1] === '(' &&
         string[i + 2] === 'h' &&
@@ -165,13 +173,12 @@ export default class ReferenceStripper extends React.Component {
         isReferencing = true;
       }
       // removes embedded (<url>)
-      if (!this.state.includeParentheses ? pURL : pText) {
+      if (!includeParentheses ? pURL : pText) {
         isWriting = false;
         hasClosed = false;
       }
       if (string[i] === ')') {
         hasClosed = true;
-        isWriting == true;
       }
       if (string[i] === '"') {
         isQuoting = !isQuoting;
@@ -206,17 +213,16 @@ export default class ReferenceStripper extends React.Component {
     return stripped;
   };
 
-  outputTextareaRef = React.createRef();
-
-  changelogRef = React.createRef();
-
   handleCopy = event => {
+    const { snippets } = this.state;
     const textareaText = this.outputTextareaRef.current;
     textareaText.select();
     document.execCommand('copy');
     window.getSelection().removeAllRanges();
-    const newSnippetsArr = this.state.snippets;
-    newSnippetsArr.forEach(x => (x.copied = false));
+    const newSnippetsArr = snippets;
+    for (let i = 0; i < newSnippetsArr.length; i += 1) {
+      newSnippetsArr[i].copied = false;
+    }
     this.setState({ copied: true, snippets: newSnippetsArr }, () => {
       this.handleFlicker();
     });
@@ -228,13 +234,15 @@ export default class ReferenceStripper extends React.Component {
         isDark: !prevState.isDark
       }),
       () => {
-        localStorage.setItem('rs-dark', this.state.isDark);
+        const { isDark } = this.state;
+        localStorage.setItem('rs-dark', isDark);
       }
     );
   };
 
   handleSnippetFlicker = index => {
-    const newSnippetsArr = this.state.snippets;
+    const { snippets } = this.state;
+    const newSnippetsArr = snippets;
     newSnippetsArr[index].flicker = true;
     this.setState({ snippets: newSnippetsArr });
     const timer = setTimeout(() => {
@@ -245,11 +253,14 @@ export default class ReferenceStripper extends React.Component {
   };
 
   handleSnippetCopy = (value, index) => {
-    if (this.state.snippets[index].copied) {
+    const { snippets } = this.state;
+    if (snippets[index].copied) {
       this.handleSnippetFlicker(index);
     } else {
-      const newSnippetsArr = this.state.snippets;
-      newSnippetsArr.forEach(x => (x.copied = false));
+      const newSnippetsArr = snippets;
+      for (let i = 0; i < newSnippetsArr.length; i += 1) {
+        newSnippetsArr[i].copied = false;
+      }
       newSnippetsArr[index].copied = true;
       this.setState({
         snippets: newSnippetsArr,
@@ -268,13 +279,17 @@ export default class ReferenceStripper extends React.Component {
   };
 
   handleRemoveSnippet = position => {
-    const newSnippetsArr = this.state.snippets;
+    const { snippets } = this.state;
+    const newSnippetsArr = snippets;
     newSnippetsArr.splice(position, 1);
-    this.setState({
-      snippets: newSnippetsArr
-    });
-    // console.log("in here");
-    localStorage.setItem('rs-snippets', JSON.stringify(this.state.snippets));
+    this.setState(
+      {
+        snippets: newSnippetsArr
+      },
+      () => {
+        localStorage.setItem('rs-snippets', JSON.stringify(newSnippetsArr));
+      }
+    );
   };
 
   handleChangelogView = () => {
@@ -286,15 +301,13 @@ export default class ReferenceStripper extends React.Component {
   };
 
   handleClearSnippets = () => {
+    const newSnippetsArr = [];
     this.setState(
       {
-        snippets: []
+        snippets: newSnippetsArr
       },
       () => {
-        localStorage.setItem(
-          'rs-snippets',
-          JSON.stringify(this.state.snippets)
-        );
+        localStorage.setItem('rs-snippets', JSON.stringify(newSnippetsArr));
       }
     );
   };
@@ -305,61 +318,74 @@ export default class ReferenceStripper extends React.Component {
         includeParentheses: !prevState.includeParentheses
       }),
       () => {
-        localStorage.setItem(
-          'rs-include-parentheses',
-          this.state.includeParentheses
-        );
-        this.handleChange(this.handleStrip(this.state.input), 'output');
+        const { includeParentheses, input } = this.state;
+        localStorage.setItem('rs-include-parentheses', includeParentheses);
+        this.handleChange(this.handleStrip(input), 'output');
       }
     );
   };
 
   render() {
+    const {
+      isDark,
+      isViewingChangelog,
+      title,
+      updates,
+      includeParentheses,
+      snippet,
+      snippets,
+      currentVersion,
+      input,
+      output,
+      copied,
+      placeholder,
+      flicker
+    } = this.state;
     return (
-      <Wrapper isDark={this.state.isDark} isDark={this.state.isDark}>
+      <Wrapper isDark={isDark}>
         <Changelog
           changelogRef={this.changelogRef}
           handleChangelogView={this.handleChangelogView}
-          isViewingChangelog={this.state.isViewingChangelog}
-          updates={this.state.updates}
+          isViewingChangelog={isViewingChangelog}
+          updates={updates}
         />
         <div id="container">
           <div id="header">
-            <Title text={this.state.title} isDark={this.state.isDark} />
+            <Title text={title} isDark={isDark} />
             <div id="settings-container">
               <div id="toggle-container">
                 <ToggleButton
-                  handleState={this.state.isDark}
+                  handleState={isDark}
                   handleOnClick={this.handleToggleDarkMode}
                   text="Dark Mode"
-                  isDark={this.state.isDark}
+                  isDark={isDark}
                 />
                 <ToggleButton
-                  handleState={this.state.includeParentheses}
+                  handleState={includeParentheses}
                   handleOnClick={this.handleToggleIncludeParentheses}
                   text="( text )"
-                  isDark={this.state.isDark}
+                  isDark={isDark}
                 />
               </div>
               <SnippetForm
-                value={this.state.snippet}
-                isDark={this.state.isDark}
+                value={snippet}
+                isDark={isDark}
                 onSubmit={this.onSubmit}
-                handleChange={event =>
-                  this.handleChange(event.target.value, 'snippet')
-                }
+                handleChange={event => {
+                  this.handleChange(event.target.value, 'snippet');
+                }}
               />
             </div>
             <ChangelogButton
               handleChangelogView={this.handleChangelogView}
-              isDark={this.state.isDark}
-              currentVersion={this.state.currentVersion}
+              isDark={isDark}
+              currentVersion={currentVersion}
             />
           </div>
-          {this.state.snippets.length > 0 && (
+          {snippets.length > 0 && (
             <SnippetsContainer
-              snippets={this.state.snippets}
-              isDark={this.state.isDark}
+              snippets={snippets}
+              isDark={isDark}
               handleSnippetCopy={this.handleSnippetCopy}
               handleClearSnippets={this.handleClearSnippets}
               handleRemoveSnippet={this.handleRemoveSnippet}
@@ -368,9 +394,9 @@ export default class ReferenceStripper extends React.Component {
           <div id="main">
             <div id="editor">
               <Input
-                value={this.state.input}
-                isDark={this.state.isDark}
-                placeholder={this.state.placeholder}
+                value={input}
+                isDark={isDark}
+                placeholder={placeholder}
                 changelogRef={this.changelogRef}
                 handleChange={event => {
                   this.handleChange(event.target.value, 'input');
@@ -379,31 +405,25 @@ export default class ReferenceStripper extends React.Component {
             </div>
             <div id="preview">
               <Output
-                flicker={this.state.flicker}
-                copied={this.state.copied}
-                value={this.state.output}
-                isDark={this.state.isDark}
-                handleStrip={this.handleStrip(this.state.placeholder)}
+                flicker={flicker}
+                copied={copied}
+                value={output}
+                isDark={isDark}
+                handleStrip={this.handleStrip(placeholder)}
                 handleCopy={this.handleCopy}
                 outputTextareaRef={this.outputTextareaRef}
               />
               <CircularProgressBar
-                wordCount={this.handleWordCount(this.state.output)}
+                wordCount={this.handleWordCount(output)}
                 size={25}
               />
               <ConfirmButton
-                className={this.state.copied ? 'red confirm' : 'confirm'}
-                text={this.state.output}
-                label={
-                  this.state.copied
-                    ? this.state.input !== ''
-                      ? 'Copied!'
-                      : 'Nothing to Copy!'
-                    : 'Copy'
-                }
+                className={copied ? 'red confirm' : 'confirm'}
+                text={output}
+                input={input}
                 handleCopy={this.handleCopy}
-                isDark={this.state.isDark}
-                copied={this.state.copied}
+                isDark={isDark}
+                copied={copied}
               />
             </div>
           </div>
