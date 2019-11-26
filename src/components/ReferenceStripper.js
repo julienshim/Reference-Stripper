@@ -355,13 +355,13 @@ export default class ReferenceStripper extends React.Component {
             <div id="settings-container">
               <div id="toggle-container">
                 <ToggleButton
-                  handleState={isDark}
+                  state={isDark}
                   handleOnClick={this.handleToggleDarkMode}
                   text="Dark Mode"
                   isDark={isDark}
                 />
                 <ToggleButton
-                  handleState={includeParentheses}
+                  state={includeParentheses}
                   handleOnClick={this.handleToggleIncludeParentheses}
                   text="( text )"
                   isDark={isDark}
@@ -409,7 +409,7 @@ export default class ReferenceStripper extends React.Component {
                 copied={copied}
                 value={output}
                 isDark={isDark}
-                handleStrip={this.handleStrip(placeholder)}
+                strippedPlaceholder={this.handleStrip(placeholder)}
                 handleCopy={this.handleCopy}
                 outputTextareaRef={this.outputTextareaRef}
               />
@@ -418,7 +418,6 @@ export default class ReferenceStripper extends React.Component {
                 size={25}
               />
               <ConfirmButton
-                className={copied ? 'red confirm' : 'confirm'}
                 text={output}
                 input={input}
                 handleCopy={this.handleCopy}

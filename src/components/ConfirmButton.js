@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const ConfirmButton = ({ className, input, handleCopy, isDark, copied }) => {
+const ConfirmButton = ({ input, handleCopy, isDark, copied }) => {
   const themeDark = {
     color: copied ? '' : 'var(--ash)'
   };
@@ -15,7 +15,7 @@ const ConfirmButton = ({ className, input, handleCopy, isDark, copied }) => {
   return (
     <div
       id="confirm"
-      className={className}
+      className={copied ? 'red confirm' : 'confirm'}
       onClick={handleCopy}
       onKeyUp={handleCopy}
       style={theme}
@@ -28,7 +28,6 @@ const ConfirmButton = ({ className, input, handleCopy, isDark, copied }) => {
 };
 
 ConfirmButton.propTypes = {
-  className: PropTypes.string,
   input: PropTypes.string,
   handleCopy: PropTypes.func,
   isDark: PropTypes.bool,

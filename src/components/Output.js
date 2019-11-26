@@ -6,7 +6,7 @@ const Output = ({
   copied,
   value,
   isDark,
-  handleStrip,
+  strippedPlaceholder,
   handleCopy,
   outputTextareaRef
 }) => {
@@ -25,7 +25,7 @@ const Output = ({
       value={value}
       className={`split-view ${isDark ? 'dark' : ''} ${flickr}`}
       ref={outputTextareaRef}
-      placeholder={handleStrip}
+      placeholder={strippedPlaceholder}
       onFocus={handleCopy}
       onMouseDown={handleCopy}
       readOnly
@@ -38,7 +38,7 @@ Output.propTypes = {
   copied: PropTypes.bool,
   value: PropTypes.string,
   isDark: PropTypes.bool,
-  handleStrip: PropTypes.string,
+  strippedPlaceholder: PropTypes.string,
   handleCopy: PropTypes.func,
   outputTextareaRef: PropTypes.oneOfType([
     PropTypes.func,

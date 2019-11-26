@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const ToggleButton = ({ handleOnClick, handleState, text, isDark }) => {
+const ToggleButton = ({ handleOnClick, state, text, isDark }) => {
   const svgStyle = isDark ? { fill: 'var(--ash)' } : {};
   const iconDarkMode = (
     <svg
@@ -20,7 +20,7 @@ const ToggleButton = ({ handleOnClick, handleState, text, isDark }) => {
       <label className="switch" htmlFor={text}>
         <input
           id={text}
-          checked={handleState}
+          checked={state}
           type="checkbox"
           onChange={handleOnClick}
         />
@@ -36,7 +36,7 @@ const ToggleButton = ({ handleOnClick, handleState, text, isDark }) => {
 
 ToggleButton.propTypes = {
   handleOnClick: PropTypes.func,
-  handleState: PropTypes.bool,
+  state: PropTypes.bool,
   text: PropTypes.string,
   isDark: PropTypes.bool
 };
