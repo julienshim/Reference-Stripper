@@ -1,5 +1,4 @@
-import React from "react";
-import { inherits } from "util";
+import React from 'react';
 
 export default ({
   value,
@@ -12,15 +11,15 @@ export default ({
   isHashed,
   isAt
 }) => {
-  const wikiRef = `https://en.wikipedia.org/wiki/${value.split(" ").join("_")}`;
+  const wikiRef = `https://en.wikipedia.org/wiki/${value.split(' ').join('_')}`;
   const hashCheckedValue =
-    (isHashed || isAt) && value.includes("(")
+    (isHashed || isAt) && value.includes('(')
       ? `the ${value
-          .replace(/[(]/g, "#")
-          .replace(/[)]/g, "")
+          .replace(/[(]/g, '#')
+          .replace(/[)]/g, '')
           .split(/[#\s]{2,}/)
           .reverse()
-          .join(" ")}`
+          .join(' ')}`
       : value;
   return (
     <div className="snippet-container">
@@ -30,10 +29,10 @@ export default ({
           className="snippet-label"
           style={
             isCopied && !flicker
-              ? { background: "var(--peach)" }
+              ? { background: 'var(--peach)' }
               : isDark
-              ? { background: "var(--ash)" }
-              : { background: "var(--faded-ash)" }
+              ? { background: 'var(--ash)' }
+              : { background: 'var(--faded-ash)' }
           }
           data-value={hashCheckedValue}
           onClick={handleSnippetCopy}
@@ -43,21 +42,21 @@ export default ({
         {isHashed && (
           <a
             href={wikiRef}
-            style={{ color: "inherit", textDecoration: "inherit" }}
+            style={{ color: 'inherit', textDecoration: 'inherit' }}
             target="_blank"
           >
-            <div className="wiki">{"W"}</div>
+            <div className="wiki">W</div>
           </a>
         )}
-        {(isHashed || isAt) && value.includes("(") && (
+        {(isHashed || isAt) && value.includes('(') && (
           <div className="strike-tag">
-            <span style={{ color: "var(--charcoal)" }} id="switch">
-              {"( )"}
+            <span style={{ color: 'var(--charcoal)' }} id="switch">
+              ( )
             </span>
           </div>
         )}
         <div className="delete-tag" onClick={handleRemoveSnippet}>
-          {"X"}
+          X
         </div>
       </div>
     </div>
