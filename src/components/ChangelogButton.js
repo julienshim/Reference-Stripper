@@ -1,7 +1,8 @@
-import React from "react";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-export default ({ isDark, handleChangelogView, currentVersion }) => {
-  const svgStyle = { fill: "rgba(204, 204, 204, 0.8)" };
+const ChangelogButton = ({ isDark, handleChangelogView, currentVersion }) => {
+  const svgStyle = { fill: 'rgba(204, 204, 204, 0.8)' };
   const note = (
     <svg
       style={svgStyle}
@@ -25,8 +26,22 @@ export default ({ isDark, handleChangelogView, currentVersion }) => {
     </svg>
   );
   return (
-    <p id="changelogButton" onClick={handleChangelogView}>
+    <div
+      id="changelogButton"
+      onClick={handleChangelogView}
+      onKeyUp={handleChangelogView}
+      role="button"
+      tabIndex={0}
+    >
       <span>{currentVersion}</span> {isDark ? noteDark : note}
-    </p>
+    </div>
   );
 };
+
+ChangelogButton.propTypes = {
+  isDark: PropTypes.bool,
+  handleChangelogView: PropTypes.func,
+  currentVersion: PropTypes.string
+};
+
+export default ChangelogButton;
