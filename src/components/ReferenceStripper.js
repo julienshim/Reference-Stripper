@@ -1,56 +1,56 @@
-import React from "react";
-import CircularProgressBar from "./CircularProgressBar";
-import Title from "./Title";
-import ConfirmButton from "./ConfirmButton";
-import ToggleButton from "./ToggleButton";
-import Wrapper from "./Wrapper";
-import ChangelogButton from "./ChangelogButton";
-import Changelog from "./Changelog";
-import SnippetForm from "./SnippetForm";
-import SnippetsContainer from "./SnippetsContainer";
-import Output from "./Output";
-import Input from "./Input";
+import React from 'react';
+import CircularProgressBar from './CircularProgressBar';
+import Title from './Title';
+import ConfirmButton from './ConfirmButton';
+import ToggleButton from './ToggleButton';
+import Wrapper from './Wrapper';
+import ChangelogButton from './ChangelogButton';
+import Changelog from './Changelog';
+import SnippetForm from './SnippetForm';
+import SnippetsContainer from './SnippetsContainer';
+import Output from './Output';
+import Input from './Input';
 
 export default class ReferenceStripper extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: "",
-      input: "",
-      placeholder: "",
-      output: "",
+      title: '',
+      input: '',
+      placeholder: '',
+      output: '',
       updates: [],
       copied: false,
       isDark: false,
-      currentVersion: "",
+      currentVersion: '',
       includeParentheses: false,
       isViewingChangelog: false,
-      snippet: "",
+      snippet: '',
       snippets: []
     };
   }
 
   componentDidMount() {
     fetch(
-      "https://raw.githubusercontent.com/julienshim/Reference-Stripper/master/public/updates.json"
+      'https://raw.githubusercontent.com/julienshim/Reference-Stripper/master/public/updates.json'
     )
       .then(response => response.json())
       .then(result => {
-        const isDark = localStorage.getItem("rs-dark") === "true";
+        const isDark = localStorage.getItem('rs-dark') === 'true';
         const includeParentheses =
-          localStorage.getItem("rs-include-parentheses") === "true";
+          localStorage.getItem('rs-include-parentheses') === 'true';
         const snippets =
-          localStorage.getItem("rs-snippets") === null
+          localStorage.getItem('rs-snippets') === null
             ? []
-            : JSON.parse(localStorage.getItem("rs-snippets"));
+            : JSON.parse(localStorage.getItem('rs-snippets'));
         const input =
-          localStorage.getItem("rs-string") === null
-            ? ""
-            : localStorage.getItem("rs-string");
+          localStorage.getItem('rs-string') === null
+            ? ''
+            : localStorage.getItem('rs-string');
         const placeholder =
           'Lorem (ipsum sit) amet[1], consectetur elit[citation needed], sed "tempor (ut labore)" (https://en.wikipedia.org/wiki/Lorem_ipsum)[2], dolore (https://en.wikipedia.org/wiki/Lorem_ipsum) magna aliqua (https://en.wikipedia.org/wiki/Lorem_ipsum) ultrices sagittis orci.[3] Ut imperdiet iaculus (rhoncus), placerat quam, vehicula pulvinar.[5]:35 Fusce vestibulum[10]:400,418[11][12][13][14], et ”mattis orci iaculis!”.[5]:35–36';
-        const title = "Reference Stripper";
-        const updates = result.updates;
+        const title = 'Reference Stripper';
+        const { updates } = result;
         const currentVersion = `v${result.updates[0].version}`;
 
         this.setState(
@@ -65,7 +65,7 @@ export default class ReferenceStripper extends React.Component {
             snippets
           },
           () => {
-            this.handleChange(this.state.input, "input");
+            this.handleChange(this.state.input, 'input');
           }
         );
       });
@@ -77,9 +77,9 @@ export default class ReferenceStripper extends React.Component {
     this.setState(
       { [type]: value, copied: false, snippets: newSnippetsArr },
       () => {
-        if (type === "input") {
-          localStorage.setItem("rs-string", this.state.input);
-          this.handleChange(this.handleStrip(this.state.input), "output");
+        if (type === 'input') {
+          localStorage.setItem('rs-string', this.state.input);
+          this.handleChange(this.handleStrip(this.state.input), 'output');
         }
       }
     );
@@ -97,24 +97,24 @@ export default class ReferenceStripper extends React.Component {
     return (
       string
         // strips whitespace (e.g. new line, tab) before counting
-        .replace(/\s/g, " ")
+        .replace(/\s/g, ' ')
         // strips dashes before counting
-        .replace(/[-–]/g, " ")
-        .split(" ")
-        .filter(function(n) {
-          return n != "";
+        .replace(/[-–]/g, ' ')
+        .split(' ')
+        .filter(n => {
+          return n !== '';
         }).length
     );
   };
 
   onSubmit = event => {
     event.preventDefault();
-    const isHashed = this.state.snippet[0] === "#";
-    const isAt = this.state.snippet[0] === "@";
+    const isHashed = this.state.snippet[0] === '#';
+    const isAt = this.state.snippet[0] === '@';
     const isEscapingQuotes = this.state.snippet.includes('\\"');
     const cleanSnippet = isEscapingQuotes
-      ? this.state.snippet.replace(/[@#\"]/g, "").replace(/[\\]/g, '"')
-      : this.state.snippet.replace(/[@#]/g, "");
+      ? this.state.snippet.replace(/[@#\"]/g, '').replace(/[\\]/g, '"')
+      : this.state.snippet.replace(/[@#]/g, '');
     const cleanSnippetSet =
       isHashed || isAt
         ? cleanSnippet.trim().split(/\s{2,}/)
@@ -131,11 +131,11 @@ export default class ReferenceStripper extends React.Component {
     this.setState(
       prevState => ({
         snippets: [...cleanSnippetArr, ...prevState.snippets],
-        snippet: ""
+        snippet: ''
       }),
       () => {
         localStorage.setItem(
-          "rs-snippets",
+          'rs-snippets',
           JSON.stringify(this.state.snippets)
         );
       }
@@ -146,20 +146,20 @@ export default class ReferenceStripper extends React.Component {
     let isWriting = true;
     let isQuoting = false;
     let hasClosed = true;
-    let stripped = "";
+    let stripped = '';
     let isReferencing = false;
 
     for (let i = 0; i < string.length; i++) {
       const pURL =
-        string[i + 1] === "(" &&
-        string[i + 2] === "h" &&
-        string[i + 3] === "t" &&
-        string[i + 4] === "t" &&
-        string[i + 5] === "p";
+        string[i + 1] === '(' &&
+        string[i + 2] === 'h' &&
+        string[i + 3] === 't' &&
+        string[i + 4] === 't' &&
+        string[i + 5] === 'p';
 
-      const pText = string[i + 1] === "(";
+      const pText = string[i + 1] === '(';
 
-      if (string[i] === "[" && !isQuoting) {
+      if (string[i] === '[' && !isQuoting) {
         isWriting = false;
         hasClosed = false;
         isReferencing = true;
@@ -169,31 +169,31 @@ export default class ReferenceStripper extends React.Component {
         isWriting = false;
         hasClosed = false;
       }
-      if (string[i] === ")") {
+      if (string[i] === ')') {
         hasClosed = true;
         isWriting == true;
       }
       if (string[i] === '"') {
         isQuoting = !isQuoting;
       }
-      if (string[i] === "]") {
+      if (string[i] === ']') {
         hasClosed = true;
-        if (string[i + 1] !== ":") {
+        if (string[i + 1] !== ':') {
           isReferencing = false;
         }
       }
-      if (string[i + 1] === " " && isReferencing) {
+      if (string[i + 1] === ' ' && isReferencing) {
         isReferencing = !isReferencing;
       }
       if (
         (string[i].match(/\s/) ||
-          string[i] === "," ||
-          string[i] === "." ||
-          string[i] === "!" ||
-          string[i] === ";" ||
-          string[i] === ":" ||
+          string[i] === ',' ||
+          string[i] === '.' ||
+          string[i] === '!' ||
+          string[i] === ';' ||
+          string[i] === ':' ||
           string[i] === '"' ||
-          string[i] === "?") &&
+          string[i] === '?') &&
         hasClosed &&
         !isReferencing
       ) {
@@ -207,12 +207,13 @@ export default class ReferenceStripper extends React.Component {
   };
 
   outputTextareaRef = React.createRef();
+
   changelogRef = React.createRef();
 
   handleCopy = event => {
     const textareaText = this.outputTextareaRef.current;
     textareaText.select();
-    document.execCommand("copy");
+    document.execCommand('copy');
     window.getSelection().removeAllRanges();
     const newSnippetsArr = this.state.snippets;
     newSnippetsArr.forEach(x => (x.copied = false));
@@ -227,7 +228,7 @@ export default class ReferenceStripper extends React.Component {
         isDark: !prevState.isDark
       }),
       () => {
-        localStorage.setItem("rs-dark", this.state.isDark);
+        localStorage.setItem('rs-dark', this.state.isDark);
       }
     );
   };
@@ -257,12 +258,12 @@ export default class ReferenceStripper extends React.Component {
     }
     const snippetValue = document
       .getElementById(`${value}-${index}`)
-      .getAttribute("data-value");
-    const dummy = document.createElement("textarea");
+      .getAttribute('data-value');
+    const dummy = document.createElement('textarea');
     document.body.appendChild(dummy);
     dummy.value = snippetValue;
     dummy.select();
-    document.execCommand("copy");
+    document.execCommand('copy');
     document.body.removeChild(dummy);
   };
 
@@ -273,7 +274,7 @@ export default class ReferenceStripper extends React.Component {
       snippets: newSnippetsArr
     });
     // console.log("in here");
-    localStorage.setItem("rs-snippets", JSON.stringify(this.state.snippets));
+    localStorage.setItem('rs-snippets', JSON.stringify(this.state.snippets));
   };
 
   handleChangelogView = () => {
@@ -291,7 +292,7 @@ export default class ReferenceStripper extends React.Component {
       },
       () => {
         localStorage.setItem(
-          "rs-snippets",
+          'rs-snippets',
           JSON.stringify(this.state.snippets)
         );
       }
@@ -305,17 +306,15 @@ export default class ReferenceStripper extends React.Component {
       }),
       () => {
         localStorage.setItem(
-          "rs-include-parentheses",
+          'rs-include-parentheses',
           this.state.includeParentheses
         );
-        this.handleChange(this.handleStrip(this.state.input), "output");
+        this.handleChange(this.handleStrip(this.state.input), 'output');
       }
     );
   };
 
   render() {
-
-
     return (
       <Wrapper isDark={this.state.isDark} isDark={this.state.isDark}>
         <Changelog
@@ -332,13 +331,13 @@ export default class ReferenceStripper extends React.Component {
                 <ToggleButton
                   handleState={this.state.isDark}
                   handleOnClick={this.handleToggleDarkMode}
-                  text={"Dark Mode"}
+                  text="Dark Mode"
                   isDark={this.state.isDark}
                 />
                 <ToggleButton
                   handleState={this.state.includeParentheses}
                   handleOnClick={this.handleToggleIncludeParentheses}
-                  text={"( text )"}
+                  text="( text )"
                   isDark={this.state.isDark}
                 />
               </div>
@@ -347,7 +346,7 @@ export default class ReferenceStripper extends React.Component {
                 isDark={this.state.isDark}
                 onSubmit={this.onSubmit}
                 handleChange={event =>
-                  this.handleChange(event.target.value, "snippet")
+                  this.handleChange(event.target.value, 'snippet')
                 }
               />
             </div>
@@ -368,18 +367,18 @@ export default class ReferenceStripper extends React.Component {
           )}
           <div id="main">
             <div id="editor">
-              <Input 
+              <Input
                 value={this.state.input}
                 isDark={this.state.isDark}
                 placeholder={this.state.placeholder}
                 changelogRef={this.changelogRef}
                 handleChange={event => {
-    this.handleChange(event.target.value, "input");
-  }}
+                  this.handleChange(event.target.value, 'input');
+                }}
               />
             </div>
             <div id="preview">
-              <Output 
+              <Output
                 flicker={this.state.flicker}
                 copied={this.state.copied}
                 value={this.state.output}
@@ -393,14 +392,14 @@ export default class ReferenceStripper extends React.Component {
                 size={25}
               />
               <ConfirmButton
-                className={this.state.copied ? "red confirm" : "confirm"}
+                className={this.state.copied ? 'red confirm' : 'confirm'}
                 text={this.state.output}
                 label={
                   this.state.copied
-                    ? this.state.input !== ""
-                      ? "Copied!"
-                      : "Nothing to Copy!"
-                    : "Copy"
+                    ? this.state.input !== ''
+                      ? 'Copied!'
+                      : 'Nothing to Copy!'
+                    : 'Copy'
                 }
                 handleCopy={this.handleCopy}
                 isDark={this.state.isDark}
