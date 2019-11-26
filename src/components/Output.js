@@ -1,12 +1,15 @@
 import React from "react";
 
-export default ({flicker, copied, value, isDark, handleStrip, handleCopy, outputTextareaRef}) => {
-  const flickr =
-    flicker && copied
-      ? "flicker red"
-      : copied
-      ? "red"
-      : "";
+export default ({
+  flicker,
+  copied,
+  value,
+  isDark,
+  handleStrip,
+  handleCopy,
+  outputTextareaRef
+}) => {
+  const flickr = flicker && copied ? "flicker red" : copied ? "red" : "";
   return (
     <textarea
       id="output"

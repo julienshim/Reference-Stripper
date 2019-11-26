@@ -25,10 +25,7 @@ export default ({ isDark, handleChangelogView, currentVersion }) => {
     </svg>
   );
   return (
-    <p
-      id="changelogButton"
-      onClick={handleChangelogView}
-    >
+    <p id="changelogButton" onClick={handleChangelogView}>
       <span>{currentVersion}</span> {isDark ? noteDark : note}
     </p>
   );

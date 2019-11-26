@@ -12,8 +12,16 @@ export default ({
   isHashed,
   isAt
 }) => {
-  const wikiRef = `https://en.wikipedia.org/wiki/${value.split(" ").join("_")}`
-  const hashCheckedValue = (isHashed || isAt) && value.includes("(") ? `the ${value.replace(/[(]/g, "#").replace(/[)]/g, "").split(/[#\s]{2,}/).reverse().join(" ")}` : value ;
+  const wikiRef = `https://en.wikipedia.org/wiki/${value.split(" ").join("_")}`;
+  const hashCheckedValue =
+    (isHashed || isAt) && value.includes("(")
+      ? `the ${value
+          .replace(/[(]/g, "#")
+          .replace(/[)]/g, "")
+          .split(/[#\s]{2,}/)
+          .reverse()
+          .join(" ")}`
+      : value;
   return (
     <div className="snippet-container">
       <div className="snippet">
@@ -33,12 +41,20 @@ export default ({
           {value.length <= 30 ? value : `${value.slice(0, 30).trim()}...`}
         </div>
         {isHashed && (
-          <a href={wikiRef} style={{color: "inherit", textDecoration: "inherit"}} target="_blank">
+          <a
+            href={wikiRef}
+            style={{ color: "inherit", textDecoration: "inherit" }}
+            target="_blank"
+          >
             <div className="wiki">{"W"}</div>
           </a>
         )}
-        {((isHashed || isAt) && value.includes("(")) && (
-            <div className="strike-tag"><span style={{color: "var(--charcoal)"}} id="switch">{"( )"}</span></div>
+        {(isHashed || isAt) && value.includes("(") && (
+          <div className="strike-tag">
+            <span style={{ color: "var(--charcoal)" }} id="switch">
+              {"( )"}
+            </span>
+          </div>
         )}
         <div className="delete-tag" onClick={handleRemoveSnippet}>
           {"X"}

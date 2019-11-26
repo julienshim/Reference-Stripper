@@ -9,6 +9,7 @@ import Changelog from "./Changelog";
 import SnippetForm from "./SnippetForm";
 import SnippetsContainer from "./SnippetsContainer";
 import Output from "./Output";
+import Input from "./Input";
 
 export default class ReferenceStripper extends React.Component {
   constructor(props) {
@@ -367,15 +368,14 @@ export default class ReferenceStripper extends React.Component {
           )}
           <div id="main">
             <div id="editor">
-              <textarea
-                id="input"
+              <Input 
                 value={this.state.input}
-                className={`split-view ${this.state.isDark ? "dark" : ""}`}
+                isDark={this.state.isDark}
                 placeholder={this.state.placeholder}
-                ref={ref => (this.input = ref)}
-                onChange={event => {
-                  this.handleChange(event.target.value, "input");
-                }}
+                changelogRef={this.changelogRef}
+                handleChange={event => {
+    this.handleChange(event.target.value, "input");
+  }}
               />
             </div>
             <div id="preview">
