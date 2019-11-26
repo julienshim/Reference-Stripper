@@ -393,7 +393,7 @@ export default class ReferenceStripper extends React.Component {
               snippets={this.state.snippets}
               isDark={this.state.isDark}
               handleSnippetCopy={this.handleSnippetCopy}
-              handleClearSnippets={this.handleSnippetFlicker}
+              handleClearSnippets={this.handleClearSnippets}
               handleRemoveSnippet={this.handleRemoveSnippet}
             />
           )}

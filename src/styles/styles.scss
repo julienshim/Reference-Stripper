@@ -353,7 +353,7 @@ form#snippetForm {
   align-items: flex-end;
 }
 
-.snippet-container {
+.snippets-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -375,7 +375,7 @@ input#snippetInput {
   }
 }
 
-#snippetContainer {
+#snippetsContainer {
   border-left: 2px solid var(--blue);
   border-right: 2px solid var(--blue);
   display: flex;
@@ -460,7 +460,7 @@ input#snippetInput {
     margin: 12px 12px 0 0;
   }
 
-  #snippetContainer {
+  #snippetsContainer {
     margin: 0 12px 12px 12px;
   }
 
