@@ -1,7 +1,8 @@
-import React from "react";
-import ChangelogItem from "./ChangelogItem";
+import React from 'react';
+import PropTypes from 'prop-types';
+import ChangelogItem from './ChangelogItem';
 
-export default ({ updates }) => (
+const ChangelogItemList = ({ updates }) => (
   <div>
     <ul>
       <li>
@@ -20,3 +21,17 @@ export default ({ updates }) => (
     </ul>
   </div>
 );
+
+ChangelogItemList.propTypes = {
+  updates: PropTypes.arrayOf(
+    PropTypes.oneOfType([
+      PropTypes.shape({
+        version: PropTypes.string,
+        date: PropTypes.string,
+        change: PropTypes.string
+      })
+    ])
+  )
+};
+
+export default ChangelogItemList;
