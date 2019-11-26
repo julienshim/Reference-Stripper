@@ -213,7 +213,7 @@ textarea {
 #changelog {
   height: 100vh;
   left: 0;
-  overflow: scroll;
+  overflow-x: hidden;
   position: absolute;
   top: 0;
   width: 100vw;
