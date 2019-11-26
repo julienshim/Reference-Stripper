@@ -1,9 +1,14 @@
 {
   "updates": [
     {
+      "version": "1.3.2",
+      "date": "2019-11-26",
+      "change": "Added PropTypes. Broke ReferenceStripper further into components. Ran JavaScript syntax and logic error check. Fixed errors."
+    },
+    {
       "version": "1.3.1",
       "date": "2019-11-21",
-      "change": "Added Batch Wikipedia Heading to Snippet Processing via hashtag (#) symbol at start of input. Each individual item to be made into a snippet should be separated by double whitespace (e.g double space). Note: On macOS, 'Add period after double-space' should be disabled to prevent issues via  Apple menu > ‘System Preferences’ > ‘Keyboard’ preference panel > ‘Text’ tab > uncheck > ‘Add period with double-space’. Individual Wikipedia headings can be processed as well. Please take note of the following: The hashtag (#) symbol will include a link to the related Wikipedia article with the snippet, as well as and convert Wikipedia headings with parentheses into 'the' statements on copy (e.g. 'Us (2019 film)' --> 'the 2019 film Us') for user convenience."
+      "change": "Added Batch Wikipedia Heading to Snippet Processing via hashtag (#) symbol at start of input. Each individual item to be made into a snippet should be separated by double whitespace (e.g double space). Note: On macOS, 'Add period after double-space' should be disabled to prevent issues via  Apple menu > ‘System Preferences’ > ‘Keyboard’ preference panel > ‘Text’ tab > uncheck ‘Add period with double-space’. Individual Wikipedia headings can be processed as well. Please take note of the following: The hashtag (#) symbol will include a link to the related Wikipedia article with the snippet, as well as and convert Wikipedia headings with parentheses into 'the' statements on copy (e.g. 'Us (2019 film)' --> 'the 2019 film Us') for user convenience."
     },
     {
       "version": "1.3.0",
@@ -18,7 +23,7 @@
     {
       "version": "1.2.5",
       "date": "2019-11-12",
-      "change": "Fixed text stripping algorithm to account for missing closing quotation following removed parenthesized text when remove parantehsized text mode is enabled. e.g. \"Try (Just a Little Bit Harder)\" becomes \"Try instead of \"Try\""
+      "change": "Fixed text stripping algorithm to account for missing closing quotation after a parentheses when Remove All Parentheses Mode is enabled. e.g. \"Try (Just a Little Bit Harder)\" becomes \"Try instead of \"Try\""
     },
     {
       "version": "1.2.4",
@@ -33,7 +38,7 @@
     {
       "version": "1.2.2",
       "date": "2019-10-21",
-      "change": "Added remove all parenthesis mode. Fixed user feedback in Dark Mode."
+      "change": "Added Remove All Parentheses Mode. Fixed user feedback in Dark Mode."
     },
     {
       "version": "1.2.1",
@@ -43,7 +48,7 @@
     {
       "version": "1.2.0",
       "date": "2019-10-13",
-      "change": "Removed Easy Mode. Removed react-copy-to-clipboard third-party package. Added copy to clipboard function. Added dark mode."
+      "change": "Removed Easy Mode. Removed react-copy-to-clipboard third-party package. Added copy to clipboard function. Added Dark Mode."
     },
     {
       "version": "1.1.0",
@@ -78,7 +83,7 @@
     {
       "version": "1.0.0",
       "date": "2019-09-12",
-      "change": "Created initial tool with React, SCSS"
+      "change": "Created initial tool with React, CSS"
     }
   ]
 }
