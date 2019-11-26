@@ -6,6 +6,7 @@ import ToggleButton from "./ToggleButton";
 import Wrapper from "./Wrapper";
 import ChangelogButton from "./ChangelogButton";
 import Changelog from "./Changelog";
+import SnippetForm from "./SnippetForm";
 import Snippet from "./Snippet";
 
 export default class ReferenceStripper extends React.Component {
@@ -372,23 +373,14 @@ export default class ReferenceStripper extends React.Component {
                   isDark={this.state.isDark}
                 />
               </div>
-              <form id="snippetForm" onSubmit={this.onSubmit}>
-                <input
-                  // style={{border: "2px solid pink"}}
-                  className={this.state.isDark ? "dark" : ""}
-                  type="text"
-                  id="snippetInput"
-                  value={this.state.snippet}
-                  placeholder="Enter new snippet"
-                  autoComplete="off"
-                  onChange={event =>
-                    this.handleChange(event.target.value, "snippet")
-                  }
-                ></input>
-                {/* <button style={{display: "none"}} className="button" type="submit">
-            Save Expense
-              </button> */}
-              </form>
+              <SnippetForm 
+                value={this.state.snippet}
+                isDark={this.state.isDark}
+                onSubmit={this.onSubmit}
+                handleChange={event =>
+                this.handleChange(event.target.value, "snippet")
+                }
+              />
             </div>
             <ChangelogButton
               handleChangelogView={this.handleChangelogView}
