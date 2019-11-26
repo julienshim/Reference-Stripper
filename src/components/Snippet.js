@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export default ({
+const Snippet = ({
   value,
   index,
   handleRemoveSnippet,
@@ -21,21 +22,26 @@ export default ({
           .reverse()
           .join(' ')}`
       : value;
+
+  const snippetStyle = { background: '' };
+  if (isCopied && !flicker) {
+    snippetStyle.background = 'var(--peach';
+  } else {
+    snippetStyle.background = isDark ? 'var(--ash)' : 'var(--faded-ash)';
+  }
+
   return (
     <div className="snippet-container">
       <div className="snippet">
         <div
           id={`${value}-${index}`}
           className="snippet-label"
-          style={
-            isCopied && !flicker
-              ? { background: 'var(--peach)' }
-              : isDark
-              ? { background: 'var(--ash)' }
-              : { background: 'var(--faded-ash)' }
-          }
+          style={snippetStyle}
           data-value={hashCheckedValue}
           onClick={handleSnippetCopy}
+          onKeyUp={handleSnippetCopy}
+          role="button"
+          tabIndex={0}
         >
           {value.length <= 30 ? value : `${value.slice(0, 30).trim()}...`}
         </div>
@@ -44,6 +50,7 @@ export default ({
             href={wikiRef}
             style={{ color: 'inherit', textDecoration: 'inherit' }}
             target="_blank"
+            rel="noopener noreferrer"
           >
             <div className="wiki">W</div>
           </a>
@@ -55,10 +62,30 @@ export default ({
             </span>
           </div>
         )}
-        <div className="delete-tag" onClick={handleRemoveSnippet}>
+        <div
+          className="delete-tag"
+          onClick={handleRemoveSnippet}
+          onKeyUp={handleRemoveSnippet}
+          role="button"
+          tabIndex={0}
+        >
           X
         </div>
       </div>
     </div>
   );
 };
+
+Snippet.propTypes = {
+  value: PropTypes.string,
+  index: PropTypes.number,
+  handleRemoveSnippet: PropTypes.func,
+  isDark: PropTypes.bool,
+  flicker: PropTypes.bool,
+  isCopied: PropTypes.bool,
+  handleSnippetCopy: PropTypes.func,
+  isHashed: PropTypes.bool,
+  isAt: PropTypes.bool
+};
+
+export default Snippet;
