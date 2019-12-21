@@ -27,7 +27,7 @@ body {
   --faded-peach: rgba(255, 0, 0, 0.5);
   --peach: rgba(254, 104, 74, 1);
   --tangerine: rgba(251, 177, 60, 1);
-  --white: rgba(255, 255, 255, 1);
+  --pure-white: rgba(255, 255, 255, 1);
 }
 
 .hidden {
@@ -193,11 +193,11 @@ textarea {
 /* Changelog */
 
 #changelogButton {
-  bottom: 6px;
+  bottom: 7px;
   cursor: pointer;
   display: flex;
   position: absolute;
-  right: 6px;
+  right: 7px;
   &:hover {
     color: var(--ash);
     text-decoration: underline;
@@ -291,7 +291,7 @@ textarea {
   transition: 0.4s;
   -webkit-transition: 0.4s;
   &:before {
-    background-color: var(--white);
+    background-color: var(--pure-white);
     bottom: 4px;
     content: '';
     height: 16px;
@@ -388,12 +388,13 @@ input#snippetInput {
     flex-direction: row;
   }
   & div.snippet-label {
+    border: 1px solid transparent;
     color: var(--charcoal);
     overflow: hidden;
     padding: 1px 5px 0 5px;
     &:hover {
-      border-bottom: 1px solid var(--blue);
-      font-weight: 700;
+      border: 1px solid var(--faded-peach);
+      // font-weight: 700;
     }
   }
   & div.delete-tag {
@@ -408,7 +409,7 @@ input#snippetInput {
     &:hover {
       background: red;
       border-bottom: 1px solid var(--blue);
-      color: white;
+      color: var(--pure-white);
     }
   }
 }
@@ -416,6 +417,8 @@ input#snippetInput {
 .wiki {
   align-items: center;
   background: var(--faded-blue);
+  border: 1px solid var(--faded-ash);
+  border-right: none;
   display: flex;
   font-family: 'Garamond', 'Adobe Garamond Pro', 'Warnock', 'Warnock Pro',
     'Bodoni', 'Bodoni MT', 'Goudy Old Style', 'Musica', 'serif';
@@ -425,7 +428,7 @@ input#snippetInput {
   padding-top: 3.5px;
   &:hover {
     background: var(--blue);
-    color: white;
+    color: var(--pure-white);
   }
 }
 
