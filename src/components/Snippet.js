@@ -9,13 +9,12 @@ const Snippet = ({
   flicker,
   isCopied,
   handleSnippetCopy,
-  isHashed,
-  isAt
+  isHashed
 }) => {
   const wikiRef = `https://en.wikipedia.org/wiki/${value.split(' ').join('_')}`;
   const hashCheckedValue =
-    (isHashed || isAt) && value.includes('(')
-      ? `the ${value
+    isHashed && value.includes('(')
+      ? `${value
           .replace(/[(]/g, '#')
           .replace(/[)]/g, '')
           .split(/[#\s]{2,}/)
@@ -45,7 +44,7 @@ const Snippet = ({
         >
           {value.length <= 30 ? value : `${value.slice(0, 30).trim()}...`}
         </div>
-        {(isHashed || isAt) && value.includes('(') && (
+        {isHashed && value.includes('(') && (
           <div className="strike-tag">
             <span style={{ color: 'var(--charcoal)' }} id="switch">
               ( )
@@ -84,8 +83,7 @@ Snippet.propTypes = {
   flicker: PropTypes.bool,
   isCopied: PropTypes.bool,
   handleSnippetCopy: PropTypes.func,
-  isHashed: PropTypes.bool,
-  isAt: PropTypes.bool
+  isHashed: PropTypes.bool
 };
 
 export default Snippet;
