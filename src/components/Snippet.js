@@ -45,6 +45,13 @@ const Snippet = ({
         >
           {value.length <= 30 ? value : `${value.slice(0, 30).trim()}...`}
         </div>
+        {(isHashed || isAt) && value.includes('(') && (
+          <div className="strike-tag">
+            <span style={{ color: 'var(--charcoal)' }} id="switch">
+              ( )
+            </span>
+          </div>
+        )}
         {isHashed && (
           <a
             href={wikiRef}
@@ -54,13 +61,6 @@ const Snippet = ({
           >
             <div className="wiki">W</div>
           </a>
-        )}
-        {(isHashed || isAt) && value.includes('(') && (
-          <div className="strike-tag">
-            <span style={{ color: 'var(--charcoal)' }} id="switch">
-              ( )
-            </span>
-          </div>
         )}
         <div
           className="delete-tag"
