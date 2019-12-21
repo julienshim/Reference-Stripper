@@ -193,12 +193,11 @@ textarea {
 /* Changelog */
 
 #changelogButton {
-  bottom: 0;
+  bottom: 6px;
   cursor: pointer;
   display: flex;
-  padding: 5px 10px;
   position: absolute;
-  right: 12px;
+  right: 6px;
   &:hover {
     color: var(--ash);
     text-decoration: underline;
