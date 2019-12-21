@@ -1,6 +1,11 @@
 {
   "updates": [
     {
+      "version": "1.3.3",
+      "date": "2019-21-2019",
+      "change": "Fixed minor styling issues on snippet labels and changelog button."
+    },
+    {
       "version": "1.3.2",
       "date": "2019-11-26",
       "change": "Added PropTypes. Broke ReferenceStripper further into components. Ran JavaScript syntax and logic error check. Fixed errors."
