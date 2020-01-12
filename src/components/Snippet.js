@@ -15,21 +15,20 @@ const Snippet = ({
   let hashCheckedValue;
   let hashCheckedValueSimple;
 
-  if(isHashed && (value.includes('(') || value.includes(','))) {
+  if (isHashed && (value.includes('(') || value.includes(','))) {
     let tempHashCheckedValue;
     if (value.includes('(')) {
-      tempHashCheckedValue = hashCheckedValue = value
-        .replace(/[(]/g, '#')
-        .replace(/[)]/g, '')
+      tempHashCheckedValue = value.replace(/[(]/g, '#').replace(/[)]/g, '');
     }
     if (value.includes(',')) {
-      tempHashCheckedValue = value.replace(/[,]/g, '#')
-    };
-    hashCheckedValue = tempHashCheckedValue.split(/[#\s]{2,}/).reverse().join(' ')
-    hashCheckedValueSimple = tempHashCheckedValue.split(/[#\s]{2,}/)[0];
+      tempHashCheckedValue = value.replace(/[,]/g, '#');
+    }
+    const [head, tail] = tempHashCheckedValue.split(/[#\s]{2,}/);
+    hashCheckedValue = [tail, head].join(' ');
+    hashCheckedValueSimple = head;
   } else {
     hashCheckedValue = value;
-  } 
+  }
 
   const snippetStyle = { background: '' };
   if (isCopied && !flicker) {
@@ -38,6 +37,17 @@ const Snippet = ({
     snippetStyle.background = isDark ? 'var(--ash)' : 'var(--faded-ash)';
   }
 
+  const arrow = (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="12"
+      height="12"
+      viewBox="0 0 24 24"
+    >
+      <path d="M6 13v4l-6-5 6-5v4h3v2h-3zm9-2v2h3v4l6-5-6-5v4h-3zm-4-6v14h2v-14h-2z" />
+    </svg>
+  );
+
   return (
     <div className="snippet-container">
       <div className="snippet">
@@ -45,7 +55,7 @@ const Snippet = ({
           id={`${value}-${index}-A`}
           className="snippet-label"
           style={snippetStyle}
-          data-value={hashCheckedValue}
+          data-value={value}
           onClick={() => handleSnippetCopy(value, index, 'A')}
           onKeyUp={() => handleSnippetCopy(value, index, 'A')}
           role="button"
@@ -53,24 +63,29 @@ const Snippet = ({
         >
           {value.length <= 30 ? value : `${value.slice(0, 30).trim()}...`}
         </div>
-        {isHashed && (value.includes('(') || value.includes(',')) && (
-          <div
+        <div
           id={`${value}-${index}-B`}
-          className="snippet-label"
-          style={snippetStyle}
-          data-value={hashCheckedValueSimple}
+          data-value={hashCheckedValue}
           onClick={() => handleSnippetCopy(value, index, 'B')}
           onKeyUp={() => handleSnippetCopy(value, index, 'B')}
           role="button"
           tabIndex={0}
+          className="reverse-tag"
         >
-          {hashCheckedValueSimple.length <= 30 ? hashCheckedValueSimple : `${hashCheckedValueSimple.slice(0, 30).trim()}...`}
+          {arrow}
         </div>
-        )}
         {isHashed && (value.includes('(') || value.includes(',')) && (
-          <div className="strike-tag">
+          <div
+            id={`${value}-${index}-C`}
+            data-value={hashCheckedValueSimple}
+            onClick={() => handleSnippetCopy(value, index, 'C')}
+            onKeyUp={() => handleSnippetCopy(value, index, 'C')}
+            role="button"
+            tabIndex={0}
+            className="strike-tag"
+          >
             <span style={{ color: 'var(--charcoal)' }} id="switch">
-              ( )
+              ( ) ,
             </span>
           </div>
         )}

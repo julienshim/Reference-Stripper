@@ -414,6 +414,13 @@ input#snippetInput {
   }
 }
 
+.reverse-tag {
+  background: var(--blue);
+  color: var(--charcoal);
+  padding: 0 5px;
+  padding-top: 3.5px;
+}
+
 .wiki {
   align-items: center;
   background: var(--faded-blue);
