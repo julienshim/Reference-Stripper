@@ -252,7 +252,7 @@ export default class ReferenceStripper extends React.Component {
     return () => clearTimeout(timer);
   };
 
-  handleSnippetCopy = (value, index) => {
+  handleSnippetCopy = (value, index, type) => {
     const { snippets } = this.state;
     if (snippets[index].copied) {
       this.handleSnippetFlicker(index);
@@ -268,7 +268,7 @@ export default class ReferenceStripper extends React.Component {
       });
     }
     const snippetValue = document
-      .getElementById(`${value}-${index}`)
+      .getElementById(`${value}-${index}-${type}`)
       .getAttribute('data-value');
     const dummy = document.createElement('textarea');
     document.body.appendChild(dummy);

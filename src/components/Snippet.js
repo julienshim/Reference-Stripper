@@ -12,15 +12,24 @@ const Snippet = ({
   isHashed
 }) => {
   const wikiRef = `https://en.wikipedia.org/wiki/${value.split(' ').join('_')}`;
-  const hashCheckedValue =
-    isHashed && value.includes('(')
-      ? `${value
-          .replace(/[(]/g, '#')
-          .replace(/[)]/g, '')
-          .split(/[#\s]{2,}/)
-          .reverse()
-          .join(' ')}`
-      : value;
+  let hashCheckedValue;
+  let hashCheckedValueSimple;
+
+  if(isHashed && (value.includes('(') || value.includes(','))) {
+    let tempHashCheckedValue;
+    if (value.includes('(')) {
+      tempHashCheckedValue = hashCheckedValue = value
+        .replace(/[(]/g, '#')
+        .replace(/[)]/g, '')
+    }
+    if (value.includes(',')) {
+      tempHashCheckedValue = value.replace(/[,]/g, '#')
+    };
+    hashCheckedValue = tempHashCheckedValue.split(/[#\s]{2,}/).reverse().join(' ')
+    hashCheckedValueSimple = tempHashCheckedValue.split(/[#\s]{2,}/)[0];
+  } else {
+    hashCheckedValue = value;
+  } 
 
   const snippetStyle = { background: '' };
   if (isCopied && !flicker) {
@@ -33,18 +42,32 @@ const Snippet = ({
     <div className="snippet-container">
       <div className="snippet">
         <div
-          id={`${value}-${index}`}
+          id={`${value}-${index}-A`}
           className="snippet-label"
           style={snippetStyle}
           data-value={hashCheckedValue}
-          onClick={handleSnippetCopy}
-          onKeyUp={handleSnippetCopy}
+          onClick={() => handleSnippetCopy(value, index, 'A')}
+          onKeyUp={() => handleSnippetCopy(value, index, 'A')}
           role="button"
           tabIndex={0}
         >
           {value.length <= 30 ? value : `${value.slice(0, 30).trim()}...`}
         </div>
-        {isHashed && value.includes('(') && (
+        {isHashed && (value.includes('(') || value.includes(',')) && (
+          <div
+          id={`${value}-${index}-B`}
+          className="snippet-label"
+          style={snippetStyle}
+          data-value={hashCheckedValueSimple}
+          onClick={() => handleSnippetCopy(value, index, 'B')}
+          onKeyUp={() => handleSnippetCopy(value, index, 'B')}
+          role="button"
+          tabIndex={0}
+        >
+          {hashCheckedValueSimple.length <= 30 ? hashCheckedValueSimple : `${hashCheckedValueSimple.slice(0, 30).trim()}...`}
+        </div>
+        )}
+        {isHashed && (value.includes('(') || value.includes(',')) && (
           <div className="strike-tag">
             <span style={{ color: 'var(--charcoal)' }} id="switch">
               ( )

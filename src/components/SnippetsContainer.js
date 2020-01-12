@@ -36,7 +36,7 @@ const SnippetsContainer = ({
           value={snippet.value}
           isHashed={snippet.isHashed === true}
           isAt={snippet.isAt === true}
-          handleSnippetCopy={() => handleSnippetCopy(snippet.value, index)}
+          handleSnippetCopy={handleSnippetCopy}
           handleRemoveSnippet={() => handleRemoveSnippet(index)}
         />
       ))}
