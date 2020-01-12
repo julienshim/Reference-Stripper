@@ -70,6 +70,7 @@ const Snippet = ({
           onKeyUp={() => handleSnippetCopy(value, index, 'B')}
           role="button"
           tabIndex={0}
+          style={{ fill: isDark ? 'var(--ash)' : 'var(--charcoal)' }}
           className="reverse-tag"
         >
           {arrow}
@@ -84,7 +85,10 @@ const Snippet = ({
             tabIndex={0}
             className="strike-tag"
           >
-            <span style={{ color: 'var(--charcoal)' }} id="switch">
+            <span
+              style={{ color: isDark ? 'var(--ash)' : 'var(--charcoal)' }}
+              id="switch"
+            >
               ( ) ,
             </span>
           </div>

@@ -21,13 +21,16 @@ body {
   --ash: rgba(204, 204, 204, 1);
   --blue: rgba(33, 118, 134, 1);
   --charcoal: rgba(30, 30, 30, 1);
+  --denim: rgba(21, 96, 189, 1);
   --faded-ash: rgba(204, 204, 204, 0.5);
   --faded-blue: rgba(33, 118, 134, 0.5);
   --faded-clay: rgba(60, 72, 88, 0.5);
+  --faded-denim: rgba(21, 96, 189, 0.5);
   --faded-peach: rgba(255, 0, 0, 0.5);
+  --faded-tangerine: rgba(251, 177, 60, 0.5);
   --peach: rgba(254, 104, 74, 1);
-  --tangerine: rgba(251, 177, 60, 1);
   --pure-white: rgba(255, 255, 255, 1);
+  --tangerine: rgba(251, 177, 60, 1);
 }
 
 .hidden {
@@ -161,11 +164,16 @@ textarea {
 
 .strike-tag {
   align-items: center;
-  background: var(--tangerine);
+  background: var(--faded-tangerine);
+  border: 1px solid var(--faded-ash);
+  border-left: none;
   display: flex;
   font-size: 10px;
   justify-content: center;
   padding: 0 5px 2px 5px;
+  &:hover {
+    background-color: #d68700;
+  }
 }
 
 #switch {
@@ -401,13 +409,14 @@ input#snippetInput {
     align-items: center;
     background: var(--faded-peach);
     border: 1px solid var(--faded-ash);
+    border-left: none;
     display: flex;
     font-size: 10px;
     font-weight: 700;
     justify-content: center;
     padding: 0 5px;
     &:hover {
-      background: red;
+      background: #cc0000;
       border-bottom: 1px solid var(--blue);
       color: var(--pure-white);
     }
@@ -415,17 +424,21 @@ input#snippetInput {
 }
 
 .reverse-tag {
-  background: var(--blue);
-  color: var(--charcoal);
+  background: var(--faded-denim);
+  border: 1px solid var(--faded-ash);
+  border-left: none;
   padding: 0 5px;
   padding-top: 3.5px;
+  &:hover {
+    background-color: #0096d7;
+  }
 }
 
 .wiki {
   align-items: center;
   background: var(--faded-blue);
   border: 1px solid var(--faded-ash);
-  border-right: none;
+  border-left: none;
   display: flex;
   font-family: 'Garamond', 'Adobe Garamond Pro', 'Warnock', 'Warnock Pro',
     'Bodoni', 'Bodoni MT', 'Goudy Old Style', 'Musica', 'serif';
