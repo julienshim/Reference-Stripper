@@ -63,18 +63,20 @@ const Snippet = ({
         >
           {value.length <= 30 ? value : `${value.slice(0, 30).trim()}...`}
         </div>
-        <div
-          id={`${value}-${index}-B`}
-          data-value={hashCheckedValue}
-          onClick={() => handleSnippetCopy(value, index, 'B')}
-          onKeyUp={() => handleSnippetCopy(value, index, 'B')}
-          role="button"
-          tabIndex={0}
-          style={{ fill: isDark ? 'var(--ash)' : 'var(--charcoal)' }}
-          className="reverse-tag"
-        >
-          {arrow}
-        </div>
+        {isHashed && (value.includes('(') || value.includes(',')) && (
+          <div
+            id={`${value}-${index}-B`}
+            data-value={hashCheckedValue}
+            onClick={() => handleSnippetCopy(value, index, 'B')}
+            onKeyUp={() => handleSnippetCopy(value, index, 'B')}
+            role="button"
+            tabIndex={0}
+            style={{ fill: isDark ? 'var(--ash)' : 'var(--charcoal)' }}
+            className="reverse-tag"
+          >
+            {arrow}
+          </div>
+        )}
         {isHashed && (value.includes('(') || value.includes(',')) && (
           <div
             id={`${value}-${index}-C`}
