@@ -119,33 +119,35 @@ export default class ReferenceStripper extends React.Component {
   onSubmit = event => {
     event.preventDefault();
     const { snippet } = this.state;
-    const isHashed = snippet[0] === '#';
-    const isAt = snippet[0] === '@';
-    const isEscapingQuotes = snippet.includes('\\"');
-    const cleanSnippet = isEscapingQuotes
-      ? snippet.replace(/[@#"]/g, '').replace(/[\\]/g, '"')
-      : snippet.replace(/[@#]/g, '');
-    const cleanSnippetSet =
-      isHashed || isAt ? cleanSnippet.trim().split(/\s{2,}/) : [snippet];
-    const cleanSnippetArr = [...new Set(cleanSnippetSet)].map(x => {
-      return {
-        value: x,
-        copied: false,
-        flicker: false,
-        isHashed,
-        isAt
-      };
-    });
-    this.setState(
-      prevState => ({
-        snippets: [...cleanSnippetArr, ...prevState.snippets],
-        snippet: ''
-      }),
-      () => {
-        const { snippets } = this.state;
-        localStorage.setItem('rs-snippets', JSON.stringify(snippets));
-      }
-    );
+    if (snippet !== '') {
+      const isHashed = snippet[0] === '#';
+      const isAt = snippet[0] === '@';
+      const isEscapingQuotes = snippet.includes('\\"');
+      const cleanSnippet = isEscapingQuotes
+        ? snippet.replace(/[@#"]/g, '').replace(/[\\]/g, '"')
+        : snippet.replace(/[@#]/g, '');
+      const cleanSnippetSet =
+        isHashed || isAt ? cleanSnippet.trim().split(/\s{2,}/) : [snippet];
+      const cleanSnippetArr = [...new Set(cleanSnippetSet)].map(x => {
+        return {
+          value: x,
+          copied: false,
+          flicker: false,
+          isHashed,
+          isAt
+        };
+      });
+      this.setState(
+        prevState => ({
+          snippets: [...cleanSnippetArr, ...prevState.snippets],
+          snippet: ''
+        }),
+        () => {
+          const { snippets } = this.state;
+          localStorage.setItem('rs-snippets', JSON.stringify(snippets));
+        }
+      );
+    }
   };
 
   handleStrip = string => {
