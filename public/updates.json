@@ -3,7 +3,7 @@
     {
       "version": "1.3.4",
       "date": "2020-01-12",
-      "change": "Updated Wikipedia heading snippet copying functions for Wikipedia headings with parentheses, e.g. Us (2019 film), or commas, e.g. Charles V, Holy Roman Emperor. Clicking the grey box containing Wikipedia heading will result in a 1:1 copy (Charles V, Holy Roman Emperor -> Charles V, Holy Roman Emperor). Clicking the blue box with separated arrows will result in a reversed order copy with no comma or parentheses (Charles V, Holy Roman Emperor -> Holy Roman Emperor Charles V). Clicking the yellow box with crossed out parentheses and comma will result in a copified copy (Charles V, Holy Roman Emperor -> Charles V)."
+      "change": "Updated Wikipedia heading snippet copying functions for Wikipedia headings with parentheses, e.g. Us (2019 film), or commas, e.g. Charles V, Holy Roman Emperor. Clicking the grey box containing Wikipedia heading will result in a 1:1 copy (Charles V, Holy Roman Emperor -> Charles V, Holy Roman Emperor). Clicking the blue box with separated arrows will result in a reversed order copy with no comma or parentheses (Charles V, Holy Roman Emperor -> Holy Roman Emperor Charles V). Clicking the yellow box with crossed out parentheses and comma will result in a copified copy (Charles V, Holy Roman Emperor -> Charles V). Updated onSubmit function to prevent users from creating snippets containing no text."
     },
     {
       "version": "1.3.3",
