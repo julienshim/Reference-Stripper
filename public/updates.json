@@ -1,6 +1,11 @@
 {
   "updates": [
     {
+      "version": "1.3.6",
+      "date": "2020-02-12",
+      "change": "Fixed issue of users taken to wrong URL when Wikipedia header contain a question mark."
+    },
+    {
       "version": "1.3.5",
       "date": "2020-01-29",
       "change": "Fixed issue where 'output' text is recopied when revisiting tab with Reference Stripper on Safari browser."
