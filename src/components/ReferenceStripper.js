@@ -116,7 +116,7 @@ export default class ReferenceStripper extends React.Component {
     );
   };
 
-  onSubmit = event => {
+   onSubmit = event => {
     event.preventDefault();
     const { snippet } = this.state;
     if (snippet !== '') {
@@ -128,7 +128,21 @@ export default class ReferenceStripper extends React.Component {
         : snippet.replace(/[@#]/g, '');
       const cleanSnippetSet =
         isHashed || isAt ? cleanSnippet.trim().split(/\s{2,}/) : [snippet];
-      const cleanSnippetArr = [...new Set(cleanSnippetSet)].map(x => {
+     
+      // Side by Side Filter Start
+         const temp = [];
+         for (let i = 0; i < cleanSnippetSet.length; i++) {
+           if (cleanSnippetSet[i] !== cleanSnippetSet[i-1]) {
+            temp.push(cleanSnippetSet[i]);
+           }
+         }
+      // Side by Side Filter End
+     
+      // Unique Keys Filter Start
+         // const cleanSnippetArr = [...new Set(cleanSnippetSet)].map(x => {
+      // Unique Keys Filter End
+     
+      const cleanSnippetArr = [...temp].map(x => {
         return {
           value: x,
           copied: false,
