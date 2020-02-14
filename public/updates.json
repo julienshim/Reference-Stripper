@@ -3,7 +3,7 @@
     {
       "version": "1.3.7",
       "date": "2020-02-14",
-      "change": "Updated snippet sorting algorithm to check for unique values via side by side comparison rather than generating unique values, e.g. #Coolio  Coolio  Nas  Nas  Coolio  Coolio -> Coolio, Nas, Coolio (rather than Coolio, Nas). Note: Commas in this example separates snippets generated in ouput. This new sorting method allow users to keep track of snippet items in a chronological order where items may be revisited later on."
+      "change": "Updated snippet sorting algorithm to check for unique values via side by side comparison rather than generating unique values, e.g. #Coolio  Coolio  Nas  Nas  Coolio  Coolio -> Coolio, Nas, Coolio (rather than Coolio, Nas). Note: Commas in this example separates snippets generated in output. This new sorting method allow users to keep track of snippet items in a chronological order where items may be revisited later on."
     },
     {
       "version": "1.3.6",
