@@ -2,6 +2,10 @@
 
 Reference Stripper is a tool that remove links and special symbols from Wikipedia Text.
 
+## Demo (CodePen)
+
+https://codepen.io/julienshim/full/ZEzomZx
+
 ## Removal Features
 
 * Removes footnoes inside brackes, e.g. Lorem ipsum dolor sit amet [2]:29-33[citation needed][11]
