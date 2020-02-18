@@ -130,7 +130,7 @@ export default class ReferenceStripper extends React.Component {
         : snippet.replace(/[@#]/g, '');
      // I'll fix this part later, but just to test.
       const cleanSnippetSet =
-        isHashed || isAt ? isWikiLink ? [snippet.split("/wiki/")[1].replace(/_/g, " ").replace("%3F", "?")] : cleanSnippet.trim().split(/\s{2,}/) : [snippet];
+        isHashed || isAt ? isWikiLink ? [snippet.split("/wiki/")[1].replace(/_/g, " ").replace(/%3F/g, "?")] : cleanSnippet.trim().split(/\s{2,}/) : [snippet];
      console.log(cleanSnippetSet);
       // Side by Side Filter Start
          const temp = [];
