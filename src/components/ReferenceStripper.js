@@ -116,56 +116,67 @@ export default class ReferenceStripper extends React.Component {
     );
   };
 
-   onSubmit = event => {
+  onSubmit = event => {
     event.preventDefault();
     const { snippet } = this.state;
-    if (snippet !== '') {
-           const isWikiLink = /https:\/\/en.wikipedia.org\/wiki\/([\w%]+)/g.test(snippet);
-      const isHashed = snippet[0] === '#' || isWikiLink;
-      const isAt = snippet[0] === '@';
-      console.log(isWikiLink);                                 
-      const isEscapingQuotes = snippet.includes('\\"');
-      const cleanSnippet = isEscapingQuotes
-        ? snippet.replace(/[@#"]/g, '').replace(/[\\]/g, '"')
-        : snippet.replace(/[@#]/g, '');
+    if (snippet !== "") {
+     const isWikiLink = /https:\/\/en.wikipedia.org\/wiki\/([\w%]+)/g.test(
+      snippet
+     );
+     const isHashed = snippet[0] === "#" || isWikiLink;
+     const isAt = snippet[0] === "@";
+     const isEscapingQuotes = snippet.includes('\\"');
+     const cleanSnippet = isEscapingQuotes
+      ? snippet.replace(/[@#"]/g, "").replace(/[\\]/g, '"')
+      : snippet.replace(/[@#]/g, "");
      // I'll fix this part later, but just to test.
-      const cleanSnippetSet =
-        isHashed || isAt ? isWikiLink ? [snippet.split("/wiki/")[1].replace(/_/g, " ").replace(/%3F/g, "?")] : cleanSnippet.trim().split(/\s{2,}/) : [snippet];
-     console.log(cleanSnippetSet);
-      // Side by Side Filter Start
-         const temp = [];
-         for (let i = 0; i < cleanSnippetSet.length; i++) {
-           if (cleanSnippetSet[i] !== cleanSnippetSet[i-1]) {
-            temp.push(cleanSnippetSet[i]);
-           }
-         }
-      // Side by Side Filter End
-     
-      // Unique Keys Filter Start
-         // const cleanSnippetArr = [...new Set(cleanSnippetSet)].map(x => {
-      // Unique Keys Filter End
-     
-      const cleanSnippetArr = [...temp].map(x => {
-        return {
-          value: x,
-          copied: false,
-          flicker: false,
-          isHashed,
-          isAt
-        };
-      });
-      this.setState(
-        prevState => ({
-          snippets: [...cleanSnippetArr, ...prevState.snippets],
-          snippet: ''
-        }),
-        () => {
-          const { snippets } = this.state;
-          localStorage.setItem('rs-snippets', JSON.stringify(snippets));
-        }
-      );
+     let cleanSnippetSet;
+     if (isHashed || isAt) {
+      cleanSnippetSet = isWikiLink
+       ? [
+          snippet
+           .split("/wiki/")[1]
+           .replace(/_/g, " ")
+           .replace(/%3F/g, "?")
+         ]
+       : cleanSnippet.trim().split(/\s{2,}/);
+     } else {
+      cleanSnippetSet = [snippet];
+     }
+     // Side by Side Filter Start
+     const temp = [];
+     for (let i = 0; i < cleanSnippetSet.length; i++) {
+      if (cleanSnippetSet[i] !== cleanSnippetSet[i - 1]) {
+       temp.push(cleanSnippetSet[i]);
+      }
+     }
+     // Side by Side Filter End
+
+     // Unique Keys Filter Start
+     // const cleanSnippetArr = [...new Set(cleanSnippetSet)].map(x => {
+     // Unique Keys Filter End
+
+     const cleanSnippetArr = [...temp].map(x => {
+      return {
+       value: x,
+       copied: false,
+       flicker: false,
+       isHashed,
+       isAt
+      };
+     });
+     this.setState(
+      prevState => ({
+       snippets: [...cleanSnippetArr, ...prevState.snippets],
+       snippet: ""
+      }),
+      () => {
+       const { snippets } = this.state;
+       localStorage.setItem("rs-snippets", JSON.stringify(snippets));
+      }
+     );
     }
-  };
+ };
 
   handleStrip = string => {
     const { includeParentheses } = this.state;
