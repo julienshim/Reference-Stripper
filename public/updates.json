@@ -3,7 +3,7 @@
     {
       "version": "1.3.9",
       "date": "2020-03-06",
-      "change": "Updated snippet sorting algorithm to check for lingering strikeout styling when copying text, e.g. -Jerry Garcia-."
+      "change": "Updated snippet sorting algorithm to check for lingering strikeout styling when copying text, e.g. -Jerry Garcia-. Updated snippets keys to fix issue of snippets not being removed immediately upon deletion."
     },
     {
       "version": "1.3.8",
