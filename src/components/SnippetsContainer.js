@@ -28,7 +28,7 @@ const SnippetsContainer = ({
     >
       {snippets.map((snippet, index) => (
         <Snippet
-          key={`${snippet.value}`}
+          key={`${snippet.value}-${index}`}
           flicker={snippet.flicker}
           isCopied={snippet.copied}
           index={index}
