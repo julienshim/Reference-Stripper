@@ -20,11 +20,9 @@
   },
   "homepage": "https://github.com/julienshim/freeCodeCamp#readme",
   "dependencies": {
-    "acorn": "^7.1.1",
     "css-loader": "^3.4.2",
     "live-server": "^1.2.1",
     "marked": "^0.8.0",
-    "minimist": "^1.2.5",
     "node-sass": "^4.13.1",
     "normalize.css": "^8.0.0",
     "prop-types": "^15.7.2",
