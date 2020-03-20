@@ -28,6 +28,8 @@ const SnippetsContainer = ({
     >
       {snippets.map((snippet, index) => (
         <Snippet
+          // snippets can have same value
+          // eslint-disable-next-line
           key={`${snippet.value}-${index}`}
           flicker={snippet.flicker}
           isCopied={snippet.copied}

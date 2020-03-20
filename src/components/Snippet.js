@@ -11,8 +11,10 @@ const Snippet = ({
   handleSnippetCopy,
   isHashed
 }) => {
-  const wikiVal = value.includes("?") ? value.replace("?", "%3F") : value;
-  const wikiRef = `https://en.wikipedia.org/wiki/${wikiVal.split(' ').join('_')}`;
+  const wikiVal = value.includes('?') ? value.replace('?', '%3F') : value;
+  const wikiRef = `https://en.wikipedia.org/wiki/${wikiVal
+    .split(' ')
+    .join('_')}`;
   let hashCheckedValue;
   let hashCheckedValueSimple;
 
