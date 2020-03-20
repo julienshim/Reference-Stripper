@@ -26,9 +26,9 @@ const Output = ({
       className={`split-view ${isDark ? 'dark' : ''} ${flickr}`}
       ref={outputTextareaRef}
       placeholder={strippedPlaceholder}
-      onFocus={(event)=>{
-        if(event.keycode === undefined) {
-         handleCopy();
+      onFocus={event => {
+        if (event.keycode === undefined) {
+          handleCopy();
         }
       }}
       onMouseDown={handleCopy}
