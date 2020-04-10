@@ -6,6 +6,7 @@ const Output = ({
   copied,
   value,
   isDark,
+  isLowerCase,
   strippedPlaceholder,
   handleCopy,
   outputTextareaRef
@@ -22,10 +23,10 @@ const Output = ({
   return (
     <textarea
       id="output"
-      value={value}
+      value={isLowerCase ? value.toLowerCase() : value}
       className={`split-view ${isDark ? 'dark' : ''} ${flickr}`}
       ref={outputTextareaRef}
-      placeholder={strippedPlaceholder}
+      placeholder={isLowerCase ? strippedPlaceholder.toLowerCase() : value}
       onFocus={event => {
         if (event.keycode === undefined) {
           handleCopy();
@@ -42,6 +43,7 @@ Output.propTypes = {
   copied: PropTypes.bool,
   value: PropTypes.string,
   isDark: PropTypes.bool,
+  isLowerCase: PropTypes.bool,
   strippedPlaceholder: PropTypes.string,
   handleCopy: PropTypes.func,
   outputTextareaRef: PropTypes.oneOfType([

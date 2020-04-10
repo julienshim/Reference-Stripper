@@ -29,6 +29,7 @@ export default class ReferenceStripper extends React.Component {
       currentVersion: '',
       includeParentheses: false,
       isViewingChangelog: false,
+      isLowerCase: false,
       snippet: '',
       snippets: []
     };
@@ -114,6 +115,12 @@ export default class ReferenceStripper extends React.Component {
           return n !== '';
         }).length
     );
+  };
+
+  handleCasing = () => {
+    this.setState(prevState => ({
+      isLowerCase: !prevState.isLowerCase
+    }));
   };
 
   onSubmit = event => {
@@ -362,6 +369,7 @@ export default class ReferenceStripper extends React.Component {
       title,
       updates,
       includeParentheses,
+      isLowerCase,
       snippet,
       snippets,
       currentVersion,
@@ -381,7 +389,12 @@ export default class ReferenceStripper extends React.Component {
         />
         <div id="container">
           <div id="header">
-            <Title text={title} isDark={isDark} />
+            <Title
+              text={title}
+              isDark={isDark}
+              isLowerCase={isLowerCase}
+              handleCasing={this.handleCasing}
+            />
             <div id="settings-container">
               <div id="toggle-container">
                 <ToggleButton
@@ -426,6 +439,7 @@ export default class ReferenceStripper extends React.Component {
               <Input
                 value={input}
                 isDark={isDark}
+                isLowerCase={isLowerCase}
                 placeholder={placeholder}
                 changelogRef={this.changelogRef}
                 handleChange={event => {
@@ -439,6 +453,7 @@ export default class ReferenceStripper extends React.Component {
                 copied={copied}
                 value={output}
                 isDark={isDark}
+                isLowerCase={isLowerCase}
                 strippedPlaceholder={this.handleStrip(placeholder)}
                 handleCopy={this.handleCopy}
                 outputTextareaRef={this.outputTextareaRef}
