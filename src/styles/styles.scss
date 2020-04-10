@@ -75,6 +75,7 @@ body {
 
 h1 {
   margin: 12px 12px 12px 24px;
+  cursor: pointer;
 }
 
 /* Text Area */
@@ -147,7 +148,6 @@ textarea {
 
 .dark {
   background: var(--charcoal);
-  color: var(--ash);
 }
 
 .flicker {
