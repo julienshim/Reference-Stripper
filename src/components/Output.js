@@ -26,7 +26,9 @@ const Output = ({
       value={isLowerCase ? value.toLowerCase() : value}
       className={`split-view ${isDark ? 'dark' : ''} ${flickr}`}
       ref={outputTextareaRef}
-      placeholder={isLowerCase ? strippedPlaceholder.toLowerCase() : value}
+      placeholder={
+        isLowerCase ? strippedPlaceholder.toLowerCase() : strippedPlaceholder
+      }
       onFocus={event => {
         if (event.keycode === undefined) {
           handleCopy();
