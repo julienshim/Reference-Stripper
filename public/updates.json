@@ -1,6 +1,11 @@
 {
   "updates": [
     {
+      "version": "1.4.0",
+      "date": "2020-04-16",
+      "change": "Added Presets to allow users to save input single- and multi- line 'input' text via '$preset1' and '$preset2' commands"
+    },
+    {
       "version": "1.3.10",
       "date": "2020-04-10",
       "change": "Toggle between lowercase mode and normal input by clicking on the 'Reference Stripper' title."
