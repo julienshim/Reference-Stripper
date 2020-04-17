@@ -194,6 +194,10 @@ textarea {
   position: absolute;
 }
 
+span#message {
+  color: var(--faded-ash);
+}
+
 .example {
   color: var(--ash);
   padding: 0 6px;
@@ -369,6 +373,23 @@ input#snippetInput {
   }
 }
 
+.presets-button {
+  display: inline;
+  width: 220px;
+  margin: 0 10px 5px 0;
+  padding: 1px 5px 0 5px;
+  &:hover {
+    color: var(--blue);
+  }
+}
+
+#presetsContainer {
+  min-width: 180px;
+  padding: 4px 0px 0 12px;
+  border: 1px solid transparent;
+  margin: 12px 0 12px 12px;
+}
+
 #snippetsContainer {
   align-items: flex-start;
   border-left: 2px solid var(--blue);
@@ -376,7 +397,7 @@ input#snippetInput {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  margin: 12px 12px;
+  margin: 12px 12px 12px 0;
   overflow: auto;
   overflow-x: auto;
   padding: 4px 12px 0 12px;
@@ -463,7 +484,10 @@ input#snippetInput {
   }
 
   #snippetsContainer {
-    margin: 0 12px 12px 12px;
+    margin: 0 12px 12px 0;
+  }
+  #presetsContainer {
+    margin: 0 0 12px 12px;
   }
 
   input#snippetInput {
