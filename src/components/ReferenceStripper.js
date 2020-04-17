@@ -7,7 +7,7 @@ import Wrapper from './Wrapper';
 import ChangelogButton from './ChangelogButton';
 import Changelog from './Changelog';
 import SnippetForm from './SnippetForm';
-import SnippetsContainer from './SnippetsContainer';
+import BarContainer from './BarContainer';
 import Output from './Output';
 import Input from './Input';
 
@@ -31,7 +31,8 @@ export default class ReferenceStripper extends React.Component {
       isViewingChangelog: false,
       isLowerCase: false,
       snippet: '',
-      snippets: []
+      snippets: [],
+      presets: { first: '', second: '' }
     };
   }
 
@@ -46,6 +47,10 @@ export default class ReferenceStripper extends React.Component {
         const rsDark = localStorage.getItem('rs-dark') === 'true';
         const rsIncludeParentheses =
           localStorage.getItem('rs-include-parentheses') === 'true';
+        const rsPresets =
+          localStorage.getItem('rs-presets') === null
+            ? { first: '', second: '' }
+            : JSON.parse(localStorage.getItem('rs-presets'));
         const rsSnippets =
           localStorage.getItem('rs-snippets') === null
             ? []
@@ -67,7 +72,8 @@ export default class ReferenceStripper extends React.Component {
             input: rsString,
             includeParentheses: rsIncludeParentheses,
             isDark: rsDark,
-            snippets: rsSnippets
+            snippets: rsSnippets,
+            presets: rsPresets
           },
           () => {
             const { input } = this.state;
@@ -130,7 +136,35 @@ export default class ReferenceStripper extends React.Component {
       const isWikiLink = /https:\/\/en.wikipedia.org\/wiki\/([\w%]+)/g.test(
         snippet
       );
+      const { input, presets } = this.state;
       const isHashed = snippet[0] === '#' || isWikiLink;
+      const presetMatch = snippet.match(/^[$preset]+[1-2]{1,1}$/g);
+      const isPreset = presetMatch !== null;
+      let presetPosition;
+      if (isPreset) {
+        if (presetMatch[0][presetMatch[0].length - 1] === '1') {
+          presetPosition = 'first';
+        } else if (presetMatch[0][presetMatch[0].length - 1] === '2') {
+          presetPosition = 'second';
+        }
+      }
+
+      const presetValue = input;
+      const newPresetObject = presets;
+      newPresetObject[presetPosition] = presetValue;
+
+      if (isPreset) {
+        this.setState(
+          {
+            input: '',
+            output: '',
+            presets: newPresetObject
+          },
+          () => {
+            localStorage.setItem('rs-presets', JSON.stringify(presets));
+          }
+        );
+      }
       const isAt = snippet[0] === '@';
       const isEscapingQuotes = snippet.includes('\\"');
       const cleanSnippet = isEscapingQuotes
@@ -148,7 +182,7 @@ export default class ReferenceStripper extends React.Component {
             ]
           : cleanSnippet.trim().split(/[\s-]{2,}/);
       } else {
-        cleanSnippetSet = [snippet];
+        cleanSnippetSet = !isPreset && [snippet];
       }
       // Side by Side Filter Start
       const temp = [];
@@ -289,6 +323,22 @@ export default class ReferenceStripper extends React.Component {
     return () => clearTimeout(timer);
   };
 
+  handleLoadPreset = id => {
+    const presetValue = document
+      .getElementById(`preset-${id}`)
+      .getAttribute('data-preset');
+    this.setState(
+      {
+        input: presetValue
+      },
+      () => {
+        const { input } = this.state;
+        localStorage.setItem('rs-string', input);
+        this.handleChange(this.handleStrip(input), 'output');
+      }
+    );
+  };
+
   handleSnippetCopy = (value, index, type) => {
     const { snippets } = this.state;
     if (snippets[index].copied) {
@@ -377,7 +427,8 @@ export default class ReferenceStripper extends React.Component {
       output,
       copied,
       placeholder,
-      flicker
+      flicker,
+      presets
     } = this.state;
     return (
       <Wrapper isDark={isDark}>
@@ -425,15 +476,15 @@ export default class ReferenceStripper extends React.Component {
               currentVersion={currentVersion}
             />
           </div>
-          {snippets.length > 0 && (
-            <SnippetsContainer
-              snippets={snippets}
-              isDark={isDark}
-              handleSnippetCopy={this.handleSnippetCopy}
-              handleClearSnippets={this.handleClearSnippets}
-              handleRemoveSnippet={this.handleRemoveSnippet}
-            />
-          )}
+          <BarContainer
+            snippets={snippets}
+            presets={presets}
+            isDark={isDark}
+            handleSnippetCopy={this.handleSnippetCopy}
+            handleClearSnippets={this.handleClearSnippets}
+            handleRemoveSnippet={this.handleRemoveSnippet}
+            handleLoadPreset={this.handleLoadPreset}
+          />
           <div id="main">
             <div id="editor">
               <Input
