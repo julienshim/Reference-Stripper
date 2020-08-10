@@ -59,6 +59,7 @@ const Snippet = ({
           className="snippet-label"
           style={snippetStyle}
           data-value={value}
+          title={value}
           onClick={() => handleSnippetCopy(value, index, 'A')}
           onKeyUp={() => handleSnippetCopy(value, index, 'A')}
           role="button"
