@@ -177,8 +177,11 @@ export default class ReferenceStripper extends React.Component {
           ? [
               snippet
                 .split('/wiki/')[1]
+                .split('#')[0]
                 .replace(/_/g, ' ')
                 .replace(/%3F/g, '?')
+                .replace(/%27/g, "'")
+                .replace(/%C3%A9/g, 'é')
             ]
           : cleanSnippet.trim().split(/[\s-]{2,}/);
       } else {
