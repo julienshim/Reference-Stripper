@@ -12,6 +12,7 @@ const PresetsContainer = ({ presets, isDark, handleLoadPreset }) => {
         id="preset-first"
         className="presets-button"
         style={buttonStyle}
+        title={presets.first ? presets.first : 'No value saved to $preset1'}
         data-preset={presets.first}
         onClick={() => handleLoadPreset('first')}
         onKeyUp={() => handleLoadPreset('first')}
@@ -24,6 +25,7 @@ const PresetsContainer = ({ presets, isDark, handleLoadPreset }) => {
         id="preset-second"
         className="presets-button"
         style={buttonStyle}
+        title={presets.second ? presets.second : 'No value saved to $preset2'}
         data-preset={presets.second}
         onClick={() => handleLoadPreset('second')}
         onKeyUp={() => handleLoadPreset('second')}
