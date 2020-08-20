@@ -331,6 +331,13 @@ input {
   }
 }
 
+#snippetCount {
+  position: absolute;
+  color: var(--ash);
+  top: 0;
+  left: 0;
+}
+
 #deleteSVG {
   cursor: pointer;
   fill: var(--ash);
@@ -375,7 +382,6 @@ input#snippetInput {
 
 .presets-button {
   display: inline;
-  width: 220px;
   margin: 0 10px 5px 0;
   padding: 1px 5px 0 5px;
   &:hover {
@@ -475,6 +481,10 @@ input#snippetInput {
 }
 
 @media only screen and (min-width: 768px) {
+  #snippetCount {
+    top: -12;
+  }
+
   #deleteSVG {
     margin-top: 0;
   }

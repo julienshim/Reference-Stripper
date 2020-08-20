@@ -36,7 +36,6 @@ const BarContainer = ({
           });
         }}
       >
-        {snippets.length}
         {snippets.length === 0 ? (
           <span style={style}>No snippets</span>
         ) : (
@@ -59,7 +58,10 @@ const BarContainer = ({
         )}
       </div>{' '}
       <div>
-        <ClearSnippetsButton handleClearSnippets={handleClearSnippets} />
+        <ClearSnippetsButton
+          handleClearSnippets={handleClearSnippets}
+          totalSnippets={snippets.length}
+        />
       </div>
     </div>
   );
