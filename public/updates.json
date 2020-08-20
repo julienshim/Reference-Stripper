@@ -1,6 +1,11 @@
 {
   "updates": [
     {
+      "version": "1.4.2",
+      "date": "2020-08-19",
+      "change": "Added snippet count."
+    },
+    {
       "version": "1.4.1",
       "date": "2020-08-09",
       "change": "Improved Wikipedia link to snippet conversion handling by removing # from Wikipeia URL on submit. URL encoded é and ' from Wikipedia links are now displayed correctly in snippets. Snippets will display full snippet value on hover. Presets will display full preset value or warn that no value has been saved to either $preset1 or $preset2 on hover."
