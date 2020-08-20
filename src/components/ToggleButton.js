@@ -38,7 +38,7 @@ ToggleButton.propTypes = {
   handleOnClick: PropTypes.func,
   state: PropTypes.bool,
   text: PropTypes.string,
-  isDark: PropTypes.bool
+  isDark: PropTypes.bool,
 };
 
 export default ToggleButton;

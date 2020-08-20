@@ -9,7 +9,7 @@ const Output = ({
   isLowerCase,
   strippedPlaceholder,
   handleCopy,
-  outputTextareaRef
+  outputTextareaRef,
 }) => {
   let flickr;
   if (flicker && copied) {
@@ -29,7 +29,7 @@ const Output = ({
       placeholder={
         isLowerCase ? strippedPlaceholder.toLowerCase() : strippedPlaceholder
       }
-      onFocus={event => {
+      onFocus={(event) => {
         if (event.keycode === undefined) {
           handleCopy();
         }
@@ -51,9 +51,9 @@ Output.propTypes = {
   outputTextareaRef: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.shape({
-      current: PropTypes.any
-    })
-  ])
+      current: PropTypes.shape,
+    }),
+  ]),
 };
 
 export default Output;

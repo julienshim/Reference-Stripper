@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const ConfirmButton = ({ input, handleCopy, isDark, copied }) => {
   const themeDark = {
-    color: copied ? '' : 'var(--ash)'
+    color: copied ? '' : 'var(--ash)',
   };
   const theme = isDark ? themeDark : {};
   let label;
@@ -31,7 +31,7 @@ ConfirmButton.propTypes = {
   input: PropTypes.string,
   handleCopy: PropTypes.func,
   isDark: PropTypes.bool,
-  copied: PropTypes.bool
+  copied: PropTypes.bool,
 };
 
 export default ConfirmButton;

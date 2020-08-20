@@ -11,7 +11,7 @@ const BarContainer = ({
   handleClearSnippets,
   handleRemoveSnippet,
   handleLoadPreset,
-  presets
+  presets,
 }) => {
   const style = { color: isDark ? 'var(--faded-ash)' : 'var(--ash)' };
   return (
@@ -23,7 +23,7 @@ const BarContainer = ({
       />
       <div
         id="snippetsContainer"
-        onWheel={event => {
+        onWheel={(event) => {
           // event.preventDefault();
           const container = document.getElementById('snippetsContainer');
           const containerScrollPosition = document.getElementById(
@@ -32,10 +32,11 @@ const BarContainer = ({
           container.scrollTo({
             top: 0,
             left: containerScrollPosition + event.deltaY,
-            behaviour: 'smooth'
+            behaviour: 'smooth',
           });
         }}
       >
+        {snippets.length}
         {snippets.length === 0 ? (
           <span style={style}>No snippets</span>
         ) : (
@@ -72,19 +73,19 @@ BarContainer.propTypes = {
         copied: PropTypes.bool,
         flicker: PropTypes.bool,
         isHashed: PropTypes.bool,
-        isAt: PropTypes.bool
-      })
+        isAt: PropTypes.bool,
+      }),
     ])
   ),
   presets: PropTypes.shape({
     first: PropTypes.string,
-    second: PropTypes.string
+    second: PropTypes.string,
   }),
   isDark: PropTypes.bool,
   handleSnippetCopy: PropTypes.func,
   handleClearSnippets: PropTypes.func,
   handleRemoveSnippet: PropTypes.func,
-  handleLoadPreset: PropTypes.func
+  handleLoadPreset: PropTypes.func,
 };
 
 export default BarContainer;

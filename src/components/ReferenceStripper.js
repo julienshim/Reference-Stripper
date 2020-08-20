@@ -32,7 +32,7 @@ export default class ReferenceStripper extends React.Component {
       isLowerCase: false,
       snippet: '',
       snippets: [],
-      presets: { first: '', second: '' }
+      presets: { first: '', second: '' },
     };
   }
 
@@ -40,8 +40,8 @@ export default class ReferenceStripper extends React.Component {
     fetch(
       'https://raw.githubusercontent.com/julienshim/Reference-Stripper/master/public/updates.json'
     )
-      .then(response => response.json())
-      .then(result => {
+      .then((response) => response.json())
+      .then((result) => {
         const { updates } = result;
         const currentVersion = `v${updates[0].version}`;
         const rsDark = localStorage.getItem('rs-dark') === 'true';
@@ -73,7 +73,7 @@ export default class ReferenceStripper extends React.Component {
             includeParentheses: rsIncludeParentheses,
             isDark: rsDark,
             snippets: rsSnippets,
-            presets: rsPresets
+            presets: rsPresets,
           },
           () => {
             const { input } = this.state;
@@ -109,7 +109,7 @@ export default class ReferenceStripper extends React.Component {
     return () => clearTimeout(timer);
   };
 
-  handleWordCount = string => {
+  handleWordCount = (string) => {
     return (
       string
         // strips whitespace (e.g. new line, tab) before counting
@@ -117,19 +117,19 @@ export default class ReferenceStripper extends React.Component {
         // strips dashes before counting
         .replace(/[-–]/g, ' ')
         .split(' ')
-        .filter(n => {
+        .filter((n) => {
           return n !== '';
         }).length
     );
   };
 
   handleCasing = () => {
-    this.setState(prevState => ({
-      isLowerCase: !prevState.isLowerCase
+    this.setState((prevState) => ({
+      isLowerCase: !prevState.isLowerCase,
     }));
   };
 
-  onSubmit = event => {
+  onSubmit = (event) => {
     event.preventDefault();
     const { snippet } = this.state;
     if (snippet !== '') {
@@ -158,7 +158,7 @@ export default class ReferenceStripper extends React.Component {
           {
             input: '',
             output: '',
-            presets: newPresetObject
+            presets: newPresetObject,
           },
           () => {
             localStorage.setItem('rs-presets', JSON.stringify(presets));
@@ -181,7 +181,7 @@ export default class ReferenceStripper extends React.Component {
                 .replace(/_/g, ' ')
                 .replace(/%3F/g, '?')
                 .replace(/%27/g, "'")
-                .replace(/%C3%A9/g, 'é')
+                .replace(/%C3%A9/g, 'é'),
             ]
           : cleanSnippet.trim().split(/[\s-]{2,}/);
       } else {
@@ -200,19 +200,19 @@ export default class ReferenceStripper extends React.Component {
       // const cleanSnippetArr = [...new Set(cleanSnippetSet)].map(x => {
       // Unique Keys Filter End
 
-      const cleanSnippetArr = [...temp].map(x => {
+      const cleanSnippetArr = [...temp].map((x) => {
         return {
           value: x,
           copied: false,
           flicker: false,
           isHashed,
-          isAt
+          isAt,
         };
       });
       this.setState(
-        prevState => ({
+        (prevState) => ({
           snippets: [...cleanSnippetArr, ...prevState.snippets],
-          snippet: ''
+          snippet: '',
         }),
         () => {
           const { snippets } = this.state;
@@ -222,7 +222,7 @@ export default class ReferenceStripper extends React.Component {
     }
   };
 
-  handleStrip = string => {
+  handleStrip = (string) => {
     const { includeParentheses } = this.state;
     let isWriting = true;
     let isQuoting = false;
@@ -287,7 +287,7 @@ export default class ReferenceStripper extends React.Component {
     return stripped;
   };
 
-  handleCopy = event => {
+  handleCopy = (event) => {
     const { snippets } = this.state;
     const textareaText = this.outputTextareaRef.current;
     textareaText.select();
@@ -304,8 +304,8 @@ export default class ReferenceStripper extends React.Component {
 
   handleToggleDarkMode = () => {
     this.setState(
-      prevState => ({
-        isDark: !prevState.isDark
+      (prevState) => ({
+        isDark: !prevState.isDark,
       }),
       () => {
         const { isDark } = this.state;
@@ -314,7 +314,7 @@ export default class ReferenceStripper extends React.Component {
     );
   };
 
-  handleSnippetFlicker = index => {
+  handleSnippetFlicker = (index) => {
     const { snippets } = this.state;
     const newSnippetsArr = snippets;
     newSnippetsArr[index].flicker = true;
@@ -326,13 +326,13 @@ export default class ReferenceStripper extends React.Component {
     return () => clearTimeout(timer);
   };
 
-  handleLoadPreset = id => {
+  handleLoadPreset = (id) => {
     const presetValue = document
       .getElementById(`preset-${id}`)
       .getAttribute('data-preset');
     this.setState(
       {
-        input: presetValue
+        input: presetValue,
       },
       () => {
         const { input } = this.state;
@@ -354,7 +354,7 @@ export default class ReferenceStripper extends React.Component {
       newSnippetsArr[index].copied = true;
       this.setState({
         snippets: newSnippetsArr,
-        copied: false
+        copied: false,
       });
     }
     const snippetValue = document
@@ -368,13 +368,13 @@ export default class ReferenceStripper extends React.Component {
     document.body.removeChild(dummy);
   };
 
-  handleRemoveSnippet = position => {
+  handleRemoveSnippet = (position) => {
     const { snippets } = this.state;
     const newSnippetsArr = snippets;
     newSnippetsArr.splice(position, 1);
     this.setState(
       {
-        snippets: newSnippetsArr
+        snippets: newSnippetsArr,
       },
       () => {
         localStorage.setItem('rs-snippets', JSON.stringify(newSnippetsArr));
@@ -385,8 +385,8 @@ export default class ReferenceStripper extends React.Component {
   handleChangelogView = () => {
     const changelogDiv = this.changelogRef.current;
     changelogDiv.scrollTo(0, 0);
-    this.setState(prevState => ({
-      isViewingChangelog: !prevState.isViewingChangelog
+    this.setState((prevState) => ({
+      isViewingChangelog: !prevState.isViewingChangelog,
     }));
   };
 
@@ -394,7 +394,7 @@ export default class ReferenceStripper extends React.Component {
     const newSnippetsArr = [];
     this.setState(
       {
-        snippets: newSnippetsArr
+        snippets: newSnippetsArr,
       },
       () => {
         localStorage.setItem('rs-snippets', JSON.stringify(newSnippetsArr));
@@ -404,8 +404,8 @@ export default class ReferenceStripper extends React.Component {
 
   handleToggleIncludeParentheses = () => {
     this.setState(
-      prevState => ({
-        includeParentheses: !prevState.includeParentheses
+      (prevState) => ({
+        includeParentheses: !prevState.includeParentheses,
       }),
       () => {
         const { includeParentheses, input } = this.state;
@@ -431,7 +431,7 @@ export default class ReferenceStripper extends React.Component {
       copied,
       placeholder,
       flicker,
-      presets
+      presets,
     } = this.state;
     return (
       <Wrapper isDark={isDark}>
@@ -468,7 +468,7 @@ export default class ReferenceStripper extends React.Component {
                 value={snippet}
                 isDark={isDark}
                 onSubmit={this.onSubmit}
-                handleChange={event => {
+                handleChange={(event) => {
                   this.handleChange(event.target.value, 'snippet');
                 }}
               />
@@ -496,7 +496,7 @@ export default class ReferenceStripper extends React.Component {
                 isLowerCase={isLowerCase}
                 placeholder={placeholder}
                 changelogRef={this.changelogRef}
-                handleChange={event => {
+                handleChange={(event) => {
                   this.handleChange(event.target.value, 'input');
                 }}
               />

@@ -7,7 +7,7 @@ const Input = ({
   placeholder,
   handleChange,
   changelogRef,
-  isLowerCase
+  isLowerCase,
 }) => {
   return (
     <textarea
@@ -30,9 +30,9 @@ Input.propTypes = {
   changelogRef: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.shape({
-      current: PropTypes.any
-    })
-  ])
+      current: PropTypes.shape,
+    }),
+  ]),
 };
 
 export default Input;

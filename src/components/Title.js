@@ -33,7 +33,7 @@ Title.propTypes = {
   text: PropTypes.string,
   isDark: PropTypes.bool,
   isLowerCase: PropTypes.bool,
-  handleCasing: PropTypes.func
+  handleCasing: PropTypes.func,
 };
 
 export default Title;

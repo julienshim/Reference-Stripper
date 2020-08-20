@@ -21,7 +21,7 @@ SnippetForm.propTypes = {
   value: PropTypes.string,
   isDark: PropTypes.bool,
   handleChange: PropTypes.func,
-  onSubmit: PropTypes.func
+  onSubmit: PropTypes.func,
 };
 
 export default SnippetForm;

@@ -6,7 +6,7 @@ const Changelog = ({
   handleChangelogView,
   isViewingChangelog,
   changelogRef,
-  updates
+  updates,
 }) => {
   return (
     <div
@@ -29,18 +29,18 @@ Changelog.propTypes = {
   changelogRef: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.shape({
-      current: PropTypes.any
-    })
+      current: PropTypes.shape,
+    }),
   ]),
   updates: PropTypes.arrayOf(
     PropTypes.oneOfType([
       PropTypes.shape({
         version: PropTypes.string,
         date: PropTypes.string,
-        change: PropTypes.string
-      })
+        change: PropTypes.string,
+      }),
     ])
-  )
+  ),
 };
 
 export default Changelog;

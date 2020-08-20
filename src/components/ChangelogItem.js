@@ -14,7 +14,7 @@ const ChangelogItem = ({ version, date, change }) => (
 ChangelogItem.propTypes = {
   version: PropTypes.string,
   date: PropTypes.string,
-  change: PropTypes.string
+  change: PropTypes.string,
 };
 
 export default ChangelogItem;

@@ -41,7 +41,7 @@ const ChangelogButton = ({ isDark, handleChangelogView, currentVersion }) => {
 ChangelogButton.propTypes = {
   isDark: PropTypes.bool,
   handleChangelogView: PropTypes.func,
-  currentVersion: PropTypes.string
+  currentVersion: PropTypes.string,
 };
 
 export default ChangelogButton;

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const PresetsContainer = ({ presets, isDark, handleLoadPreset }) => {
   const buttonStyle = {
     border: isDark ? '1px solid var(--blue)' : '1px solid var(--faded-blue)',
-    background: isDark ? 'var(--faded-clay' : 'var(--faded-ash)'
+    background: isDark ? 'var(--faded-clay' : 'var(--faded-ash)',
   };
   return (
     <div id="presetsContainer">
@@ -41,10 +41,10 @@ const PresetsContainer = ({ presets, isDark, handleLoadPreset }) => {
 PresetsContainer.propTypes = {
   presets: PropTypes.shape({
     first: PropTypes.string,
-    second: PropTypes.string
+    second: PropTypes.string,
   }),
   isDark: PropTypes.bool,
-  handleLoadPreset: PropTypes.func
+  handleLoadPreset: PropTypes.func,
 };
 
 export default PresetsContainer;

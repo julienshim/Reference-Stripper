@@ -16,7 +16,7 @@ const ClearSnippetsButton = ({ handleClearSnippets }) => (
 );
 
 ClearSnippetsButton.propTypes = {
-  handleClearSnippets: PropTypes.func
+  handleClearSnippets: PropTypes.func,
 };
 
 export default ClearSnippetsButton;

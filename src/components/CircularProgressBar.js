@@ -28,12 +28,12 @@ const CircularProgressBar = ({ wordCount, size }) => {
 
   const backgroundStyle = {
     strokeDashoffset,
-    stroke: backgroundStroke
+    stroke: backgroundStroke,
   };
 
   const progressStyle = {
     strokeDashoffset,
-    stroke: progressStroke
+    stroke: progressStroke,
   };
 
   const textStyle = { fill: wordCount < 30 ? 'var(--ash)' : 'var(--peach)' };
@@ -75,7 +75,7 @@ const CircularProgressBar = ({ wordCount, size }) => {
 
 CircularProgressBar.propTypes = {
   wordCount: PropTypes.number,
-  size: PropTypes.number
+  size: PropTypes.number,
 };
 
 export default CircularProgressBar;

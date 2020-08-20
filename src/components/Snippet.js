@@ -9,7 +9,7 @@ const Snippet = ({
   flicker,
   isCopied,
   handleSnippetCopy,
-  isHashed
+  isHashed,
 }) => {
   const wikiVal = value.includes('?') ? value.replace('?', '%3F') : value;
   const wikiRef = `https://en.wikipedia.org/wiki/${wikiVal
@@ -131,7 +131,7 @@ Snippet.propTypes = {
   flicker: PropTypes.bool,
   isCopied: PropTypes.bool,
   handleSnippetCopy: PropTypes.func,
-  isHashed: PropTypes.bool
+  isHashed: PropTypes.bool,
 };
 
 export default Snippet;

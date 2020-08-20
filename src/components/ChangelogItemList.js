@@ -8,7 +8,7 @@ const ChangelogItemList = ({ updates }) => (
       <li>
         <h1>Changelog</h1>
       </li>
-      {updates.map(update => {
+      {updates.map((update) => {
         return (
           <ChangelogItem
             key={update.version}
@@ -28,10 +28,10 @@ ChangelogItemList.propTypes = {
       PropTypes.shape({
         version: PropTypes.string,
         date: PropTypes.string,
-        change: PropTypes.string
-      })
+        change: PropTypes.string,
+      }),
     ])
-  )
+  ),
 };
 
 export default ChangelogItemList;
