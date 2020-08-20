@@ -7,7 +7,7 @@ const ClearSnippetsButton = ({ handleClearSnippets, totalSnippets }) => (
       display: 'flex',
       position: 'relative',
       height: '36px',
-      width: '48px',
+      width: '60px', // codepen 60px vs server 48px
     }}
   >
     <div id="snippetCount">{totalSnippets > 0 && totalSnippets}</div>

@@ -483,6 +483,7 @@ input#snippetInput {
 @media only screen and (min-width: 768px) {
   #snippetCount {
     top: -12;
+    // margin-top: -12px // codepen
   }
 
   #deleteSVG {
