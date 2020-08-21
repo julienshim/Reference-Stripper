@@ -1,6 +1,11 @@
 {
   "updates": [
     {
+      "version": "1.4.3",
+      "date": "2020-08-20",
+      "change": "Added drag and drop reorder functionality to snippets."
+    },
+    {
       "version": "1.4.2",
       "date": "2020-08-19",
       "change": "Added snippet count."
