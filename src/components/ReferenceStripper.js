@@ -415,6 +415,39 @@ export default class ReferenceStripper extends React.Component {
     );
   };
 
+  onDragStart = (event, index) => {
+    const { snippets } = this.state;
+    const draggableItemEvent = event;
+    this.draggedItem = snippets[index];
+    draggableItemEvent.dataTransfer.effectAllowed = 'move';
+    draggableItemEvent.dataTransfer.setData(
+      'text/html',
+      draggableItemEvent.target.parentNode
+    );
+    draggableItemEvent.dataTransfer.setDragImage(
+      draggableItemEvent.target.parentNode,
+      20,
+      20
+    );
+  };
+
+  onDragOver = (index) => {
+    const { snippets } = this.state;
+    const draggedOverItem = snippets[index];
+    if (this.draggedItem === draggedOverItem) {
+      return;
+    }
+    const items = snippets.filter((snippet) => snippet !== this.draggedItem);
+    items.splice(index, 0, this.draggedItem);
+    this.setState({ snippets: items }, () => {
+      localStorage.setItem('rs-snippets', JSON.stringify(items));
+    });
+  };
+
+  onDragEnd = () => {
+    this.draggedIndex = null;
+  };
+
   render() {
     const {
       isDark,
@@ -487,6 +520,9 @@ export default class ReferenceStripper extends React.Component {
             handleClearSnippets={this.handleClearSnippets}
             handleRemoveSnippet={this.handleRemoveSnippet}
             handleLoadPreset={this.handleLoadPreset}
+            onDragStart={this.onDragStart}
+            onDragEnd={this.onDragEnd}
+            onDragOver={this.onDragOver}
           />
           <div id="main">
             <div id="editor">
