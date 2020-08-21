@@ -29,7 +29,7 @@ Changelog.propTypes = {
   changelogRef: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.shape({
-      current: PropTypes.shape,
+      current: PropTypes.instanceOf(Element),
     }),
   ]),
   updates: PropTypes.arrayOf(
