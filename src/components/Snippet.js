@@ -10,6 +10,9 @@ const Snippet = ({
   isCopied,
   handleSnippetCopy,
   isHashed,
+  onDragStart,
+  onDragEnd,
+  onDragOver,
 }) => {
   const wikiVal = value.includes('?') ? value.replace('?', '%3F') : value;
   const wikiRef = `https://en.wikipedia.org/wiki/${wikiVal
@@ -53,7 +56,13 @@ const Snippet = ({
 
   return (
     <div className="snippet-container">
-      <div className="snippet">
+      <div
+        className="snippet"
+        draggable
+        onDragStart={(event) => onDragStart(event, index)}
+        onDragEnd={onDragEnd}
+        onDragOver={() => onDragOver(index)}
+      >
         <div
           id={`${value}-${index}-A`}
           className="snippet-label"
@@ -132,6 +141,9 @@ Snippet.propTypes = {
   isCopied: PropTypes.bool,
   handleSnippetCopy: PropTypes.func,
   isHashed: PropTypes.bool,
+  onDragStart: PropTypes.func,
+  onDragOver: PropTypes.func,
+  onDragEnd: PropTypes.func,
 };
 
 export default Snippet;
