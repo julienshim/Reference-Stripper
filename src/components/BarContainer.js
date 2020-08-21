@@ -11,6 +11,9 @@ const BarContainer = ({
   handleClearSnippets,
   handleRemoveSnippet,
   handleLoadPreset,
+  onDragStart,
+  onDragEnd,
+  onDragOver,
   presets,
 }) => {
   const style = { color: isDark ? 'var(--faded-ash)' : 'var(--ash)' };
@@ -49,6 +52,9 @@ const BarContainer = ({
               index={index}
               isDark={isDark}
               value={snippet.value}
+              onDragStart={onDragStart}
+              onDragEnd={onDragEnd}
+              onDragOver={onDragOver}
               isHashed={snippet.isHashed === true}
               isAt={snippet.isAt === true}
               handleSnippetCopy={handleSnippetCopy}
@@ -88,6 +94,9 @@ BarContainer.propTypes = {
   handleClearSnippets: PropTypes.func,
   handleRemoveSnippet: PropTypes.func,
   handleLoadPreset: PropTypes.func,
+  onDragStart: PropTypes.func,
+  onDragOver: PropTypes.func,
+  onDragEnd: PropTypes.func,
 };
 
 export default BarContainer;
