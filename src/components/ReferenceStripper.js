@@ -181,7 +181,8 @@ export default class ReferenceStripper extends React.Component {
                 .replace(/_/g, ' ')
                 .replace(/%3F/g, '?')
                 .replace(/%27/g, "'")
-                .replace(/%C3%A9/g, 'é'),
+                .replace(/%C3%A9/g, 'é')
+                .replace(/%26/g, '&'),
             ]
           : cleanSnippet.trim().split(/[\s-]{2,}/);
       } else {
