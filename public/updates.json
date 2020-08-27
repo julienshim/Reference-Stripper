@@ -1,6 +1,11 @@
 {
   "updates": [
     {
+      "version": "1.4.4",
+      "date": "2020-08-20",
+      "change": "URL encoded & from Wikipedia links are now displayed correctly in snippets."
+    },
+    {
       "version": "1.4.3",
       "date": "2020-08-20",
       "change": "Added drag and drop reorder functionality to snippets."
