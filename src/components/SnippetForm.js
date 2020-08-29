@@ -9,7 +9,7 @@ const SnippetForm = ({ value, isDark, handleChange, onSubmit }) => {
         type="text"
         id="snippetInput"
         value={value}
-        placeholder="Enter new snippet"
+        placeholder="Enter new snippet (e.g. text, Wikipedia URL)"
         autoComplete="off"
         onChange={handleChange}
       />
