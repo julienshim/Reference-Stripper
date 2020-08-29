@@ -2,7 +2,7 @@ import React from 'react';
 import CircularProgressBar from './CircularProgressBar';
 import Title from './Title';
 import ConfirmButton from './ConfirmButton';
-import ToggleButton from './ToggleButton';
+// import ToggleButton from './ToggleButton';
 import Wrapper from './Wrapper';
 import ChangelogButton from './ChangelogButton';
 import Changelog from './Changelog';
@@ -455,7 +455,7 @@ export default class ReferenceStripper extends React.Component {
       isViewingChangelog,
       title,
       updates,
-      includeParentheses,
+      // includeParentheses,
       isLowerCase,
       snippet,
       snippets,
@@ -485,7 +485,7 @@ export default class ReferenceStripper extends React.Component {
             />
             <div id="settings-container">
               <div id="toggle-container">
-                <ToggleButton
+                {/* <ToggleButton
                   state={isDark}
                   handleOnClick={this.handleToggleDarkMode}
                   text="Dark Mode"
@@ -496,7 +496,7 @@ export default class ReferenceStripper extends React.Component {
                   handleOnClick={this.handleToggleIncludeParentheses}
                   text="( text )"
                   isDark={isDark}
-                />
+                /> */}
               </div>
               <SnippetForm
                 value={snippet}
@@ -507,11 +507,6 @@ export default class ReferenceStripper extends React.Component {
                 }}
               />
             </div>
-            <ChangelogButton
-              handleChangelogView={this.handleChangelogView}
-              isDark={isDark}
-              currentVersion={currentVersion}
-            />
           </div>
           <BarContainer
             snippets={snippets}
@@ -563,6 +558,11 @@ export default class ReferenceStripper extends React.Component {
             </div>
           </div>
         </div>
+        <ChangelogButton
+          handleChangelogView={this.handleChangelogView}
+          isDark={isDark}
+          currentVersion={currentVersion}
+        />
       </Wrapper>
     );
   }
