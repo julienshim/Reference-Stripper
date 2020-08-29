@@ -71,11 +71,18 @@ body {
   flex-direction: row;
 }
 
-/* Header */
+/* Header & Settings */
+
+#settingsButton {
+  margin-top: 18px;
+  width: 48px;
+  // margin-left: 12px;
+}
 
 h1 {
-  margin: 12px 12px 12px 24px;
+  margin: 12px 12px 12px 12px;
   cursor: pointer;
+  width: 282px;
 }
 
 /* Text Area */
@@ -206,11 +213,9 @@ span#message {
 /* Changelog */
 
 #changelogButton {
-  bottom: 7px;
   cursor: pointer;
   display: flex;
-  position: absolute;
-  right: 7px;
+  margin: 12px 24px;
   &:hover {
     color: var(--ash);
     text-decoration: underline;
@@ -354,9 +359,9 @@ form#snippetForm {
   display: flex;
   flex-direction: column;
   height: 30px;
-  margin: -6px 12px 0 12px;
+  margin: -6px 12px 6px 12px;
   padding: 0;
-  width: 100%;
+  width: 98%;
 }
 
 .snippets-container {
@@ -369,10 +374,9 @@ form#snippetForm {
 
 input#snippetInput {
   background: none;
-  border-bottom: 1px dotted var(--faded-ash);
+  border: 1px dotted var(--faded-ash);
   border-left: none;
   border-right: none;
-  border-top: none;
   height: 30px;
   width: 100%;
   &:focus {
@@ -393,7 +397,7 @@ input#snippetInput {
   min-width: 180px;
   padding: 4px 0px 0 12px;
   border: 1px solid transparent;
-  margin: 12px 0 12px 12px;
+  margin: 12px 0 12px 0px;
 }
 
 #snippetsContainer {
@@ -486,12 +490,20 @@ input#snippetInput {
     // margin-top: -12px // codepen
   }
 
+  input#snippetInput {
+    border-top: none;
+  }
+
+  #title {
+    margin-left: 24px;
+  }
+
   #deleteSVG {
     margin-top: 0;
   }
   form#snippetForm {
-    margin: 12px 12px 0 0;
-    max-width: 350px;
+    margin: 12px 24px;
+    max-width: 98%;
   }
 
   #snippetsContainer {
@@ -501,13 +513,6 @@ input#snippetInput {
     margin: 0 0 12px 12px;
   }
 
-  input#snippetInput {
-    max-width: 350px;
-  }
-
-  h1 {
-    min-width: 281px;
-  }
   #main {
     display: flex;
   }
