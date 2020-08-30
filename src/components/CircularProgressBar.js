@@ -70,7 +70,7 @@ const CircularProgressBar = ({ wordCount, size, wordCountLimit }) => {
           textAnchor="middle"
           style={textStyle}
         >
-          {wordCount !== 0 ? wordCount : wordCountLimit - wordCount}
+          {wordCountLimit < 1 ? wordCount : wordCountLimit - wordCount}
         </text>
       </svg>
     </div>
