@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const ChangelogItem = ({ version, date, change }) => (
-  <li className="changelog-li">
+  <li>
     <h2>
       <span>{`v${version}`}</span>
       {date}
