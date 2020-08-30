@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const CircularProgressBar = ({ wordCount, size }) => {
-  const percentage = (wordCount / 30) * 100;
+const CircularProgressBar = ({ wordCount, size, wordCountLimit }) => {
+  const percentage = (wordCount / wordCountLimit) * 100;
   const radius = size;
   const strokeWidth = radius / 10;
   const normalizedRadius = radius - strokeWidth * 2;
@@ -12,13 +12,13 @@ const CircularProgressBar = ({ wordCount, size }) => {
   let backgroundStroke;
   let progressStroke;
 
-  if (wordCount < 20) {
+  if (wordCount < Math.ceil(wordCountLimit * 0.66)) {
     backgroundStroke = 'var(--ash)';
     progressStroke = 'var(--blue)';
-  } else if (wordCount < 30) {
+  } else if (wordCount < wordCountLimit) {
     backgroundStroke = 'var(--ash)';
     progressStroke = 'var(--tangerine)';
-  } else if (wordCount < 40) {
+  } else if (wordCount < Math.ceil(wordCountLimit * 1.33)) {
     backgroundStroke = 'var(--peach)';
     progressStroke = 'var(--peach)';
   } else {
@@ -36,7 +36,9 @@ const CircularProgressBar = ({ wordCount, size }) => {
     stroke: progressStroke,
   };
 
-  const textStyle = { fill: wordCount < 30 ? 'var(--ash)' : 'var(--peach)' };
+  const textStyle = {
+    fill: wordCount < wordCountLimit ? 'var(--ash)' : 'var(--peach)',
+  };
 
   return (
     <div id="circular-progress-bar">
@@ -66,7 +68,7 @@ const CircularProgressBar = ({ wordCount, size }) => {
           textAnchor="middle"
           style={textStyle}
         >
-          {30 - wordCount}
+          {wordCountLimit - wordCount}
         </text>
       </svg>
     </div>
@@ -76,6 +78,7 @@ const CircularProgressBar = ({ wordCount, size }) => {
 CircularProgressBar.propTypes = {
   wordCount: PropTypes.number,
   size: PropTypes.number,
+  wordCountLimit: PropTypes.number,
 };
 
 export default CircularProgressBar;
