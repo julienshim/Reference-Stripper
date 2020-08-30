@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const SettingsPanel = ({
+const PanelShell = ({
   handlePopUpView,
   isViewingPanel,
   panelRef,
@@ -58,7 +58,7 @@ const SettingsPanel = ({
   );
 };
 
-SettingsPanel.propTypes = {
+PanelShell.propTypes = {
   children: PropTypes.node,
   id: PropTypes.string,
   target: PropTypes.string,
@@ -73,4 +73,4 @@ SettingsPanel.propTypes = {
   ]),
 };
 
-export default SettingsPanel;
+export default PanelShell;
