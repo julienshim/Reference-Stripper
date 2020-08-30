@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const ChangelogButton = ({ isDark, handleChangelogView, currentVersion }) => {
+const ChangelogButton = ({ isDark, handlePopUpView, currentVersion }) => {
   const svgStyle = { fill: 'rgba(204, 204, 204, 0.8)' };
   const note = (
     <svg
@@ -35,8 +35,8 @@ const ChangelogButton = ({ isDark, handleChangelogView, currentVersion }) => {
     >
       <div
         id="changelogButton"
-        onClick={handleChangelogView}
-        onKeyUp={handleChangelogView}
+        onClick={() => handlePopUpView('isViewingChangelog', 'changelogRef')}
+        onKeyUp={() => handlePopUpView('isViewingChangelog', 'changelogRef')}
         role="button"
         tabIndex={0}
       >
@@ -48,7 +48,7 @@ const ChangelogButton = ({ isDark, handleChangelogView, currentVersion }) => {
 
 ChangelogButton.propTypes = {
   isDark: PropTypes.bool,
-  handleChangelogView: PropTypes.func,
+  handlePopUpView: PropTypes.func,
   currentVersion: PropTypes.string,
 };
 
