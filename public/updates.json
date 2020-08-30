@@ -1,6 +1,11 @@
 {
   "updates": [
     {
+      "version": "1.5.0",
+      "date": "2020-08-30",
+      "change": "Remove All Parentheses Mode and Dark Mode moved into new Settings panel. Users can now set Word Count Limit in Settings panel as well as define special characters to warn against."
+    },
+    {
       "version": "1.4.4",
       "date": "2020-08-27",
       "change": "URL encoded & from Wikipedia links are now displayed correctly in snippets."
