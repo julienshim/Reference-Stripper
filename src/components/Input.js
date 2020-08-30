@@ -1,21 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Input = ({
-  value,
-  isDark,
-  placeholder,
-  handleChange,
-  changelogRef,
-  isLowerCase,
-}) => {
+const Input = ({ value, isDark, placeholder, handleChange, isLowerCase }) => {
   return (
     <textarea
       id="input"
       value={isLowerCase ? value.toLowerCase() : value}
       className={`split-view ${isDark ? 'dark' : ''}`}
       placeholder={isLowerCase ? placeholder.toLowerCase() : placeholder}
-      ref={changelogRef}
       onChange={handleChange}
     />
   );
@@ -27,12 +19,6 @@ Input.propTypes = {
   placeholder: PropTypes.string,
   handleChange: PropTypes.func,
   isLowerCase: PropTypes.bool,
-  changelogRef: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.shape({
-      current: PropTypes.instanceOf(Element),
-    }),
-  ]),
 };
 
 export default Input;
