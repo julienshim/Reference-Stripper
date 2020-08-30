@@ -1,7 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Title = ({ text, isDark, handleCasing, isLowerCase }) => {
+const Title = ({
+  text,
+  isDark,
+  handleCasing,
+  isLowerCase,
+  handlePopUpView,
+}) => {
   let textColor;
 
   if (isLowerCase) {
@@ -55,7 +61,19 @@ const Title = ({ text, isDark, handleCasing, isLowerCase }) => {
           {isLowerCase ? text.toLowerCase() : text}
         </h1>
       </div>
-      <div id="settingsButton">{isDark ? settingsDark : settings}</div>
+      <div
+        id="settingsButton"
+        onClick={() =>
+          // eslint-disable-next-line prettier/prettier
+          handlePopUpView('isViewingSettingsPanel', 'settingsPanelRef')}
+        onKeyUp={() =>
+          // eslint-disable-next-line prettier/prettier
+          handlePopUpView('isViewingSettingsPanel', 'settingsPanelRef')}
+        role="button"
+        tabIndex={0}
+      >
+        {isDark ? settingsDark : settings}
+      </div>
     </div>
   );
 };
@@ -65,6 +83,7 @@ Title.propTypes = {
   isDark: PropTypes.bool,
   isLowerCase: PropTypes.bool,
   handleCasing: PropTypes.func,
+  handlePopUpView: PropTypes.func,
 };
 
 export default Title;
