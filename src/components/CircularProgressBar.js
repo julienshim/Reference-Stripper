@@ -2,13 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const CircularProgressBar = ({ wordCount, size, wordCountLimit }) => {
-  const percentage = (wordCount / wordCountLimit) * 100;
+  const percentage = (wordCount / (wordCountLimit || 1)) * 100;
   const radius = size;
   const strokeWidth = radius / 10;
   const normalizedRadius = radius - strokeWidth * 2;
   const circumference = normalizedRadius * 2 * Math.PI;
   const strokeDashoffset = circumference - (percentage / 100) * circumference;
-
   let backgroundStroke;
   let progressStroke;
 
@@ -37,7 +36,10 @@ const CircularProgressBar = ({ wordCount, size, wordCountLimit }) => {
   };
 
   const textStyle = {
-    fill: wordCount < wordCountLimit ? 'var(--ash)' : 'var(--peach)',
+    fill:
+      wordCount < wordCountLimit || wordCountLimit === 0
+        ? 'var(--ash)'
+        : 'var(--peach)',
   };
 
   return (
@@ -68,7 +70,7 @@ const CircularProgressBar = ({ wordCount, size, wordCountLimit }) => {
           textAnchor="middle"
           style={textStyle}
         >
-          {wordCountLimit - wordCount}
+          {wordCount !== 0 ? wordCount : wordCountLimit - wordCount}
         </text>
       </svg>
     </div>
