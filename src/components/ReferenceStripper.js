@@ -2,10 +2,11 @@ import React from 'react';
 import CircularProgressBar from './CircularProgressBar';
 import Title from './Title';
 import ConfirmButton from './ConfirmButton';
-// import ToggleButton from './ToggleButton';
 import Wrapper from './Wrapper';
 import ChangelogButton from './ChangelogButton';
 import Changelog from './Changelog';
+import Settings from './Settings';
+import PanelShell from './PanelShell';
 import SnippetForm from './SnippetForm';
 import BarContainer from './BarContainer';
 import Output from './Output';
@@ -15,6 +16,8 @@ export default class ReferenceStripper extends React.Component {
   outputTextareaRef = React.createRef();
 
   changelogRef = React.createRef();
+
+  settingsPanelRef = React.createRef();
 
   constructor(props) {
     super(props);
@@ -29,10 +32,14 @@ export default class ReferenceStripper extends React.Component {
       currentVersion: '',
       includeParentheses: false,
       isViewingChangelog: false,
+      isViewingSettingsPanel: false,
       isLowerCase: false,
       snippet: '',
       snippets: [],
       presets: { first: '', second: '' },
+      wordCountLimit: 30,
+      specialCharactersUser: '? !',
+      specialCharactersFound: [],
     };
   }
 
@@ -55,6 +62,14 @@ export default class ReferenceStripper extends React.Component {
           localStorage.getItem('rs-snippets') === null
             ? []
             : JSON.parse(localStorage.getItem('rs-snippets'));
+        const rsWCL =
+          localStorage.getItem('rs-wcl') === null
+            ? 30
+            : +localStorage.getItem('rs-wcl');
+        const rsSCU =
+          localStorage.getItem('rs-scu') === null
+            ? ''
+            : localStorage.getItem('rs-scu');
         const rsString =
           localStorage.getItem('rs-string') === null
             ? ''
@@ -74,6 +89,8 @@ export default class ReferenceStripper extends React.Component {
             isDark: rsDark,
             snippets: rsSnippets,
             presets: rsPresets,
+            wordCountLimit: rsWCL,
+            specialCharactersUser: rsSCU,
           },
           () => {
             const { input } = this.state;
@@ -84,13 +101,27 @@ export default class ReferenceStripper extends React.Component {
   }
 
   handleChange = (value, type) => {
-    const { snippets } = this.state;
+    const { snippets, specialCharactersUser } = this.state;
     const newSnippetsArr = snippets;
     for (let i = 0; i < newSnippetsArr.length; i += 1) {
       newSnippetsArr[i].copied = false;
     }
+    const flag = [];
+
+    [...new Set(specialCharactersUser.split(/\s/).filter((x) => x))].forEach(
+      (char) => {
+        if (value.toLowerCase().includes(char.toLowerCase())) {
+          flag.push(char);
+        }
+      }
+    );
     this.setState(
-      { [type]: value, copied: false, snippets: newSnippetsArr },
+      {
+        [type]: value,
+        copied: false,
+        snippets: newSnippetsArr,
+        specialCharactersFound: flag,
+      },
       () => {
         const { input } = this.state;
         if (type === 'input') {
@@ -120,6 +151,39 @@ export default class ReferenceStripper extends React.Component {
         .filter((n) => {
           return n !== '';
         }).length
+    );
+  };
+
+  handleWordCountLimit = (value) => {
+    let numify = value.match(/\d{1,5}/) ? +value.match(/\d{1,5}/)[0] : 0;
+
+    if (+value) {
+      if (value.length <= 5) {
+        numify = +value;
+      } else {
+        numify = +value.slice(0, 5);
+      }
+    }
+    this.setState(
+      {
+        wordCountLimit: numify,
+      },
+      () => {
+        localStorage.setItem('rs-wcl', numify);
+      }
+    );
+  };
+
+  handleSpecialCharacters = (value) => {
+    this.setState(
+      {
+        specialCharactersUser: value,
+      },
+      () => {
+        localStorage.setItem('rs-scu', value);
+        const { input } = this.state;
+        this.handleChange(this.handleStrip(input), 'output');
+      }
     );
   };
 
@@ -383,11 +447,11 @@ export default class ReferenceStripper extends React.Component {
     );
   };
 
-  handleChangelogView = () => {
-    const changelogDiv = this.changelogRef.current;
+  handlePopUpView = (target, view) => {
+    const changelogDiv = this[view].current;
     changelogDiv.scrollTo(0, 0);
     this.setState((prevState) => ({
-      isViewingChangelog: !prevState.isViewingChangelog,
+      [target]: !prevState[target],
     }));
   };
 
@@ -453,9 +517,10 @@ export default class ReferenceStripper extends React.Component {
     const {
       isDark,
       isViewingChangelog,
+      isViewingSettingsPanel,
       title,
       updates,
-      // includeParentheses,
+      includeParentheses,
       isLowerCase,
       snippet,
       snippets,
@@ -465,16 +530,42 @@ export default class ReferenceStripper extends React.Component {
       copied,
       placeholder,
       flicker,
+      specialCharactersUser,
+      specialCharactersFound,
       presets,
+      wordCountLimit,
     } = this.state;
     return (
       <Wrapper isDark={isDark}>
-        <Changelog
-          changelogRef={this.changelogRef}
-          handleChangelogView={this.handleChangelogView}
-          isViewingChangelog={isViewingChangelog}
-          updates={updates}
-        />
+        <PanelShell
+          panelRef={this.changelogRef}
+          handlePopUpView={this.handlePopUpView}
+          isViewingPanel={isViewingChangelog}
+          target="isViewingChangelog"
+          view="changelogRef"
+          id="changelog"
+        >
+          <Changelog updates={updates} />
+        </PanelShell>
+        <PanelShell
+          panelRef={this.settingsPanelRef}
+          handlePopUpView={this.handlePopUpView}
+          isViewingPanel={isViewingSettingsPanel}
+          target="isViewingSettingsPanel"
+          view="settingsPanelRef"
+          id="settingsPanel"
+        >
+          <Settings
+            handleToggleDarkMode={this.handleToggleDarkMode}
+            handleToggleIncludeParentheses={this.handleToggleIncludeParentheses}
+            isDark={isDark}
+            wordCountLimit={wordCountLimit}
+            includeParentheses={includeParentheses}
+            handleWordCountLimit={this.handleWordCountLimit}
+            handleSpecialCharacters={this.handleSpecialCharacters}
+            specialCharactersUser={specialCharactersUser}
+          />
+        </PanelShell>
         <div id="container">
           <div id="header">
             <Title
@@ -482,22 +573,10 @@ export default class ReferenceStripper extends React.Component {
               isDark={isDark}
               isLowerCase={isLowerCase}
               handleCasing={this.handleCasing}
+              handlePopUpView={this.handlePopUpView}
             />
             <div id="settings-container">
-              <div id="toggle-container">
-                {/* <ToggleButton
-                  state={isDark}
-                  handleOnClick={this.handleToggleDarkMode}
-                  text="Dark Mode"
-                  isDark={isDark}
-                />
-                <ToggleButton
-                  state={includeParentheses}
-                  handleOnClick={this.handleToggleIncludeParentheses}
-                  text="( text )"
-                  isDark={isDark}
-                /> */}
-              </div>
+              <div id="toggle-container" />
               <SnippetForm
                 value={snippet}
                 isDark={isDark}
@@ -527,7 +606,7 @@ export default class ReferenceStripper extends React.Component {
                 isDark={isDark}
                 isLowerCase={isLowerCase}
                 placeholder={placeholder}
-                changelogRef={this.changelogRef}
+                specialCharactersFound={specialCharactersFound}
                 handleChange={(event) => {
                   this.handleChange(event.target.value, 'input');
                 }}
@@ -547,6 +626,7 @@ export default class ReferenceStripper extends React.Component {
               <CircularProgressBar
                 wordCount={this.handleWordCount(output)}
                 size={25}
+                wordCountLimit={wordCountLimit}
               />
               <ConfirmButton
                 text={output}
@@ -559,7 +639,7 @@ export default class ReferenceStripper extends React.Component {
           </div>
         </div>
         <ChangelogButton
-          handleChangelogView={this.handleChangelogView}
+          handlePopUpView={this.handlePopUpView}
           isDark={isDark}
           currentVersion={currentVersion}
         />
