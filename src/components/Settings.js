@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ToggleButton from './ToggleButton';
 
-const SettingsPanel = ({
+const Settings = ({
   handleWordCountLimit,
   handleSpecialCharacters,
   handleToggleDarkMode,
@@ -73,7 +73,7 @@ const SettingsPanel = ({
   </ul>
 );
 
-SettingsPanel.propTypes = {
+Settings.propTypes = {
   handleSpecialCharacters: PropTypes.func,
   isDark: PropTypes.bool,
   includeParentheses: PropTypes.bool,
@@ -84,4 +84,4 @@ SettingsPanel.propTypes = {
   specialCharactersUser: PropTypes.string,
 };
 
-export default SettingsPanel;
+export default Settings;
