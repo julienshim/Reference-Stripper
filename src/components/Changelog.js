@@ -1,37 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ChangelogItemList from './ChangelogItemList';
+import ChangelogItem from './ChangelogItem';
 
-const Changelog = ({
-  handleChangelogView,
-  isViewingChangelog,
-  changelogRef,
-  updates,
-}) => {
-  return (
-    <div
-      id="changelog"
-      className={isViewingChangelog ? '' : 'hidden'}
-      onClick={handleChangelogView}
-      onKeyUp={handleChangelogView}
-      ref={changelogRef}
-      role="button"
-      tabIndex={0}
-    >
-      <ChangelogItemList updates={updates} />
-    </div>
-  );
-};
+const Changelog = ({ updates }) => (
+  <ul>
+    <li>
+      <h1>Changelog</h1>
+    </li>
+    {updates.map((update) => {
+      return (
+        <ChangelogItem
+          key={update.version}
+          version={update.version}
+          date={update.date}
+          change={update.change}
+        />
+      );
+    })}
+  </ul>
+);
 
 Changelog.propTypes = {
-  handleChangelogView: PropTypes.func,
-  isViewingChangelog: PropTypes.bool,
-  changelogRef: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.shape({
-      current: PropTypes.instanceOf(Element),
-    }),
-  ]),
   updates: PropTypes.arrayOf(
     PropTypes.oneOfType([
       PropTypes.shape({
