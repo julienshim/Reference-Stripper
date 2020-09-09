@@ -20,7 +20,7 @@
   "bugs": {
     "url": "https://github.com/julienshim/reference-stripper/issues"
   },
-  "homepage": "https://julienshim.github.io/reference_stripper",
+  "homepage": "https://julienshim.github.io/reference-stripper",
   "dependencies": {
     "css-loader": "^4.2.1",
     "live-server": "^1.2.1",

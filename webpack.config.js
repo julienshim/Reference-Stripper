@@ -4,7 +4,7 @@ module.exports = {
   mode: 'development', // configuration needs to be explicitly state or a lot of performance warnings
   entry: './src/app.js', // entry -> output
   output: {
-    path: path.join(__dirname, 'public'),
+    path: path.join(__dirname, 'build'),
     filename: 'bundle.js',
   },
   module: {
