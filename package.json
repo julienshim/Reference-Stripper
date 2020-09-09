@@ -1,6 +1,6 @@
 {
-  "name": "random-quote-machine",
-  "version": "1.0.0",
+  "name": "reference-stripper",
+  "version": "1.5.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/julienshim/freeCodeCamp.git"
+    "url": "git+https://github.com/julienshim/reference-stripper.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/julienshim/freeCodeCamp/issues"
+    "url": "https://github.com/julienshim/reference-stripper/issues"
   },
-  "homepage": "https://github.com/julienshim/freeCodeCamp#readme",
+  "homepage": "https://github.com/julienshim/reference-stripper#readme",
   "dependencies": {
     "css-loader": "^4.2.1",
     "live-server": "^1.2.1",
