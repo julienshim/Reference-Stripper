@@ -31178,7 +31178,7 @@ var ReferenceStripper = /*#__PURE__*/function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      fetch('https://raw.githubusercontent.com/julienshim/Reference-Stripper/master/public/updates.json').then(function (response) {
+      fetch('updates.json').then(function (response) {
         return response.json();
       }).then(function (result) {
         var updates = result.updates;
