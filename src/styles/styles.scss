@@ -1,0 +1,594 @@
+/* Reference Stripper
+
+Created by Julien Shim on 9/11/19.
+Copyright © 2019 Julien Shim. All rights reserved. */
+
+@import './base/settings';
+@import './base/base';
+
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+* {
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+  outline: none;
+}
+
+body {
+  overflow: hidden;
+}
+
+:root {
+  --ash: rgba(204, 204, 204, 1);
+  --blue: rgba(33, 118, 134, 1);
+  --charcoal: rgba(30, 30, 30, 1);
+  --clay: rgba(60, 72, 88, 0.9);
+  --denim: rgba(21, 96, 189, 1);
+  --faded-ash: rgba(204, 204, 204, 0.5);
+  --faded-blue: rgba(33, 118, 134, 0.5);
+  --faded-clay: rgba(60, 72, 88, 0.5);
+  --faded-denim: rgba(21, 96, 189, 0.5);
+  --faded-peach: rgba(255, 0, 0, 0.5);
+  --faded-tangerine: rgba(251, 177, 60, 0.5);
+  --peach: rgba(254, 104, 74, 1);
+  --pure-white: rgba(255, 255, 255, 1);
+  --tangerine: rgba(251, 177, 60, 1);
+}
+
+.hidden {
+  display: none;
+}
+
+/* Containers */
+
+#main {
+  width: 100%;
+}
+
+#header {
+  display: flex;
+  flex-direction: column;
+}
+
+#preview,
+#editor {
+  position: relative;
+  width: 100%;
+}
+
+#wrapper {
+  height: 100vh;
+  width: 100vw;
+}
+
+#settings-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+#toggle-container {
+  display: flex;
+  flex-direction: row;
+}
+
+/* Header & Settings */
+
+#settingsButton {
+  cursor: pointer;
+  margin-top: 18px;
+  width: 48px;
+}
+
+h1 {
+  cursor: pointer;
+  margin: 12px 12px 12px 12px;
+  width: 282px;
+}
+
+/* Text Area */
+
+textarea {
+  box-shadow: none;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  display: block;
+  height: 35vh;
+  margin: 0 auto;
+  padding: 12px;
+  resize: none;
+}
+
+.split-view {
+  width: 97vw;
+}
+
+#output {
+  cursor: pointer;
+  overflow: auto;
+}
+
+/* Counter */
+
+.circle-progress {
+  fill: transparent;
+}
+.circle-background {
+  fill: transparent;
+}
+
+.circle-text {
+  fill: var(--ash);
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+#circular-progress-bar {
+  bottom: 12px;
+  left: 24px;
+  position: absolute;
+}
+
+/* User Feedback */
+
+#confirm {
+  cursor: pointer;
+}
+
+.confirm {
+  border: 1px solid var(--ash);
+  border-radius: 12px;
+  bottom: 12px;
+  padding: 12px 12px;
+  position: absolute;
+  right: 24px;
+}
+
+.red {
+  color: var(--peach);
+  border: 1px solid var(--peach);
+}
+
+.dark {
+  background: var(--charcoal);
+  color: var(--ash);
+}
+
+.flicker {
+  background: var(--faded-peach);
+}
+
+.strike-tag {
+  align-items: center;
+  background: var(--faded-tangerine);
+  border: 1px solid var(--faded-ash);
+  border-left: none;
+  display: flex;
+  font-size: 10px;
+  justify-content: center;
+  padding: 0 5px 2px 5px;
+  &:hover {
+    background-color: #d68700;
+  }
+}
+
+#switch {
+  text-decoration: line-through;
+}
+
+#switch:before,
+#switch:after {
+  content: '\00a0\00a0';
+}
+
+.warning {
+  color: var(--faded-peach);
+  padding: 6px 12px;
+  position: absolute;
+}
+
+span#message {
+  color: var(--faded-ash);
+}
+
+.example {
+  color: var(--ash);
+  padding: 0 6px;
+}
+
+/* Changelog & Settings*/
+
+#changelogButton {
+  cursor: pointer;
+  display: flex;
+  margin: 12px 24px;
+  &:hover {
+    color: var(--ash);
+    text-decoration: underline;
+  }
+  & span {
+    color: var(--ash);
+    display: block;
+    margin: 4px 8px;
+  }
+}
+
+#changelog,
+#settingsPanel {
+  // left: 0;
+  right: 0;
+  position: absolute;
+  top: 0;
+  width: 100vw;
+  z-index: 99;
+  & div {
+    color: var(--ash);
+    margin: 0;
+    & ul {
+      overflow-x: hidden;
+      height: 100vh;
+      background: var(--clay);
+      border-left: 1px solid var(--faded-blue);
+      list-style: none;
+      margin: 0;
+      padding: 24px 48px;
+      width: 100%;
+      & li h1 {
+        margin-left: 0;
+        margin-top: 24px;
+      }
+      & li h2 {
+        display: flex;
+        font-weight: 700;
+        & span {
+          color: var(--peach);
+          display: block;
+          width: 100px;
+        }
+      }
+      & li:last-child {
+        border-bottom: none;
+        margin-bottom: 96px;
+      }
+    }
+  }
+}
+
+#closingDiv {
+  display: none;
+  width: 100%;
+  background-color: var(--faded-ash);
+}
+
+#backButtonContainer {
+  border-bottom: 1px dotted var(--faded-ash);
+  background-color: rgba(33, 118, 134, 0.9);
+  cursor: pointer;
+}
+
+#backButton {
+  fill: var(--ash);
+  margin: 24px 0 24px 48px;
+}
+
+.changelog-li {
+  border-bottom: 1px solid grey;
+}
+
+/* Toggle Switch */
+#toggle {
+  display: flex;
+}
+
+#toggleLabel {
+  margin: 0 0 12px 12px;
+}
+
+.switch {
+  /* Switch Container */
+  display: inline-block;
+  height: 24px;
+  margin: 0 0 12px 24px;
+  position: relative;
+  width: 42px;
+  & input {
+    /* Hide the default HTML version */
+    height: 0;
+    opacity: 0;
+    width: 0;
+  }
+}
+
+.slider {
+  /* Switch Slider*/
+  background-color: var(--ash);
+  bottom: 0;
+  cursor: pointer;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: 0.4s;
+  -webkit-transition: 0.4s;
+  &:before {
+    background-color: var(--pure-white);
+    bottom: 4px;
+    content: '';
+    height: 16px;
+    left: 4px;
+    position: absolute;
+    transition: 0.4s;
+    -webkit-transition: 0.4s;
+    width: 16px;
+  }
+}
+
+input {
+  &:checked + .slider {
+    background-color: var(--blue);
+  }
+  &:checked + .slider:before {
+    transform: translateX(16px); /* The same size as slider */
+    -ms-transform: translateX(16px);
+    -webkit-transform: translateX(16px);
+  }
+  &:focus + .slider {
+    /* Focus Option */
+    box-shadow: 0 0 1px hsl(207, 90%, 54%);
+  }
+}
+
+#snippetCount {
+  position: absolute;
+  color: var(--ash);
+  top: 0;
+  left: 0;
+}
+
+#deleteSVG {
+  cursor: pointer;
+  fill: var(--ash);
+  margin-left: auto;
+  margin-right: 24px;
+  margin-top: 12px;
+  &:hover {
+    fill: red;
+  }
+}
+
+form#snippetForm {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+  height: 30px;
+  margin: -6px 12px 6px 12px;
+  padding: 0;
+  width: 98%;
+}
+
+.snippets-container {
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: calc(100%-48px);
+}
+
+input#snippetInput {
+  background: none;
+  border: 1px dotted var(--faded-ash);
+  border-left: none;
+  border-right: none;
+  height: 30px;
+  width: 100%;
+  // &:focus {
+  //   outline: none;
+  // }
+}
+
+.presets-button {
+  display: inline;
+  margin: 0 10px 5px 0;
+  padding: 1px 5px 0 5px;
+  &:hover {
+    color: var(--blue);
+  }
+}
+
+#presetsContainer {
+  min-width: 180px;
+  padding: 4px 0px 0 12px;
+  border: 1px solid transparent;
+  margin: 12px 0 12px 0px;
+}
+
+#snippetsContainer {
+  align-items: flex-start;
+  border-left: 2px solid var(--blue);
+  border-right: 2px solid var(--blue);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  margin: 12px 12px 12px 0;
+  overflow: auto;
+  overflow-x: auto;
+  padding: 4px 12px 0 12px;
+  width: 100%;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  & div.snippet-container {
+    display: inline-block;
+    flex: 0 0 auto;
+    margin: 0 10px 5px 0;
+    div {
+      height: 20px;
+    }
+  }
+  & div.snippet {
+    display: flex;
+    flex-direction: row;
+  }
+  & div.snippet-label {
+    border: 1px solid transparent;
+    color: var(--charcoal);
+    overflow: hidden;
+    padding: 1px 5px 0 5px;
+    &:hover {
+      border: 1px solid var(--faded-peach);
+      // font-weight: 700;
+    }
+  }
+  & div.delete-tag {
+    align-items: center;
+    background: var(--faded-peach);
+    border: 1px solid var(--faded-ash);
+    border-left: none;
+    display: flex;
+    font-size: 10px;
+    font-weight: 700;
+    justify-content: center;
+    padding: 0 5px;
+    &:hover {
+      background: #cc0000;
+      border-bottom: 1px solid var(--blue);
+      color: var(--pure-white);
+    }
+  }
+}
+
+.reverse-tag {
+  background: var(--faded-denim);
+  border: 1px solid var(--faded-ash);
+  border-left: none;
+  padding: 0 5px;
+  padding-top: 1px;
+  &:hover {
+    background-color: #0096d7;
+  }
+}
+
+.wiki {
+  align-items: center;
+  background: var(--faded-blue);
+  border: 1px solid var(--faded-ash);
+  border-left: none;
+  display: flex;
+  font-family: 'Garamond', 'Adobe Garamond Pro', 'Warnock', 'Warnock Pro',
+    'Bodoni', 'Bodoni MT', 'Goudy Old Style', 'Musica', 'serif';
+  font-size: 10px;
+  justify-content: center;
+  padding: 0 5px;
+  padding-top: 3.5px;
+  &:hover {
+    background: var(--blue);
+    color: var(--pure-white);
+  }
+}
+
+.warning {
+  color: var(--ash);
+  background-color: #000;
+  font-weight: bold;
+  animation: blinkingText 2s infinite;
+  position: absolute;
+  border: 1px solid rgba(255, 0, 0, 0.16);
+  margin: 12px 24px;
+  padding: 12px 12px;
+  font-size: 1.6rem;
+  bottom: 0;
+  left: 0;
+}
+@keyframes blinkingText {
+  0% {
+    background-color: rgba(255, 0, 0, 0.16);
+  }
+  25% {
+    background-color: rgba(255, 0, 0, 0.33);
+  }
+  50% {
+    background-color: rgba(255, 0, 0, 0.16);
+  }
+  75% {
+    background-color: rgba(255, 0, 0, 0.33);
+  }
+  100% {
+    background-color: rgba(255, 0, 0, 0.16);
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  #panelContainer {
+    display: flex;
+  }
+  #snippetCount {
+    top: -12;
+    // margin-top: -12px // codepen
+  }
+
+  input#snippetInput {
+    border-top: none;
+  }
+
+  #title {
+    margin-left: 24px;
+  }
+
+  #deleteSVG {
+    margin-top: 0;
+  }
+  form#snippetForm {
+    margin: 12px 24px;
+    max-width: 98%;
+  }
+
+  #snippetsContainer {
+    margin: 0 12px 12px 0;
+  }
+  #presetsContainer {
+    margin: 0 0 12px 12px;
+  }
+
+  #main {
+    display: flex;
+  }
+
+  .split-view {
+    width: 48.5vw;
+  }
+
+  #header {
+    flex-direction: row;
+  }
+
+  textarea {
+    height: 72.75vh;
+  }
+
+  #toggleLabel {
+    margin: 20px 0 0 16px;
+  }
+
+  .switch {
+    margin: 18px 0 0 24px;
+  }
+
+  #changelog,
+  #settingsPanel {
+    & div {
+      & ul {
+        width: 768px;
+      }
+    }
+  }
+  #closingDiv {
+    display: unset;
+  }
+}
+
+@media only screen and (max-width: 405px) {
+  #changelogButton span {
+    display: none;
+  }
+}
