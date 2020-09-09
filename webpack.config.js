@@ -23,6 +23,6 @@ module.exports = {
   },
   devtool: 'cheap-module-source-map', // vs cheap-module=-eval-source-map in webpack
   devServer: {
-    contentBase: path.join(__dirname, 'public'),
+    contentBase: path.join(__dirname, 'build'),
   },
 };

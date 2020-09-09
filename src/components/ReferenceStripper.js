@@ -45,7 +45,7 @@ export default class ReferenceStripper extends React.Component {
 
   componentDidMount() {
     fetch(
-      'https://raw.githubusercontent.com/julienshim/Reference-Stripper/master/public/updates.json'
+      'updates.json'
     )
       .then((response) => response.json())
       .then((result) => {
