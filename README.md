@@ -1,6 +1,6 @@
 # Reference Stripper
 
-Reference Stripper is a tool that remove links and special symbols from Wikipedia Text and assists in manipulating text.
+Reference Stripper is a tool that remove links and special symbols from Wikipedia text and assists in manipulating text.
 
 ## Demo
 
@@ -48,7 +48,7 @@ Reference Stripper is a tool that remove links and special symbols from Wikipedi
 
 ### Presets
 
-Save multi-line presets by entering text into the input text area and then entering `$preset1` or `$preset2` into the input line bo. Click on either the `Preset 1` or `Preset 2` buttons to recall into input text area.
+Save multi-line presets by entering text into the input text area and then entering `$preset1` or `$preset2` into the input line box. Click on either the `Preset 1` or `Preset 2` buttons to recall into input text area.
 
 <img src="https://github.com/julienshim/reference-stripper/blob/master/public/images/presets.gif?raw=true" width=500>
 
