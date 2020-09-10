@@ -34,6 +34,15 @@ Reference Stripper is a tool that remove links and special symbols from Wikipedi
 - Define special characters, words, acronyms to warn against (e.g. _GBP ½ / ¾_)
   - Separate special characters, words, acronyms to warn against with a space.
 - Responsive web design
+- Lower case mode by clicking the `Reference Stripper` header
+- LocalStorage saves the following settings:
+  - Last input/output text
+  - Snippets
+  - Dark Mode
+  - Defined special characters, words, acronyms to warm against
+  - Remove all parentheses and containing text
+  - Presets
+  - Word Count Limit
 
 ### Snippets
 
