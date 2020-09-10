@@ -2,7 +2,7 @@
 
 Reference Stripper is a tool that remove links and special symbols from Wikipedia Text and assists in manipulating text.
 
-## Demo (CodePen)
+## Demo
 
 * Codepen: https://codepen.io/julienshim/full/ZEzomZx
 * GitHub via [gh-pages](https://yarnpkg.com/package/gh-pages): https://julienshim.github.io/reference-stripper/
@@ -128,7 +128,7 @@ public
 1. `yarn install` to install dependencies
 2. `yarn run build` to bundle the tool into static files
 3. `yarn run dev-server` to start the server
-4. Open `localhost:8000` in a browser
+4. Open `localhost:8080` in a browser
 
 ## Cross-Origin Resource Sharing (CORS)
 
